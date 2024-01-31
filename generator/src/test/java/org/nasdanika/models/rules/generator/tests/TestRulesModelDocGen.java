@@ -24,10 +24,13 @@ import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.html.bootstrap.Theme;
 import org.nasdanika.html.model.app.Action;
 import org.nasdanika.html.model.app.gen.ActionSiteGenerator;
+import org.nasdanika.models.architecture.ArchitecturePackage;
+import org.nasdanika.models.echarts.graph.GraphPackage;
 import org.nasdanika.models.ecore.graph.processors.EcoreActionGenerator;
 import org.nasdanika.models.ecore.graph.processors.EcoreNodeProcessorFactory;
 import org.nasdanika.models.rules.RulesPackage;
 import org.nasdanika.models.rules.processors.ecore.EcoreGenRulesProcessorsFactory;
+import org.nasdanika.ncore.NcorePackage;
 
 /**
  * Tests Ecore -> Graph -> Processor -> actions generation
@@ -62,7 +65,11 @@ public class TestRulesModelDocGen {
 		File output = new File(actionModelsDir, "rules.xmi");
 		
 		Map<EPackage, URI> packageURIMap = Map.ofEntries(
-				Map.entry(EcorePackage.eINSTANCE, URI.createURI("https://ecore.models.nasdanika.org/"))	
+				Map.entry(EcorePackage.eINSTANCE, URI.createURI("https://ecore.models.nasdanika.org/")),	
+				Map.entry(NcorePackage.eINSTANCE, URI.createURI("https://ncore.models.nasdanika.org/")),	
+				Map.entry(org.nasdanika.graph.model.ModelPackage.eINSTANCE, URI.createURI("https://graph.models.nasdanika.org/")),	
+				Map.entry(org.nasdanika.drawio.model.ModelPackage.eINSTANCE, URI.createURI("https://drawio.models.nasdanika.org/")),	
+				Map.entry(ArchitecturePackage.eINSTANCE, URI.createURI("https://architecture.models.nasdanika.org/"))	
 			);
 			
 		EcoreActionGenerator eCoreActionGenerator = new EcoreActionGenerator(

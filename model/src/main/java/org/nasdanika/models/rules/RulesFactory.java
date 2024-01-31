@@ -31,6 +31,51 @@ public interface RulesFactory extends EFactory {
 	Rule createRule();
 
 	/**
+	 * Returns a new object of class '<em>Rule Set</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Rule Set</em>'.
+	 * @generated
+	 */
+	RuleSet createRuleSet();
+
+	/**
+	 * Returns a new object of class '<em>Violation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Violation</em>'.
+	 * @generated
+	 */
+	Violation createViolation();
+
+	/**
+	 * Returns a new object of class '<em>Waiver</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Waiver</em>'.
+	 * @generated
+	 */
+	Waiver createWaiver();
+
+	/**
+	 * Returns a new object of class '<em>Inspectable</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Inspectable</em>'.
+	 * @generated
+	 */
+	Inspectable createInspectable();
+
+	/**
+	 * Returns a new object of class '<em>Severity</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Severity</em>'.
+	 * @generated
+	 */
+	Severity createSeverity();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

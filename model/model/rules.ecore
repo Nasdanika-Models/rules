@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rules" nsURI="ecore://nasdanika.org/models/rules" nsPrefix="org.nasdanika.models.rules">
-  <eClassifiers xsi:type="ecore:EClass" name="Rule"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Rule" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//Node">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="suppress" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="severity" lowerBound="1"
+        eType="#//Severity" eOpposite="#//Severity/rules"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RuleSet">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extends" upperBound="-1"
+        eType="#//RuleSet" eOpposite="#//RuleSet/extensions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extensions" upperBound="-1"
+        eType="#//RuleSet" eOpposite="#//RuleSet/extends"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
+        eType="#//Rule" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Violation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rule" lowerBound="1" eType="#//Rule"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="waivers" upperBound="-1"
+        eType="#//Waiver" eOpposite="#//Waiver/violations"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Waiver">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="violations" upperBound="-1"
+        eType="#//Violation" eOpposite="#//Violation/waivers"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Inspectable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="violations" upperBound="-1"
+        eType="#//Violation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="waivers" upperBound="-1"
+        eType="#//Waiver" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Severity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
+        eType="#//Rule" eOpposite="#//Rule/severity"/>
+  </eClassifiers>
 </ecore:EPackage>

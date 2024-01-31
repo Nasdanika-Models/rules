@@ -58,9 +58,9 @@
 
 	<dependencies>	
 		<dependency>
-		    <groupId>org.nasdanika.core</groupId>
-		    <artifactId>exec</artifactId>
-		    <version>${core.version}</version>
+		    <groupId>org.nasdanika.models.architecture</groupId>
+		    <artifactId>model</artifactId>
+		    <version>${architecture.version}</version>
 		</dependency> 		
 		<dependency>
 		    <groupId>org.eclipse.emf</groupId>

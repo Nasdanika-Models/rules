@@ -24,6 +24,7 @@
 	<properties>
 		<core.version>2024.1.0</core.version>
 		<html.version>2024.1.0</html.version>
+		<architecture.version>2024.1.0</architecture.version>
 		<models.ecore.version>2024.1.0</models.ecore.version>
 		<jacoco.version>0.8.11</jacoco.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

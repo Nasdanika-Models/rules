@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
-    modelDirectory="/org.nasdanika.models.rules/src/main/java" creationIcons="false"
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.nasdanika.models.rules/src/main/java" creationIcons="false"
     editorDirectory="" modelPluginID="org.nasdanika.models.rules" modelName="Rules"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
     featureDelegation="Dynamic" complianceLevel="17.0" suppressGenModelAnnotations="false"
-    copyrightFields="false" operationReflection="true" importOrganizing="true">
+    copyrightFields="false" usedGenPackages="../../org.nasdanika.models.architecture/model/architecture.genmodel#//architecture ../../org.nasdanika.drawio.model/model/drawio.genmodel#//model ../../org.nasdanika.graph.model/model/graph.genmodel#//model ../../org.nasdanika.ncore/model/ncore.genmodel#//ncore"
+    operationReflection="true" importOrganizing="true">
   <foreignModel>rules.ecore</foreignModel>
   <genPackages prefix="Rules" basePackage="org.nasdanika.models" disposableProviderFactory="true"
       ecorePackage="rules.ecore#/">
-    <genClasses ecoreClass="rules.ecore#//Rule"/>
+    <genClasses ecoreClass="rules.ecore#//Rule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rules.ecore#//Rule/suppress"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rules.ecore#//Rule/severity"/>
+    </genClasses>
+    <genClasses ecoreClass="rules.ecore#//RuleSet">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rules.ecore#//RuleSet/extends"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rules.ecore#//RuleSet/extensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rules.ecore#//RuleSet/rules"/>
+    </genClasses>
+    <genClasses ecoreClass="rules.ecore#//Violation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rules.ecore#//Violation/rule"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rules.ecore#//Violation/waivers"/>
+    </genClasses>
+    <genClasses ecoreClass="rules.ecore#//Waiver">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rules.ecore#//Waiver/violations"/>
+    </genClasses>
+    <genClasses ecoreClass="rules.ecore#//Inspectable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rules.ecore#//Inspectable/violations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rules.ecore#//Inspectable/waivers"/>
+    </genClasses>
+    <genClasses ecoreClass="rules.ecore#//Severity">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference rules.ecore#//Severity/rules"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -5,6 +5,5 @@ module org.nasdanika.models.rules {
 	
 	requires transitive org.eclipse.emf.ecore;
 	requires transitive org.eclipse.emf.common;
-	requires org.nasdanika.common;
-	requires transitive org.nasdanika.exec;
+	requires transitive org.nasdanika.models.architecture;
 }
