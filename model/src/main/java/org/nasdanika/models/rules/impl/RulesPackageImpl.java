@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.nasdanika.drawio.model.ModelPackage;
 import org.nasdanika.models.architecture.ArchitecturePackage;
+import org.nasdanika.models.party.PartyPackage;
 import org.nasdanika.models.rules.Inspectable;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RuleSet;
@@ -117,6 +118,7 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		ModelPackage.eINSTANCE.eClass();
 		org.nasdanika.graph.model.ModelPackage.eINSTANCE.eClass();
 		NcorePackage.eINSTANCE.eClass();
+		PartyPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theRulesPackage.createPackageContents();
@@ -387,6 +389,10 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 
 		// Add supertypes to classes
 		ruleEClass.getESuperTypes().add(theArchitecturePackage.getNode());
+		ruleSetEClass.getESuperTypes().add(theArchitecturePackage.getDomain());
+		violationEClass.getESuperTypes().add(theArchitecturePackage.getArchitectureDescriptionElement());
+		waiverEClass.getESuperTypes().add(theArchitecturePackage.getArchitectureDescriptionElement());
+		severityEClass.getESuperTypes().add(theArchitecturePackage.getArchitectureDescriptionElement());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(ruleEClass, Rule.class, "Rule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

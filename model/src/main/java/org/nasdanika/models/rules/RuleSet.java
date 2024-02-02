@@ -3,8 +3,7 @@
 package org.nasdanika.models.rules;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
+import org.nasdanika.models.architecture.Domain;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface RuleSet extends EObject {
+public interface RuleSet extends Domain {
 	/**
 	 * Returns the value of the '<em><b>Extends</b></em>' reference list.
 	 * The list contents are of type {@link org.nasdanika.models.rules.RuleSet}.

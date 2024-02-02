@@ -10,11 +10,9 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.nasdanika.models.architecture.impl.DomainImpl;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RuleSet;
 import org.nasdanika.models.rules.RulesPackage;
@@ -34,7 +32,7 @@ import org.nasdanika.models.rules.RulesPackage;
  *
  * @generated
  */
-public class RuleSetImpl extends MinimalEObjectImpl.Container implements RuleSet {
+public class RuleSetImpl extends DomainImpl implements RuleSet {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -52,16 +50,6 @@ public class RuleSetImpl extends MinimalEObjectImpl.Container implements RuleSet
 	@Override
 	protected EClass eStaticClass() {
 		return RulesPackage.Literals.RULE_SET;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected int eStaticFeatureCount() {
-		return 0;
 	}
 
 	/**

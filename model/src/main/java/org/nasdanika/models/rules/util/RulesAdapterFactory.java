@@ -16,10 +16,14 @@ import org.nasdanika.graph.model.ConnectionSource;
 import org.nasdanika.graph.model.ConnectionTarget;
 import org.nasdanika.graph.model.DocumentedNamedConnectionSource;
 import org.nasdanika.graph.model.DocumentedNamedConnectionTarget;
+import org.nasdanika.graph.model.DocumentedNamedGraph;
 import org.nasdanika.graph.model.DocumentedNamedGraphElement;
+import org.nasdanika.graph.model.Graph;
 import org.nasdanika.graph.model.GraphElement;
+import org.nasdanika.models.architecture.ArchitectureDescription;
 import org.nasdanika.models.architecture.ArchitectureDescriptionElement;
 import org.nasdanika.models.architecture.ArchitectureElement;
+import org.nasdanika.models.architecture.Domain;
 import org.nasdanika.models.architecture.Node;
 import org.nasdanika.models.architecture.RelationshipSource;
 import org.nasdanika.models.architecture.RelationshipTarget;
@@ -205,6 +209,22 @@ public class RulesAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseNode(Node object) {
 				return createNodeAdapter();
+			}
+			@Override
+			public <E extends GraphElement> Adapter caseGraph(Graph<E> object) {
+				return createGraphAdapter();
+			}
+			@Override
+			public <E extends GraphElement> Adapter caseDocumentedNamedGraph(DocumentedNamedGraph<E> object) {
+				return createDocumentedNamedGraphAdapter();
+			}
+			@Override
+			public Adapter caseArchitectureDescription(ArchitectureDescription object) {
+				return createArchitectureDescriptionAdapter();
+			}
+			@Override
+			public Adapter caseDomain(Domain object) {
+				return createDomainAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -629,6 +649,62 @@ public class RulesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNodeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.graph.model.Graph <em>Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.graph.model.Graph
+	 * @generated
+	 */
+	public Adapter createGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.graph.model.DocumentedNamedGraph <em>Documented Named Graph</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.graph.model.DocumentedNamedGraph
+	 * @generated
+	 */
+	public Adapter createDocumentedNamedGraphAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.architecture.ArchitectureDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.architecture.ArchitectureDescription
+	 * @generated
+	 */
+	public Adapter createArchitectureDescriptionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.architecture.Domain <em>Domain</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.architecture.Domain
+	 * @generated
+	 */
+	public Adapter createDomainAdapter() {
 		return null;
 	}
 

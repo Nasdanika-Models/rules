@@ -10,11 +10,9 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.nasdanika.models.architecture.impl.ArchitectureDescriptionElementImpl;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RulesPackage;
 import org.nasdanika.models.rules.Severity;
@@ -32,7 +30,7 @@ import org.nasdanika.models.rules.Severity;
  *
  * @generated
  */
-public class SeverityImpl extends MinimalEObjectImpl.Container implements Severity {
+public class SeverityImpl extends ArchitectureDescriptionElementImpl implements Severity {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -50,16 +48,6 @@ public class SeverityImpl extends MinimalEObjectImpl.Container implements Severi
 	@Override
 	protected EClass eStaticClass() {
 		return RulesPackage.Literals.SEVERITY;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected int eStaticFeatureCount() {
-		return 0;
 	}
 
 	/**

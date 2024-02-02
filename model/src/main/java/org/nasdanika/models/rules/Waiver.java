@@ -3,8 +3,7 @@
 package org.nasdanika.models.rules;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
+import org.nasdanika.models.architecture.ArchitectureDescriptionElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Waiver extends EObject {
+public interface Waiver extends ArchitectureDescriptionElement {
 	/**
 	 * Returns the value of the '<em><b>Violations</b></em>' reference list.
 	 * The list contents are of type {@link org.nasdanika.models.rules.Violation}.

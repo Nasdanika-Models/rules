@@ -14,10 +14,14 @@ import org.nasdanika.graph.model.ConnectionSource;
 import org.nasdanika.graph.model.ConnectionTarget;
 import org.nasdanika.graph.model.DocumentedNamedConnectionSource;
 import org.nasdanika.graph.model.DocumentedNamedConnectionTarget;
+import org.nasdanika.graph.model.DocumentedNamedGraph;
 import org.nasdanika.graph.model.DocumentedNamedGraphElement;
+import org.nasdanika.graph.model.Graph;
 import org.nasdanika.graph.model.GraphElement;
+import org.nasdanika.models.architecture.ArchitectureDescription;
 import org.nasdanika.models.architecture.ArchitectureDescriptionElement;
 import org.nasdanika.models.architecture.ArchitectureElement;
+import org.nasdanika.models.architecture.Domain;
 import org.nasdanika.models.architecture.Node;
 import org.nasdanika.models.architecture.RelationshipSource;
 import org.nasdanika.models.architecture.RelationshipTarget;
@@ -121,18 +125,70 @@ public class RulesSwitch<T> extends Switch<T> {
 			case RulesPackage.RULE_SET: {
 				RuleSet ruleSet = (RuleSet)theEObject;
 				T result = caseRuleSet(ruleSet);
+				if (result == null) result = caseDomain(ruleSet);
+				if (result == null) result = caseArchitectureDescriptionElement(ruleSet);
+				if (result == null) result = caseArchitectureDescription(ruleSet);
+				if (result == null) result = caseDocumentedNamedGraphElement(ruleSet);
+				if (result == null) result = caseArchitectureElement(ruleSet);
+				if (result == null) result = caseUndergoer(ruleSet);
+				if (result == null) result = caseDocumentedNamedGraph(ruleSet);
+				if (result == null) result = caseGraphElement(ruleSet);
+				if (result == null) result = caseDocumentedNamedStringIdentity(ruleSet);
+				if (result == null) result = casePeriod(ruleSet);
+				if (result == null) result = caseGraph(ruleSet);
+				if (result == null) result = caseStringIdentity(ruleSet);
+				if (result == null) result = caseSemanticElement(ruleSet);
+				if (result == null) result = caseDocumentedNamedElement(ruleSet);
+				if (result == null) result = caseNamedElement(ruleSet);
+				if (result == null) result = caseDocumented(ruleSet);
+				if (result == null) result = caseModelElement(ruleSet);
+				if (result == null) result = caseMarked(ruleSet);
+				if (result == null) result = caseAdaptable(ruleSet);
+				if (result == null) result = caseIMarked(ruleSet);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case RulesPackage.VIOLATION: {
 				Violation violation = (Violation)theEObject;
 				T result = caseViolation(violation);
+				if (result == null) result = caseArchitectureDescriptionElement(violation);
+				if (result == null) result = caseDocumentedNamedGraphElement(violation);
+				if (result == null) result = caseArchitectureElement(violation);
+				if (result == null) result = caseUndergoer(violation);
+				if (result == null) result = caseGraphElement(violation);
+				if (result == null) result = caseDocumentedNamedStringIdentity(violation);
+				if (result == null) result = casePeriod(violation);
+				if (result == null) result = caseStringIdentity(violation);
+				if (result == null) result = caseSemanticElement(violation);
+				if (result == null) result = caseDocumentedNamedElement(violation);
+				if (result == null) result = caseNamedElement(violation);
+				if (result == null) result = caseDocumented(violation);
+				if (result == null) result = caseModelElement(violation);
+				if (result == null) result = caseMarked(violation);
+				if (result == null) result = caseAdaptable(violation);
+				if (result == null) result = caseIMarked(violation);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case RulesPackage.WAIVER: {
 				Waiver waiver = (Waiver)theEObject;
 				T result = caseWaiver(waiver);
+				if (result == null) result = caseArchitectureDescriptionElement(waiver);
+				if (result == null) result = caseDocumentedNamedGraphElement(waiver);
+				if (result == null) result = caseArchitectureElement(waiver);
+				if (result == null) result = caseUndergoer(waiver);
+				if (result == null) result = caseGraphElement(waiver);
+				if (result == null) result = caseDocumentedNamedStringIdentity(waiver);
+				if (result == null) result = casePeriod(waiver);
+				if (result == null) result = caseStringIdentity(waiver);
+				if (result == null) result = caseSemanticElement(waiver);
+				if (result == null) result = caseDocumentedNamedElement(waiver);
+				if (result == null) result = caseNamedElement(waiver);
+				if (result == null) result = caseDocumented(waiver);
+				if (result == null) result = caseModelElement(waiver);
+				if (result == null) result = caseMarked(waiver);
+				if (result == null) result = caseAdaptable(waiver);
+				if (result == null) result = caseIMarked(waiver);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -145,6 +201,22 @@ public class RulesSwitch<T> extends Switch<T> {
 			case RulesPackage.SEVERITY: {
 				Severity severity = (Severity)theEObject;
 				T result = caseSeverity(severity);
+				if (result == null) result = caseArchitectureDescriptionElement(severity);
+				if (result == null) result = caseDocumentedNamedGraphElement(severity);
+				if (result == null) result = caseArchitectureElement(severity);
+				if (result == null) result = caseUndergoer(severity);
+				if (result == null) result = caseGraphElement(severity);
+				if (result == null) result = caseDocumentedNamedStringIdentity(severity);
+				if (result == null) result = casePeriod(severity);
+				if (result == null) result = caseStringIdentity(severity);
+				if (result == null) result = caseSemanticElement(severity);
+				if (result == null) result = caseDocumentedNamedElement(severity);
+				if (result == null) result = caseNamedElement(severity);
+				if (result == null) result = caseDocumented(severity);
+				if (result == null) result = caseModelElement(severity);
+				if (result == null) result = caseMarked(severity);
+				if (result == null) result = caseAdaptable(severity);
+				if (result == null) result = caseIMarked(severity);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -584,6 +656,66 @@ public class RulesSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNode(Node object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <E extends GraphElement> T caseGraph(Graph<E> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Documented Named Graph</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Documented Named Graph</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <E extends GraphElement> T caseDocumentedNamedGraph(DocumentedNamedGraph<E> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Description</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Description</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseArchitectureDescription(ArchitectureDescription object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Domain</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Domain</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDomain(Domain object) {
 		return null;
 	}
 

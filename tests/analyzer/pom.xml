@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.nasdanika.models.rules</groupId>
+		<version>2024.1.0</version>
+		<artifactId>parent</artifactId>
+		<relativePath>../..</relativePath>
+	</parent>
+	<artifactId>test-analyzers</artifactId>
+	<packaging>jar</packaging>
+	<name>Test Analyzer</name>
+	<description>Discovers inpsector sets and uses them to analyze input</description>
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>test-inspector-set</artifactId>
+			<version>${project.version}</version>
+		</dependency>		
+	</dependencies>
+</project>
+

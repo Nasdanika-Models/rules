@@ -10,11 +10,9 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.nasdanika.models.architecture.impl.ArchitectureDescriptionElementImpl;
 import org.nasdanika.models.rules.RulesPackage;
 import org.nasdanika.models.rules.Violation;
 import org.nasdanika.models.rules.Waiver;
@@ -32,7 +30,7 @@ import org.nasdanika.models.rules.Waiver;
  *
  * @generated
  */
-public class WaiverImpl extends MinimalEObjectImpl.Container implements Waiver {
+public class WaiverImpl extends ArchitectureDescriptionElementImpl implements Waiver {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -50,16 +48,6 @@ public class WaiverImpl extends MinimalEObjectImpl.Container implements Waiver {
 	@Override
 	protected EClass eStaticClass() {
 		return RulesPackage.Literals.WAIVER;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected int eStaticFeatureCount() {
-		return 0;
 	}
 
 	/**

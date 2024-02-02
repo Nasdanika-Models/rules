@@ -4,7 +4,7 @@
     editorDirectory="" modelPluginID="org.nasdanika.models.rules" modelName="Rules"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
     featureDelegation="Dynamic" complianceLevel="17.0" suppressGenModelAnnotations="false"
-    copyrightFields="false" usedGenPackages="../../org.nasdanika.models.architecture/model/architecture.genmodel#//architecture ../../org.nasdanika.drawio.model/model/drawio.genmodel#//model ../../org.nasdanika.graph.model/model/graph.genmodel#//model ../../org.nasdanika.ncore/model/ncore.genmodel#//ncore"
+    copyrightFields="false" usedGenPackages="../../org.nasdanika.models.architecture/model/architecture.genmodel#//architecture ../../org.nasdanika.drawio.model/model/drawio.genmodel#//model ../../org.nasdanika.graph.model/model/graph.genmodel#//model ../../org.nasdanika.ncore/model/ncore.genmodel#//ncore ../../org.nasdanika.models.party/model/party.genmodel#//party"
     operationReflection="true" importOrganizing="true">
   <foreignModel>rules.ecore</foreignModel>
   <genPackages prefix="Rules" basePackage="org.nasdanika.models" disposableProviderFactory="true"

@@ -3,8 +3,7 @@
 package org.nasdanika.models.rules;
 
 import org.eclipse.emf.common.util.EList;
-
-import org.eclipse.emf.ecore.EObject;
+import org.nasdanika.models.architecture.ArchitectureDescriptionElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Violation extends EObject {
+public interface Violation extends ArchitectureDescriptionElement {
 	/**
 	 * Returns the value of the '<em><b>Rule</b></em>' reference.
 	 * <!-- begin-user-doc -->

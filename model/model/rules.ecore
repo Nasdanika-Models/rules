@@ -6,7 +6,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="severity" lowerBound="1"
         eType="#//Severity" eOpposite="#//Severity/rules"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RuleSet">
+  <eClassifiers xsi:type="ecore:EClass" name="RuleSet" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//Domain">
     <eStructuralFeatures xsi:type="ecore:EReference" name="extends" upperBound="-1"
         eType="#//RuleSet" eOpposite="#//RuleSet/extensions"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extensions" upperBound="-1"
@@ -14,12 +14,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//Rule" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Violation">
+  <eClassifiers xsi:type="ecore:EClass" name="Violation" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule" lowerBound="1" eType="#//Rule"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="waivers" upperBound="-1"
         eType="#//Waiver" eOpposite="#//Waiver/violations"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Waiver">
+  <eClassifiers xsi:type="ecore:EClass" name="Waiver" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="violations" upperBound="-1"
         eType="#//Violation" eOpposite="#//Violation/waivers"/>
   </eClassifiers>
@@ -29,7 +29,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="waivers" upperBound="-1"
         eType="#//Waiver" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Severity">
+  <eClassifiers xsi:type="ecore:EClass" name="Severity" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//Rule" eOpposite="#//Rule/severity"/>
   </eClassifiers>
