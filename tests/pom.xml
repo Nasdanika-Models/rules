@@ -7,15 +7,9 @@
 		<artifactId>parent</artifactId>
 		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>generator</artifactId>
-	<packaging>jar</packaging>
-	<name>Documentation generator</name>
-	<dependencies>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>processors</artifactId>
-			<version>${project.version}</version>
-		</dependency>		
-	</dependencies>
+	<groupId>org.nasdanika.models.rules.tests</groupId>
+	<artifactId>parent</artifactId>
+	<packaging>pom</packaging>
+	<name>Tests</name>
 </project>
 

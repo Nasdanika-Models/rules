@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.nasdanika.models.rules.processors.test.rules</name>
+	<name>org.nasdanika.models.rules.tests.rules</name>
 	<comment>Test rule set</comment>
 	<projects>
 	</projects>

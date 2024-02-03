@@ -1,12 +1,11 @@
-module org.nasdanika.models.rules.processors {
+import org.nasdanika.models.rules.Inspector;
+
+module org.nasdanika.models.rules.tests.analyzer{
 		
-	requires transitive org.nasdanika.models.rules;
-	requires transitive org.nasdanika.models.ecore.graph;
+	requires transitive org.nasdanika.models.rules.tests.inspectors;
 	
-	exports org.nasdanika.models.rules.processors.ecore;
-	opens org.nasdanika.models.rules.processors.ecore; // For loading resources
+	exports org.nasdanika.models.rules.tests.analyzer;
 	
-	exports org.nasdanika.models.rules.processors.doc;
-	opens org.nasdanika.models.rules.processors.doc; // For loading resources
+	uses Inspector.Factory;
 	
 }

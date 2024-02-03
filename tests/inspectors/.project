@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.nasdanika.models.rules.processors.test.inspector</name>
-	<comment>Test rule set</comment>
+	<name>org.nasdanika.models.rules.tests.inspectors</name>
+	<comment>Test inspector set</comment>
 	<projects>
 	</projects>
 	<buildSpec>

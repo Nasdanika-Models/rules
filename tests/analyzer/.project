@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.nasdanika.models.rules.processors.test.analyzer</name>
-	<comment>Test rule set</comment>
+	<name>org.nasdanika.models.rules.tests.analyzer</name>
+	<comment>Uses the inspector set service to analyze models</comment>
 	<projects>
 	</projects>
 	<buildSpec>

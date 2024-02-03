@@ -2,18 +2,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.nasdanika.models.rules</groupId>
-		<version>2024.1.0</version>
+		<groupId>org.nasdanika.models.rules.tests</groupId>
+		<version>2024.2.0</version>
 		<artifactId>parent</artifactId>
-		<relativePath>../..</relativePath>
+		<relativePath>..</relativePath>
 	</parent>
-	<artifactId>test-inspector-set</artifactId>
+	<artifactId>inspectors</artifactId>
 	<packaging>jar</packaging>
 	<name>Test Inspector Set</name>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>test-rule-set</artifactId>
+			<artifactId>rules</artifactId>
 			<version>${project.version}</version>
 		</dependency>		
 	</dependencies>

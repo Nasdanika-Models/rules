@@ -24,6 +24,13 @@ import org.nasdanika.models.architecture.Domain;
  * @generated
  */
 public interface RuleSet extends Domain {
+	
+	interface Factory {
+		
+		RuleSet getRuleSet();
+
+	}
+	
 	/**
 	 * Returns the value of the '<em><b>Extends</b></em>' reference list.
 	 * The list contents are of type {@link org.nasdanika.models.rules.RuleSet}.

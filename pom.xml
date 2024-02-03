@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.nasdanika.models.rules</groupId>
 	<artifactId>parent</artifactId>
-	<version>2024.1.0</version>
+	<version>2024.2.0</version>
 	<packaging>pom</packaging>
 	<name>Rules/inspectors model, processors, doc generator</name>
 	<description>Inspection of Ecore models for compliance with rules</description>
