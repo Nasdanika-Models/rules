@@ -16,6 +16,11 @@
 			<artifactId>rules</artifactId>
 			<version>${project.version}</version>
 		</dependency>		
+		<dependency>
+			<groupId>org.nasdanika.models.java</groupId>
+			<artifactId>model</artifactId>
+			<version>2024.2.0</version>
+		</dependency>		
 	</dependencies>
 </project>
 

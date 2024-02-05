@@ -18,9 +18,10 @@ import org.nasdanika.models.rules.Violation;
  * Collects 
  */
 public class InspectorSet extends Reflector implements org.nasdanika.models.rules.Inspector<Object> {
-	
+			
 	protected List<org.nasdanika.models.rules.Inspector<Object>> inspectors = new ArrayList<>();
 	private Function<String, Rule> ruleResovler;
+	private List<RuleSet> ruleSets = new ArrayList<RuleSet>(); 
 	private boolean parallel;
 	
 	public InspectorSet(Function<String, Rule> ruleResolver, boolean parallel, Object... factories) {
@@ -33,7 +34,20 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		}
 	}
 	
-	private org.nasdanika.models.rules.Inspector<Object> createInspector(AnnotatedElementRecord aer) {
+	@Override
+	protected Stream<AnnotatedElementRecord> getAnnotatedElementRecords(Object target, List<Object> factoryPath) {
+		System.out.println(target + ": " + factoryPath);
+		return super.getAnnotatedElementRecords(target, factoryPath);
+	}
+	
+	/**
+	 * @return {@link org.nasdanika.models.rules.RuleSet} supported by this inspector set.
+	 */
+	public List<RuleSet> getRuleSets() {
+		return ruleSets;
+	}
+	
+	protected org.nasdanika.models.rules.Inspector<Object> createInspector(AnnotatedElementRecord aer) {
 		Method method = (Method) aer.getAnnotatedElement();
 		Parameter[] parameters = method.getParameters();
 		

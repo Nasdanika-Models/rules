@@ -16,9 +16,21 @@ import org.nasdanika.common.ProgressMonitor;
  */
 public interface Inspector<T> extends Composeable<Inspector<T>> {
 	
-	interface Factory {
+	interface Factory extends Composeable<Factory> {
 		
-		Inspector<?> getInspector();
+		Inspector<Object> getInspector();
+		
+		@Override
+		default Factory compose(Factory other) {
+			if (other == null) {
+				return this;
+			}
+			return () -> {
+				Inspector<Object> inspector = getInspector();
+				Inspector<Object> otherInspector = other.getInspector();
+				return inspector.compose(otherInspector);
+			};
+		}
 
 	}	
 	
