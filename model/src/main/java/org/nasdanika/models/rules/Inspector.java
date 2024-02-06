@@ -9,6 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.nasdanika.common.Composeable;
+import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
 
 /**
@@ -34,7 +35,7 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 
 	}	
 	
-	void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, ProgressMonitor progressMonitor);
+	void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor);
 	
 	/**
 	 * @param type
@@ -51,13 +52,13 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					if (Inspector.this.isForType(target.getClass())) {
-						Inspector.this.inspect(target, violationConsumer, progressMonitor);
+						Inspector.this.inspect(target, violationConsumer, context, progressMonitor);
 					}
 					if (other.isForType(target.getClass())) {
-						other.inspect(target, violationConsumer, progressMonitor);
+						other.inspect(target, violationConsumer, context, progressMonitor);
 					}
 				}
 				
@@ -76,11 +77,11 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					for (Inspector<T> inspector: inspectors) {
 						if (inspector.isForType(target.getClass())) {
-							inspector.inspect(target, violationConsumer, progressMonitor);
+							inspector.inspect(target, violationConsumer, context, progressMonitor);
 						}
 					}
 				}				
@@ -103,13 +104,13 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					Stream<Inspector<T>> iStream = inspectors.stream();
 					if (parallel) {
 						iStream = iStream.parallel();
 					}
-					iStream.forEach(inspector -> inspector.inspect(target, violationConsumer, progressMonitor));
+					iStream.forEach(inspector -> inspector.inspect(target, violationConsumer, context, progressMonitor));
 				}				
 			}
 
@@ -128,7 +129,7 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
 				// NOP				
 			}
 
@@ -150,29 +151,29 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<Notifier>() {
 
 			@Override
-			public void inspect(Notifier target, BiConsumer<? super Notifier, Violation> violationConsumer,	ProgressMonitor progressMonitor) {
+			public void inspect(Notifier target, BiConsumer<? super Notifier, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (delegate != null) {
 					if (delegate.isForType(target.getClass())) {
-						delegate.inspect(target, violationConsumer, progressMonitor);
+						delegate.inspect(target, violationConsumer, context, progressMonitor);
 					}
 					if (target instanceof ResourceSet) {
 						Stream<Resource> rStream = ((ResourceSet) target).getResources().stream();
 						if (parallel) {
 							rStream = rStream.parallel();
 						} 
-						rStream.forEach(resource -> inspect(resource, violationConsumer, progressMonitor));
+						rStream.forEach(resource -> inspect(resource, violationConsumer, context, progressMonitor));
 					} else if (target instanceof ResourceSet) {
 						Stream<EObject> contentsStream = ((Resource) target).getContents().stream();
 						if (parallel) {
 							contentsStream = contentsStream.parallel();
 						}
-						contentsStream.forEach(root -> inspect(root, violationConsumer, progressMonitor));
+						contentsStream.forEach(root -> inspect(root, violationConsumer, context, progressMonitor));
 					} else if (target instanceof EObject) {
 						Stream<EObject> contentsStream = ((EObject) target).eContents().stream();
 						if (parallel) {
 							contentsStream = contentsStream.parallel();
 						}
-						contentsStream.forEach(contents -> inspect(contents, violationConsumer, progressMonitor));
+						contentsStream.forEach(contents -> inspect(contents, violationConsumer, context, progressMonitor));
 					}
 				}				
 			}

@@ -9,6 +9,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.common.Reflector;
 import org.nasdanika.models.rules.Rule;
@@ -54,7 +55,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		return new org.nasdanika.models.rules.Inspector<Object>() {
 
 			@Override
-			public void inspect(Object target, BiConsumer<? super Object, Violation> violationConsumer,	ProgressMonitor progressMonitor) {
+			public void inspect(Object target, BiConsumer<? super Object, Violation> violationConsumer, Context context,	ProgressMonitor progressMonitor) {
 				Object result;
 				if (parameters.length == 1) {
 					result = aer.invoke(target);
@@ -81,13 +82,13 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 	}
 
 	@Override
-	public void inspect(Object target, BiConsumer<Object, Violation> violationConsumer, ProgressMonitor progressMonitor) {
+	public void inspect(Object target, BiConsumer<Object, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
 		if (target != null) {
 			Stream<org.nasdanika.models.rules.Inspector<Object>> iStream = inspectors.stream();
 			if (parallel) {
 				iStream = iStream.parallel();
 			}
-			iStream.forEach(inspector -> inspector.inspect(target, violationConsumer, progressMonitor));
+			iStream.forEach(inspector -> inspector.inspect(target, violationConsumer, context, progressMonitor));
 		}				
 	}
 
