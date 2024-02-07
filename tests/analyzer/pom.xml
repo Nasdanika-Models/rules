@@ -17,6 +17,16 @@
 			<artifactId>inspectors</artifactId>
 			<version>${project.version}</version>
 		</dependency>		
+		<dependency>
+			<groupId>org.nasdanika.models.gitlab</groupId>
+			<artifactId>model</artifactId>
+			<version>2024.1.0</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.nasdanika.models.maven</groupId>
+			<artifactId>model</artifactId>
+			<version>2024.2.0</version>
+		</dependency>		
 	</dependencies>
 </project>
 
