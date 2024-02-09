@@ -1,6 +1,7 @@
 package org.nasdanika.models.rules;
 
 import java.util.Collection;
+import java.util.ServiceLoader;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
@@ -135,6 +136,19 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 			}
 			
 		};
+	}
+
+	/**
+	 * Loads inspectors from Inspector.Factory services and composes them.
+	 * @return
+	 */
+	static Inspector<Object> load() {
+		Inspector<Object> ret = null;
+		Iterable<Inspector.Factory> inspectorFactories = ServiceLoader.load(Inspector.Factory.class);
+		for (Inspector.Factory inspectorFactory: inspectorFactories) {			
+			ret = ret == null ? inspectorFactory.getInspector() : compose(ret, inspectorFactory.getInspector());
+		}		
+		return ret == null ? nop() : ret;
 	}
 
 }

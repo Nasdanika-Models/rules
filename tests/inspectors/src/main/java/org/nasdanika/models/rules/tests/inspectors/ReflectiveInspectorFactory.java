@@ -7,7 +7,7 @@ public class ReflectiveInspectorFactory implements Inspector.Factory {
 
 	@Override
 	public Inspector<Object> getInspector() {
-		return new InspectorSet(null, false, new ReflectiveInspectorFactory());
+		return new InspectorSet(null, false, new ReflectiveInspectors());
 	}
 
 }

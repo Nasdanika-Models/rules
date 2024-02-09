@@ -1,8 +1,8 @@
 package org.nasdanika.models.rules.tests.inspectors;
 
+import org.nasdanika.models.java.Method;
 import org.nasdanika.models.java.Type;
 import org.nasdanika.models.rules.reflection.Inspector;
-import org.nasdanika.models.rules.reflection.RuleSet;
 
 /**
  * Testing implicit rule set first
@@ -24,7 +24,9 @@ public class ReflectiveInspectors {
 		return type.getName();
 	}
 	
-//	@Inspector
-//	public 
+	@Inspector
+	public String methodInspector(Method method) {
+		return method.getName();
+	}
 
 }

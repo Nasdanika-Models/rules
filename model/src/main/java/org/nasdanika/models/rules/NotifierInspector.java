@@ -106,5 +106,25 @@ public interface NotifierInspector extends Inspector<Notifier> {
 			
 		};
 	}
+	
+	static NotifierInspector adapt(Inspector<? super Notifier> inspector) {
+		return new NotifierInspector() {
+			
+			@Override
+			public void inspect(
+					Notifier target, 
+					BiConsumer<? super Notifier, Violation> violationConsumer, 
+					Context context,
+					ProgressMonitor progressMonitor) {
+				
+				inspector.inspect(target, (t,v) -> violationConsumer.accept((Notifier) t, v), context, progressMonitor);
+			}
+			
+			@Override
+			public boolean isForType(Class<?> targetType) {
+				return inspector.isForType(targetType);
+			}
+		};
+	}
 
 }

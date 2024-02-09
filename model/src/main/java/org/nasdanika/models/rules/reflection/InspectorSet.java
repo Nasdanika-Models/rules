@@ -31,13 +31,13 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		for (Object factory: factories) {
 			getAnnotatedElementRecords(factory, Collections.singletonList(factory))
 				.filter(aer -> aer.getAnnotation(Inspector.class) != null)
-				.forEach(this::createInspector);
+				.map(this::createInspector)
+				.forEach(inspectors::add);
 		}
 	}
 	
 	@Override
 	protected Stream<AnnotatedElementRecord> getAnnotatedElementRecords(Object target, List<Object> factoryPath) {
-		System.out.println(target + ": " + factoryPath);
 		return super.getAnnotatedElementRecords(target, factoryPath);
 	}
 	
@@ -88,17 +88,20 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			if (parallel) {
 				iStream = iStream.parallel();
 			}
-			iStream.forEach(inspector -> inspector.inspect(target, violationConsumer, context, progressMonitor));
+			iStream
+			.filter(inspector -> target != null && inspector.isForType(target.getClass()))
+			.forEach(inspector -> inspector.inspect(target, violationConsumer, context, progressMonitor));
 		}				
 	}
 
 	@Override
 	public boolean isForType(Class<?> targetType) {
-		Stream<org.nasdanika.models.rules.Inspector<Object>> iStream = inspectors.stream();
-		if (parallel) {
-			iStream = iStream.parallel();
+		for (org.nasdanika.models.rules.Inspector<Object> inspector: inspectors) {
+			if (inspector.isForType(targetType)) {
+				return true;
+			}
 		}
-		return iStream.filter(i -> i.isForType(targetType)).findAny().isPresent();
+		return false;
 	}
 
 }

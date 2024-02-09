@@ -142,26 +142,28 @@ public class TestAnalyzers {
 		
 		Resource dirResource = resourceSet.getResource(currentDirURI, true);
 		
-		NotifierInspector inspector = new NotifierInspector() {
-
-			@Override
-			public void inspect(
-					Notifier target, 
-					BiConsumer<? super Notifier, Violation> violationConsumer,
-					Context context, 
-					ProgressMonitor progressMonitor) {
-				
-				if (target instanceof Method) {
-					Method method = (Method) target;
-					System.out.println(method.getName());
-					Comment comment = method.getComment();
-					if (comment != null) {
-						System.out.println(comment.getComment());
-					}
-				}
-			}
-			
-		};
+//		NotifierInspector inspector = new NotifierInspector() {
+//
+//			@Override
+//			public void inspect(
+//					Notifier target, 
+//					BiConsumer<? super Notifier, Violation> violationConsumer,
+//					Context context, 
+//					ProgressMonitor progressMonitor) {
+//				
+//				if (target instanceof Method) {
+//					Method method = (Method) target;
+//					System.out.println(method.getName());
+//					Comment comment = method.getComment();
+//					if (comment != null) {
+//						System.out.println(comment.getComment());
+//					}
+//				}
+//			}
+//			
+//		};
+		
+		Inspector<Object> inspector = Inspector.load();
 		
 		// Visiting only Java 
 		Predicate<Notifier> predicate = obj -> {
@@ -170,7 +172,8 @@ public class TestAnalyzers {
 			}
 			return true;
 		};
-		inspector.asContentsInspector(false, predicate).inspect(dirResource, null, null, null);				
+		NotifierInspector notifierInspector = NotifierInspector.adapt(inspector);
+		notifierInspector.asContentsInspector(false, predicate).inspect(dirResource, null, null, null);				
 	}	
 				
 }
