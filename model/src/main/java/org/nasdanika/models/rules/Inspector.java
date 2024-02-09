@@ -4,10 +4,6 @@ import java.util.Collection;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.nasdanika.common.Composeable;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
@@ -136,51 +132,6 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 			@Override
 			public boolean isForType(Class<?> targetType) {
 				return false;
-			}
-			
-		};
-	}
-	
-	/**
-	 * Inspector which is aware of {@link ResourceSet}, {@link Resource}, and {@link EObject} contents and passes to
-	 * the delegate the target object and its contents as well.
-	 * @param delegate
-	 * @return
-	 */
-	static Inspector<Notifier> contentsInspector(Inspector<Notifier> delegate, boolean parallel) {
-		return new Inspector<Notifier>() {
-
-			@Override
-			public void inspect(Notifier target, BiConsumer<? super Notifier, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
-				if (delegate != null) {
-					if (delegate.isForType(target.getClass())) {
-						delegate.inspect(target, violationConsumer, context, progressMonitor);
-					}
-					if (target instanceof ResourceSet) {
-						Stream<Resource> rStream = ((ResourceSet) target).getResources().stream();
-						if (parallel) {
-							rStream = rStream.parallel();
-						} 
-						rStream.forEach(resource -> inspect(resource, violationConsumer, context, progressMonitor));
-					} else if (target instanceof ResourceSet) {
-						Stream<EObject> contentsStream = ((Resource) target).getContents().stream();
-						if (parallel) {
-							contentsStream = contentsStream.parallel();
-						}
-						contentsStream.forEach(root -> inspect(root, violationConsumer, context, progressMonitor));
-					} else if (target instanceof EObject) {
-						Stream<EObject> contentsStream = ((EObject) target).eContents().stream();
-						if (parallel) {
-							contentsStream = contentsStream.parallel();
-						}
-						contentsStream.forEach(contents -> inspect(contents, violationConsumer, context, progressMonitor));
-					}
-				}				
-			}
-
-			@Override
-			public boolean isForType(Class<?> targetType) {
-				return Notifier.class.isAssignableFrom(targetType);
 			}
 			
 		};

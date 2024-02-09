@@ -23,5 +23,8 @@ public class ReflectiveInspectors {
 	public String undocumentedTypeInspector(Type type) {
 		return type.getName();
 	}
+	
+//	@Inspector
+//	public 
 
 }

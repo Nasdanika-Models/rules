@@ -1,22 +1,40 @@
 package org.nasdanika.models.rules.tests.analyzer.tests;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ServiceLoader;
+import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.junit.jupiter.api.Test;
+import org.nasdanika.common.Context;
+import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.common.Util;
 import org.nasdanika.models.gitlab.util.GitLabApiProvider;
 import org.nasdanika.models.gitlab.util.GitLabURIHandler;
+import org.nasdanika.models.java.Comment;
+import org.nasdanika.models.java.Method;
+import org.nasdanika.models.java.util.JavaParserResourceFactory;
 import org.nasdanika.models.maven.Project;
 import org.nasdanika.models.maven.util.MavenResourceFactory;
 import org.nasdanika.models.rules.Inspector;
+import org.nasdanika.models.rules.NotifierInspector;
+import org.nasdanika.models.rules.Violation;
+import org.nasdanika.ncore.Tree;
+import org.nasdanika.ncore.TreeItem;
+import org.nasdanika.ncore.util.DirectoryContentFileURIHandler;
 
+/**
+ * Tests of analyzers
+ */
 public class TestAnalyzers {
 	
 	@Test
@@ -56,12 +74,11 @@ public class TestAnalyzers {
 					System.out.println(project.getDescription());			
 				}		
 			}
-		}
-		
+		}		
 	}	
 		
 	@Test
-	void testLoadTreeResource() throws IOException {
+	public void testLoadTreeResource() throws IOException {
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());		
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new MavenResourceFactory());
@@ -74,7 +91,7 @@ public class TestAnalyzers {
 						GitLabURIHandler.GITLAB_URI_SCHEME, 
 						"48523784", 
 						null, 
-						new String[] { "main", "src", "" }, 
+						new String[] { "main", "" }, 
 						null, 
 						null);
 				
@@ -82,8 +99,78 @@ public class TestAnalyzers {
 				
 				Resource resource = resourceSet.getResource(resourceURI, true);
 				resource.save(System.out, null);
+				
+				NotifierInspector inspector = new NotifierInspector() {
+
+					@Override
+					public void inspect(
+							Notifier target, 
+							BiConsumer<? super Notifier, Violation> violationConsumer,
+							Context context, 
+							ProgressMonitor progressMonitor) {
+						
+						if (target instanceof TreeItem) {
+							System.out.println("*** " + target.getClass() + " " + ((TreeItem) target).getName() + " " + ((TreeItem) target).eResource().getURI());
+						}
+					}
+					
+				};
+				
+				// Not visiting blobs
+				Predicate<Notifier> predicate = obj -> {
+					if (obj instanceof TreeItem) {
+						System.out.println(((TreeItem) obj).getName());
+						return obj instanceof Tree;
+					}
+					return true;
+				};
+				inspector.asContentsInspector(false, predicate).inspect(resource, null, null, null);				
 			}
 		}
 	}
+		
+	@Test
+	public void testInspectJava() throws IOException {
+		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());		
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("java", new JavaParserResourceFactory());
+		URIHandler fileDirectoryURIHandler = new DirectoryContentFileURIHandler();
+		resourceSet.getURIConverter().getURIHandlers().add(0, fileDirectoryURIHandler);
+		
+		String currentDir = new File(".").getCanonicalPath();
+		URI currentDirURI = URI.createFileURI(currentDir).appendSegment("");
+		
+		Resource dirResource = resourceSet.getResource(currentDirURI, true);
+		
+		NotifierInspector inspector = new NotifierInspector() {
+
+			@Override
+			public void inspect(
+					Notifier target, 
+					BiConsumer<? super Notifier, Violation> violationConsumer,
+					Context context, 
+					ProgressMonitor progressMonitor) {
+				
+				if (target instanceof Method) {
+					Method method = (Method) target;
+					System.out.println(method.getName());
+					Comment comment = method.getComment();
+					if (comment != null) {
+						System.out.println(comment.getComment());
+					}
+				}
+			}
+			
+		};
+		
+		// Visiting only Java 
+		Predicate<Notifier> predicate = obj -> {
+			if (obj instanceof TreeItem) {
+				return obj instanceof Tree || ((TreeItem) obj).getName().endsWith(".java");
+			}
+			return true;
+		};
+		inspector.asContentsInspector(false, predicate).inspect(dirResource, null, null, null);				
+	}	
 				
 }
