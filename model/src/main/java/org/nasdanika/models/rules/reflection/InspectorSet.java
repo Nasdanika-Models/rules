@@ -55,21 +55,36 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		return new org.nasdanika.models.rules.Inspector<Object>() {
 
 			@Override
-			public void inspect(Object target, BiConsumer<? super Object, Violation> violationConsumer, Context context,	ProgressMonitor progressMonitor) {
-				Object result;
-				if (parameters.length == 1) {
-					result = aer.invoke(target);
-				} else if (parameters.length ==2) {
-					if (parameters[1].getType().isAssignableFrom(BiConsumer.class)) {
-						result = aer.invoke(target, violationConsumer);						
+			public void inspect(
+					Object target, 
+					BiConsumer<? super Object, Violation> violationConsumer, 
+					Context context, 
+					ProgressMonitor progressMonitor) {
+				
+				Object[] args = new Object[parameters.length];
+				args[0] = target;
+				
+				boolean violationConsumerBound = false; 
+				boolean contextBound = false; 
+				boolean progressMonitorBound = false; 
+
+				// Binding parameters
+				for (int i = 1; i < parameters.length; ++i) {
+					if (!violationConsumerBound && parameters[i].getType().isAssignableFrom(BiConsumer.class)) {
+						args[i] = violationConsumer;
+						violationConsumerBound = true;
+					} else if (!contextBound && parameters[i].getType().isAssignableFrom(Context.class)) {
+						args[i] = context;
+						contextBound = true;
+					} else if (!progressMonitorBound && parameters[i].getType().isAssignableFrom(ProgressMonitor.class)) {
+						args[i] = progressMonitor;
+						progressMonitorBound = true;
 					} else {
-						result = aer.invoke(target, progressMonitor);						
-					}					
-				} else if (parameters.length ==3) {
-					result = aer.invoke(target, violationConsumer, progressMonitor);
-				} else {
-					throw new IllegalArgumentException("Cannot invoke " + method + " - unsupported number of parameters");
-				}				
+						throw new IllegalArgumentException("Cannot bind parameter " + i + " of type " + parameters[i].getType() + " in method " + method);
+					}
+				}					
+				
+				Object result = aer.invoke(args);
 				// TODO - handle result, inject rule, wire to rule set
 			}
 
