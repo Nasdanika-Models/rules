@@ -41,5 +41,9 @@ public @interface Inspector {
 	 */
 	String rule() default "";
 	
-
+	/**
+	 * SpEL boolean expression evaluated in the context of the target object with <code>context</code> variable.	
+	 * @return
+	 */
+	String condition() default "";
 }

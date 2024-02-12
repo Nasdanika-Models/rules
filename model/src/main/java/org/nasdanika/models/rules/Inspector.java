@@ -16,16 +16,16 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 	
 	interface Factory extends Composeable<Factory> {
 		
-		Inspector<Object> getInspector();
+		Inspector<Object> getInspector(ProgressMonitor progressMonitor);
 		
 		@Override
 		default Factory compose(Factory other) {
 			if (other == null) {
 				return this;
 			}
-			return () -> {
-				Inspector<Object> inspector = getInspector();
-				Inspector<Object> otherInspector = other.getInspector();
+			return pm -> {
+				Inspector<Object> inspector = getInspector(pm);
+				Inspector<Object> otherInspector = other.getInspector(pm);
 				return inspector.compose(otherInspector);
 			};
 		}
@@ -142,11 +142,11 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 	 * Loads inspectors from Inspector.Factory services and composes them.
 	 * @return
 	 */
-	static Inspector<Object> load() {
+	static Inspector<Object> load(ProgressMonitor progressMonitor) {
 		Inspector<Object> ret = null;
 		Iterable<Inspector.Factory> inspectorFactories = ServiceLoader.load(Inspector.Factory.class);
 		for (Inspector.Factory inspectorFactory: inspectorFactories) {			
-			ret = ret == null ? inspectorFactory.getInspector() : compose(ret, inspectorFactory.getInspector());
+			ret = ret == null ? inspectorFactory.getInspector(progressMonitor) : compose(ret, inspectorFactory.getInspector(progressMonitor));
 		}		
 		return ret == null ? nop() : ret;
 	}

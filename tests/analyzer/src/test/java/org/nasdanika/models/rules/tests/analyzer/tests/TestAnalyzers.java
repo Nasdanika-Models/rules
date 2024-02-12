@@ -16,12 +16,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.junit.jupiter.api.Test;
 import org.nasdanika.common.Context;
+import org.nasdanika.common.PrintStreamProgressMonitor;
 import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.common.Util;
 import org.nasdanika.models.gitlab.util.GitLabApiProvider;
 import org.nasdanika.models.gitlab.util.GitLabURIHandler;
-import org.nasdanika.models.java.Comment;
-import org.nasdanika.models.java.Method;
 import org.nasdanika.models.java.util.JavaParserResourceFactory;
 import org.nasdanika.models.maven.Project;
 import org.nasdanika.models.maven.util.MavenResourceFactory;
@@ -163,7 +162,9 @@ public class TestAnalyzers {
 //			
 //		};
 		
-		Inspector<Object> inspector = Inspector.load();
+		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
+		
+		Inspector<Object> inspector = Inspector.load(progressMonitor);
 		
 		// Visiting only Java 
 		Predicate<Notifier> predicate = obj -> {
@@ -173,7 +174,17 @@ public class TestAnalyzers {
 			return true;
 		};
 		NotifierInspector notifierInspector = NotifierInspector.adapt(inspector);
-		notifierInspector.asContentsInspector(false, predicate).inspect(dirResource, null, null, null);				
-	}	
+		notifierInspector
+			.asContentsInspector(false, predicate)
+			.inspect(
+					dirResource, 
+					this::consumeViolation, 
+					Context.EMPTY_CONTEXT, 
+					progressMonitor);				
+	}
+	
+	protected void consumeViolation(Notifier target, Violation violation) {
+		System.out.println(target + " -> " + violation);
+	}
 				
 }
