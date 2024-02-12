@@ -184,7 +184,7 @@ public class TestAnalyzers {
 	}
 	
 	protected void consumeViolation(Notifier target, Violation violation) {
-		System.out.println(target + " -> " + violation);
+		System.out.println(target + " -> " + violation + " " + violation.getRule() + " " + violation.getRule().eContainer());
 	}
 				
 }

@@ -17,6 +17,7 @@ import org.nasdanika.common.Util;
 import org.nasdanika.emf.persistence.EObjectLoader;
 import org.nasdanika.exec.ExecPackage;
 import org.nasdanika.models.rules.Rule;
+import org.nasdanika.models.rules.RuleSet;
 import org.nasdanika.models.rules.RulesFactory;
 import org.nasdanika.models.rules.RulesPackage;
 import org.nasdanika.ncore.NcorePackage;
@@ -28,6 +29,22 @@ import org.nasdanika.persistence.ObjectLoader;
  * This interface can be implement by reflective target classes (factories).
  */
 public interface RuleManager {
+
+	/**
+	 * Rule manager which can load rules from YAML spec, but cannot resolve them.
+	 */
+	static RuleManager LOADING_RULE_MANAGER = new RuleManager() {
+		
+		@Override
+		public RuleSet resolveRuleSet(Object target, String ruleSet, ProgressMonitor progressMonitor) {
+			throw new UnsupportedOperationException();
+		}
+		
+		@Override
+		public Rule resolveRule(Method inspectorMethod, String rule) {
+			throw new UnsupportedOperationException();
+		}
+	};
 	
 	/**
 	 * Resolves rule

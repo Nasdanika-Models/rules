@@ -206,8 +206,8 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			}
 			RuleSet ruleSetAnnotation = tClass.getAnnotation(RuleSet.class);
 			if (ruleSetAnnotation != null) {
-				String spec = ruleSetAnnotation.ruleSet();
-				String id = ruleSetAnnotation.value();
+				String spec = ruleSetAnnotation.value();
+				String id = ruleSetAnnotation.ruleSet();
 				if (!Util.isBlank(spec)) {
 					trs = getRuleManager(aer).loadRuleSet(obj, spec, progressMonitor);
 					ruleSets.put(tClass, trs);

@@ -16,17 +16,17 @@ import org.nasdanika.emf.persistence.EObjectLoader;
 public @interface RuleSet {
 	
 	/**
-	 * {@link org.nasdanika.models.rules.RuleSet} id to be resolve to a rule set 
-	 * It can be used to define a rule set as part of a class declaring inspector methods. 
-	 * @return
-	 */
-	String value();	
-	
-	/**
 	 * {@link org.nasdanika.models.rules.RuleSet} YAML specification loaded by {@link EObjectLoader}. 
 	 * It can be used to define a rule set as part of a class declaring inspector methods. 
 	 * @return
 	 */
-	String ruleSet();	
+	String value() default "";	
+	
+	/**
+	 * {@link org.nasdanika.models.rules.RuleSet} id to be resolve to a rule set 
+	 * It can be used to define a rule set as part of a class declaring inspector methods. 
+	 * @return
+	 */
+	String ruleSet() default "";	
 
 }

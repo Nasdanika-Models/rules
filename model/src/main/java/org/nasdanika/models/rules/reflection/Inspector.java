@@ -29,14 +29,14 @@ import org.nasdanika.models.rules.Violation;
 public @interface Inspector {
 	
 	/**
-	 * Rule id to be resolved to a rule.
+	 * {@link Rule} YAML specification loaded by {@link EObjectLoader}. 
+	 * It can be used to define a rule as part of inspector method. 
 	 * @return
 	 */
 	String value() default "";
 	
 	/**
-	 * {@link Rule} YAML specification loaded by {@link EObjectLoader}. 
-	 * It can be used to define a rule as part of inspector method. 
+	 * Rule id to be resolved to a rule.
 	 * @return
 	 */
 	String rule() default "";
