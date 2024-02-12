@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.nasdanika.models.architecture.impl.ArchitectureDescriptionElementImpl;
+import org.nasdanika.models.rules.Action;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RulesPackage;
 import org.nasdanika.models.rules.Violation;
@@ -28,6 +29,7 @@ import org.nasdanika.models.rules.Waiver;
  * <ul>
  *   <li>{@link org.nasdanika.models.rules.impl.ViolationImpl#getRule <em>Rule</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.impl.ViolationImpl#getWaivers <em>Waivers</em>}</li>
+ *   <li>{@link org.nasdanika.models.rules.impl.ViolationImpl#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @generated
@@ -99,6 +101,17 @@ public class ViolationImpl extends ArchitectureDescriptionElementImpl implements
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public EList<Action> getActions() {
+		return (EList<Action>)eDynamicGet(RulesPackage.VIOLATION__ACTIONS, RulesPackage.Literals.VIOLATION__ACTIONS, true, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case RulesPackage.VIOLATION__WAIVERS:
@@ -117,6 +130,8 @@ public class ViolationImpl extends ArchitectureDescriptionElementImpl implements
 		switch (featureID) {
 			case RulesPackage.VIOLATION__WAIVERS:
 				return ((InternalEList<?>)getWaivers()).basicRemove(otherEnd, msgs);
+			case RulesPackage.VIOLATION__ACTIONS:
+				return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -134,6 +149,8 @@ public class ViolationImpl extends ArchitectureDescriptionElementImpl implements
 				return basicGetRule();
 			case RulesPackage.VIOLATION__WAIVERS:
 				return getWaivers();
+			case RulesPackage.VIOLATION__ACTIONS:
+				return getActions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -154,6 +171,10 @@ public class ViolationImpl extends ArchitectureDescriptionElementImpl implements
 				getWaivers().clear();
 				getWaivers().addAll((Collection<? extends Waiver>)newValue);
 				return;
+			case RulesPackage.VIOLATION__ACTIONS:
+				getActions().clear();
+				getActions().addAll((Collection<? extends Action>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -172,6 +193,9 @@ public class ViolationImpl extends ArchitectureDescriptionElementImpl implements
 			case RulesPackage.VIOLATION__WAIVERS:
 				getWaivers().clear();
 				return;
+			case RulesPackage.VIOLATION__ACTIONS:
+				getActions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -188,6 +212,8 @@ public class ViolationImpl extends ArchitectureDescriptionElementImpl implements
 				return basicGetRule() != null;
 			case RulesPackage.VIOLATION__WAIVERS:
 				return !getWaivers().isEmpty();
+			case RulesPackage.VIOLATION__ACTIONS:
+				return !getActions().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

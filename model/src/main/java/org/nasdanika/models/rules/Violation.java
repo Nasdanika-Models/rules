@@ -16,6 +16,7 @@ import org.nasdanika.models.architecture.ArchitectureDescriptionElement;
  * <ul>
  *   <li>{@link org.nasdanika.models.rules.Violation#getRule <em>Rule</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.Violation#getWaivers <em>Waivers</em>}</li>
+ *   <li>{@link org.nasdanika.models.rules.Violation#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @see org.nasdanika.models.rules.RulesPackage#getViolation()
@@ -58,5 +59,20 @@ public interface Violation extends ArchitectureDescriptionElement {
 	 * @generated
 	 */
 	EList<Waiver> getWaivers();
+
+	/**
+	 * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
+	 * The list contents are of type {@link org.nasdanika.models.rules.Action}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Actions to be taken to address the violation
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Actions</em>' containment reference list.
+	 * @see org.nasdanika.models.rules.RulesPackage#getViolation_Actions()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Action> getActions();
 
 } // Violation

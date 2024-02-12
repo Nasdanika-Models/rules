@@ -5,6 +5,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="suppress" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="severity" lowerBound="1"
         eType="#//Severity" eOpposite="#//Severity/rules"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
+        eType="#//Action" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Actions to be taken to address rule violations. Rule actions serve as documentation and as templates/prototypes for violation actions."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RuleSet" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//Domain">
     <eStructuralFeatures xsi:type="ecore:EReference" name="extends" upperBound="-1"
@@ -13,11 +19,19 @@
         eType="#//RuleSet" eOpposite="#//RuleSet/extends"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//Rule" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="severities" upperBound="-1"
+        eType="#//Severity" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Violation" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule" lowerBound="1" eType="#//Rule"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="waivers" upperBound="-1"
         eType="#//Waiver" eOpposite="#//Waiver/violations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
+        eType="#//Action" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Actions to be taken to address the violation"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Waiver" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="violations" upperBound="-1"
@@ -33,4 +47,42 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
         eType="#//Rule" eOpposite="#//Rule/severity"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//Node">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An action to be taken to address a rule violation"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResourceAction" eSuperTypes="#//Action">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An action on a resource identified by a string identifier, e.g. a path or URI"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resourceIdentifier" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Resource identifier - path, URI, ..."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TextResourceAction" eSuperTypes="#//ResourceAction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BinaryResourceAction" eSuperTypes="#//ResourceAction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EByteArray"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CreateResourceAction" eSuperTypes="#//ResourceAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CreateTextResourceAction" eSuperTypes="#//CreateResourceAction #//TextResourceAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CreateBinaryResourceAction" eSuperTypes="#//CreateResourceAction #//BinaryResourceAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DeleteResourceAction" eSuperTypes="#//ResourceAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MoveResourceAction" eSuperTypes="#//ResourceAction">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Moves (renames) the resources - changes its identifier"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newIdentifier" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="New identifier"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UpdateResourceAction" eSuperTypes="#//ResourceAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UpdateTextResourceAction" eSuperTypes="#//UpdateResourceAction #//TextResourceAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UpdateBinaryResourceAction" eSuperTypes="#//UpdateResourceAction #//BinaryResourceAction"/>
 </ecore:EPackage>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.nasdanika.models.java.Method;
 import org.nasdanika.models.java.Type;
+import org.nasdanika.models.rules.CreateTextResourceAction;
 import org.nasdanika.models.rules.RulesFactory;
 import org.nasdanika.models.rules.Violation;
 import org.nasdanika.models.rules.reflection.Inspector;
@@ -64,7 +65,7 @@ public class ReflectiveInspectors {
 		return null;
 	}
 	
-	@Inspector("""
+	@Inspector(value = """
 			name: Untested metod
 			documentation:
 			  exec.content.Markdown:
@@ -82,8 +83,11 @@ public class ReflectiveInspectors {
 			          * Marked/Markers 
 			          * Appending test case to a test class instead of overwriting like in this demo - aggregation of violations. 
 			          * Merging using JMerge - adding @generated tag to generated methods and then adding NOT (dirtying) upon manual changes			          
-			""")
+			""",
+			condition = "name == 'buildTheory'") // For demo purposes generating a test case only for the buildTheory() method	
 	public Violation untestedMethodInspector(Method method) {
+		
+		
         String deploymentOrModelId = "gpt-3.5-turbo";
 
     	String key = System.getenv("OPENAI_API_KEY");
@@ -98,17 +102,19 @@ public class ReflectiveInspectors {
         
 		Violation violation = RulesFactory.eINSTANCE.createViolation();
 		violation.setName("Method " + method.getName() + " is not referenced from test cases, generating a test case");
-//		violation.getDocumentation()
 
         ChatCompletions chatCompletions = client.getChatCompletions(deploymentOrModelId, new ChatCompletionsOptions(chatMessages));
         for (ChatChoice choice : chatCompletions.getChoices()) {
             ChatResponseMessage message = choice.getMessage();
             String generatedTestCase = message.getContent();
             
-            StringBuilder testCaseBuilder = new StringBuilder();
+            StringBuilder testCaseBuilder = new StringBuilder("import org.junit.jupiter.api.Test;");
             
-            testCaseBuilder
-            	.append("public class Test" + ((Type) method.eContainer()).getName() + " { ")
+            String testClassName = "Test" + ((Type) method.eContainer()).getName();
+			testCaseBuilder
+            	.append(System.lineSeparator())
+            	.append(System.lineSeparator())
+            	.append("public class " + testClassName + " { ")
             	.append(System.lineSeparator())
             	.append(System.lineSeparator());
             
@@ -120,8 +126,10 @@ public class ReflectiveInspectors {
             	.append("}")
             	.append(System.lineSeparator());
             
-            // TODO - violation actions - create action, path - src/test/java/(default package for this demo)
-            System.out.println(testCaseBuilder);
+            CreateTextResourceAction createTestCaseAction = RulesFactory.eINSTANCE.createCreateTextResourceAction();
+            createTestCaseAction.setContent(testCaseBuilder.toString());
+            createTestCaseAction.setResourceIdentifier("src/test/java/com/cronopista/ai/builders/tests/" + testClassName + ".java"); // Hardcoding for a demo
+            violation.getActions().add(createTestCaseAction);
         }
 		
 		return violation;

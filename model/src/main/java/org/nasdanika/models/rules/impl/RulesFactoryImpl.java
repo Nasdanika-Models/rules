@@ -62,6 +62,18 @@ public class RulesFactoryImpl extends EFactoryImpl implements RulesFactory {
 			case RulesPackage.WAIVER: return createWaiver();
 			case RulesPackage.INSPECTABLE: return createInspectable();
 			case RulesPackage.SEVERITY: return createSeverity();
+			case RulesPackage.ACTION: return createAction();
+			case RulesPackage.RESOURCE_ACTION: return createResourceAction();
+			case RulesPackage.TEXT_RESOURCE_ACTION: return createTextResourceAction();
+			case RulesPackage.BINARY_RESOURCE_ACTION: return createBinaryResourceAction();
+			case RulesPackage.CREATE_RESOURCE_ACTION: return createCreateResourceAction();
+			case RulesPackage.CREATE_TEXT_RESOURCE_ACTION: return createCreateTextResourceAction();
+			case RulesPackage.CREATE_BINARY_RESOURCE_ACTION: return createCreateBinaryResourceAction();
+			case RulesPackage.DELETE_RESOURCE_ACTION: return createDeleteResourceAction();
+			case RulesPackage.MOVE_RESOURCE_ACTION: return createMoveResourceAction();
+			case RulesPackage.UPDATE_RESOURCE_ACTION: return createUpdateResourceAction();
+			case RulesPackage.UPDATE_TEXT_RESOURCE_ACTION: return createUpdateTextResourceAction();
+			case RulesPackage.UPDATE_BINARY_RESOURCE_ACTION: return createUpdateBinaryResourceAction();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -131,6 +143,138 @@ public class RulesFactoryImpl extends EFactoryImpl implements RulesFactory {
 	public Severity createSeverity() {
 		SeverityImpl severity = new SeverityImpl();
 		return severity;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Action createAction() {
+		ActionImpl action = new ActionImpl();
+		return action;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ResourceAction createResourceAction() {
+		ResourceActionImpl resourceAction = new ResourceActionImpl();
+		return resourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public TextResourceAction createTextResourceAction() {
+		TextResourceActionImpl textResourceAction = new TextResourceActionImpl();
+		return textResourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public BinaryResourceAction createBinaryResourceAction() {
+		BinaryResourceActionImpl binaryResourceAction = new BinaryResourceActionImpl();
+		return binaryResourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CreateResourceAction createCreateResourceAction() {
+		CreateResourceActionImpl createResourceAction = new CreateResourceActionImpl();
+		return createResourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CreateTextResourceAction createCreateTextResourceAction() {
+		CreateTextResourceActionImpl createTextResourceAction = new CreateTextResourceActionImpl();
+		return createTextResourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CreateBinaryResourceAction createCreateBinaryResourceAction() {
+		CreateBinaryResourceActionImpl createBinaryResourceAction = new CreateBinaryResourceActionImpl();
+		return createBinaryResourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public DeleteResourceAction createDeleteResourceAction() {
+		DeleteResourceActionImpl deleteResourceAction = new DeleteResourceActionImpl();
+		return deleteResourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public MoveResourceAction createMoveResourceAction() {
+		MoveResourceActionImpl moveResourceAction = new MoveResourceActionImpl();
+		return moveResourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public UpdateResourceAction createUpdateResourceAction() {
+		UpdateResourceActionImpl updateResourceAction = new UpdateResourceActionImpl();
+		return updateResourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public UpdateTextResourceAction createUpdateTextResourceAction() {
+		UpdateTextResourceActionImpl updateTextResourceAction = new UpdateTextResourceActionImpl();
+		return updateTextResourceAction;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public UpdateBinaryResourceAction createUpdateBinaryResourceAction() {
+		UpdateBinaryResourceActionImpl updateBinaryResourceAction = new UpdateBinaryResourceActionImpl();
+		return updateBinaryResourceAction;
 	}
 
 	/**

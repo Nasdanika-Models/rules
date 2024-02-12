@@ -2,6 +2,9 @@ package org.nasdanika.models.rules.tests.analyzer.tests;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.ServiceLoader;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
@@ -14,6 +17,13 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.gitlab4j.api.CommitsApi;
+import org.gitlab4j.api.Constants.Encoding;
+import org.gitlab4j.api.GitLabApiException;
+import org.gitlab4j.api.MergeRequestApi;
+import org.gitlab4j.api.models.CommitAction;
+import org.gitlab4j.api.models.CommitAction.Action;
+import org.gitlab4j.api.models.MergeRequestParams;
 import org.junit.jupiter.api.Test;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.PrintStreamProgressMonitor;
@@ -21,15 +31,32 @@ import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.common.Util;
 import org.nasdanika.models.gitlab.util.GitLabApiProvider;
 import org.nasdanika.models.gitlab.util.GitLabURIHandler;
+import org.nasdanika.models.java.CompilationUnit;
+import org.nasdanika.models.java.Member;
+import org.nasdanika.models.java.Method;
+import org.nasdanika.models.java.Type;
 import org.nasdanika.models.java.util.JavaParserResourceFactory;
 import org.nasdanika.models.maven.Project;
 import org.nasdanika.models.maven.util.MavenResourceFactory;
+import org.nasdanika.models.rules.CreateTextResourceAction;
 import org.nasdanika.models.rules.Inspector;
 import org.nasdanika.models.rules.NotifierInspector;
+import org.nasdanika.models.rules.ResourceAction;
 import org.nasdanika.models.rules.Violation;
 import org.nasdanika.ncore.Tree;
 import org.nasdanika.ncore.TreeItem;
 import org.nasdanika.ncore.util.DirectoryContentFileURIHandler;
+
+import com.azure.ai.openai.OpenAIClient;
+import com.azure.ai.openai.OpenAIClientBuilder;
+import com.azure.ai.openai.models.ChatChoice;
+import com.azure.ai.openai.models.ChatCompletions;
+import com.azure.ai.openai.models.ChatCompletionsOptions;
+import com.azure.ai.openai.models.ChatRequestMessage;
+import com.azure.ai.openai.models.ChatRequestSystemMessage;
+import com.azure.ai.openai.models.ChatRequestUserMessage;
+import com.azure.ai.openai.models.ChatResponseMessage;
+import com.azure.core.credential.KeyCredential;
 
 /**
  * Tests of analyzers
@@ -163,7 +190,6 @@ public class TestAnalyzers {
 //		};
 		
 		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
-		
 		Inspector<Object> inspector = Inspector.load(progressMonitor);
 		
 		// Visiting only Java 
@@ -186,5 +212,86 @@ public class TestAnalyzers {
 	protected void consumeViolation(Notifier target, Violation violation) {
 		System.out.println(target + " -> " + violation + " " + violation.getRule() + " " + violation.getRule().eContainer());
 	}
+	
+	private static final String MAIN_BRANCH = "main";
+	private static final String PROJECT = "54851996"; // "nasdanika-demo/inference-engine";
+	private static final String THEORY_BUILDER_PATH = "src/main/java/com/cronopista/ai/builders/TheoryBuilder.java";
+
+	@Test
+	public void testTheoryBuilder() throws GitLabApiException {
+		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());		
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("java", new JavaParserResourceFactory());	
+		
+		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
+		Inspector<Object> inspector = Inspector.load(progressMonitor);
+		NotifierInspector notifierInspector = NotifierInspector.adapt(inspector);
+		NotifierInspector contentsInspector = notifierInspector.asContentsInspector(false, null);
+		
+		Collection<ResourceAction> actions = new ArrayList<>();
+		
+		String accessToken = System.getenv("GITLAB_COMMITTER_TOKEN");
+		try (GitLabApiProvider gitLabApiProvider = new GitLabApiProvider("https://gitlab.com/", accessToken)) {		
+			GitLabURIHandler gitLabURIHandler = new GitLabURIHandler(gitLabApiProvider.getGitLabApi());				
+			resourceSet.getURIConverter().getURIHandlers().add(0, gitLabURIHandler);
+
+			// Loading Java resource
+			URI mainBranchURI = URI.createURI(GitLabURIHandler.GITLAB_URI_SCHEME + "://" + PROJECT + "/main/");			
+			URI resourceURI = URI.createURI(THEORY_BUILDER_PATH).resolve(mainBranchURI);
+			Resource resource = resourceSet.getResource(resourceURI, true);
+			
+			contentsInspector.inspect(
+					resource, 
+					(notifier, violation) -> {
+						violation.eAllContents().forEachRemaining(vc -> {
+							if (vc instanceof ResourceAction) {
+								actions.add((ResourceAction) vc);
+							}
+						});
+					}, 
+					null, 
+					progressMonitor);
+			
+			if (!actions.isEmpty()) {
+				// Committing changes
+				List<CommitAction> commitActions = new ArrayList<>();
+				
+				for (ResourceAction action: actions) {
+					if (action instanceof CreateTextResourceAction) {
+						CreateTextResourceAction createAction = (CreateTextResourceAction) action;
+						CommitAction commitAction = new CommitAction()
+							.withAction(Action.CREATE)
+							.withContent(createAction.getContent())
+							.withEncoding(Encoding.TEXT)
+							.withFilePath(createAction.getResourceIdentifier());
+						
+						commitActions.add(commitAction);
+					} else {
+						throw new UnsupportedOperationException("Unsupported action type: " + action);
+					}
+				}
+				
+				String branchName = "theory-builder-inspector-test";
+				CommitsApi commitApi = gitLabApiProvider.getGitLabApi().getCommitsApi();
+				commitApi.createCommit(
+						PROJECT,
+						branchName, 
+						"Inspector-generated test case for TheoryBuilder", 
+						MAIN_BRANCH,
+			            "Pavel.Vlasov@nasdanika.org", 
+			            "Pavel Vlasov", 
+			            commitActions);					
+				
+				// Creating a merge request
+				MergeRequestApi mergeRequestApi = gitLabApiProvider.getGitLabApi().getMergeRequestApi();
+				MergeRequestParams params = new MergeRequestParams()
+					    .withSourceBranch(branchName)
+					    .withTargetBranch(MAIN_BRANCH)
+					    .withTitle("Inspector-generated test cases")
+					    .withDescription("Code automatically generated...");
+				mergeRequestApi.createMergeRequest(PROJECT, params);				
+			}			
+		}				
+	}	
 				
 }

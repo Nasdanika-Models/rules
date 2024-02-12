@@ -16,6 +16,7 @@ import org.nasdanika.models.architecture.impl.DomainImpl;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RuleSet;
 import org.nasdanika.models.rules.RulesPackage;
+import org.nasdanika.models.rules.Severity;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,6 +29,7 @@ import org.nasdanika.models.rules.RulesPackage;
  *   <li>{@link org.nasdanika.models.rules.impl.RuleSetImpl#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.impl.RuleSetImpl#getExtensions <em>Extensions</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.impl.RuleSetImpl#getRules <em>Rules</em>}</li>
+ *   <li>{@link org.nasdanika.models.rules.impl.RuleSetImpl#getSeverities <em>Severities</em>}</li>
  * </ul>
  *
  * @generated
@@ -92,6 +94,17 @@ public class RuleSetImpl extends DomainImpl implements RuleSet {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
+	public EList<Severity> getSeverities() {
+		return (EList<Severity>)eDynamicGet(RulesPackage.RULE_SET__SEVERITIES, RulesPackage.Literals.RULE_SET__SEVERITIES, true, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case RulesPackage.RULE_SET__EXTENDS:
@@ -116,6 +129,8 @@ public class RuleSetImpl extends DomainImpl implements RuleSet {
 				return ((InternalEList<?>)getExtensions()).basicRemove(otherEnd, msgs);
 			case RulesPackage.RULE_SET__RULES:
 				return ((InternalEList<?>)getRules()).basicRemove(otherEnd, msgs);
+			case RulesPackage.RULE_SET__SEVERITIES:
+				return ((InternalEList<?>)getSeverities()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -134,6 +149,8 @@ public class RuleSetImpl extends DomainImpl implements RuleSet {
 				return getExtensions();
 			case RulesPackage.RULE_SET__RULES:
 				return getRules();
+			case RulesPackage.RULE_SET__SEVERITIES:
+				return getSeverities();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -159,6 +176,10 @@ public class RuleSetImpl extends DomainImpl implements RuleSet {
 				getRules().clear();
 				getRules().addAll((Collection<? extends Rule>)newValue);
 				return;
+			case RulesPackage.RULE_SET__SEVERITIES:
+				getSeverities().clear();
+				getSeverities().addAll((Collection<? extends Severity>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -180,6 +201,9 @@ public class RuleSetImpl extends DomainImpl implements RuleSet {
 			case RulesPackage.RULE_SET__RULES:
 				getRules().clear();
 				return;
+			case RulesPackage.RULE_SET__SEVERITIES:
+				getSeverities().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -198,6 +222,8 @@ public class RuleSetImpl extends DomainImpl implements RuleSet {
 				return !getExtensions().isEmpty();
 			case RulesPackage.RULE_SET__RULES:
 				return !getRules().isEmpty();
+			case RulesPackage.RULE_SET__SEVERITIES:
+				return !getSeverities().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

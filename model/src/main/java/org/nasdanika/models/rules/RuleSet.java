@@ -17,6 +17,7 @@ import org.nasdanika.models.architecture.Domain;
  *   <li>{@link org.nasdanika.models.rules.RuleSet#getExtends <em>Extends</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.RuleSet#getExtensions <em>Extensions</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.RuleSet#getRules <em>Rules</em>}</li>
+ *   <li>{@link org.nasdanika.models.rules.RuleSet#getSeverities <em>Severities</em>}</li>
  * </ul>
  *
  * @see org.nasdanika.models.rules.RulesPackage#getRuleSet()
@@ -70,5 +71,17 @@ public interface RuleSet extends Domain {
 	 * @generated
 	 */
 	EList<Rule> getRules();
+
+	/**
+	 * Returns the value of the '<em><b>Severities</b></em>' containment reference list.
+	 * The list contents are of type {@link org.nasdanika.models.rules.Severity}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Severities</em>' containment reference list.
+	 * @see org.nasdanika.models.rules.RulesPackage#getRuleSet_Severities()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Severity> getSeverities();
 
 } // RuleSet

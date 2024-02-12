@@ -119,6 +119,54 @@ public class RulesAdapterFactory extends AdapterFactoryImpl {
 				return createSeverityAdapter();
 			}
 			@Override
+			public Adapter caseAction(Action object) {
+				return createActionAdapter();
+			}
+			@Override
+			public Adapter caseResourceAction(ResourceAction object) {
+				return createResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseTextResourceAction(TextResourceAction object) {
+				return createTextResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseBinaryResourceAction(BinaryResourceAction object) {
+				return createBinaryResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseCreateResourceAction(CreateResourceAction object) {
+				return createCreateResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseCreateTextResourceAction(CreateTextResourceAction object) {
+				return createCreateTextResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseCreateBinaryResourceAction(CreateBinaryResourceAction object) {
+				return createCreateBinaryResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseDeleteResourceAction(DeleteResourceAction object) {
+				return createDeleteResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseMoveResourceAction(MoveResourceAction object) {
+				return createMoveResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseUpdateResourceAction(UpdateResourceAction object) {
+				return createUpdateResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseUpdateTextResourceAction(UpdateTextResourceAction object) {
+				return createUpdateTextResourceActionAdapter();
+			}
+			@Override
+			public Adapter caseUpdateBinaryResourceAction(UpdateBinaryResourceAction object) {
+				return createUpdateBinaryResourceActionAdapter();
+			}
+			@Override
 			public Adapter caseStringIdentity(StringIdentity object) {
 				return createStringIdentityAdapter();
 			}
@@ -327,6 +375,174 @@ public class RulesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSeverityAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.Action <em>Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.Action
+	 * @generated
+	 */
+	public Adapter createActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.ResourceAction <em>Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.ResourceAction
+	 * @generated
+	 */
+	public Adapter createResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.TextResourceAction <em>Text Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.TextResourceAction
+	 * @generated
+	 */
+	public Adapter createTextResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.BinaryResourceAction <em>Binary Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.BinaryResourceAction
+	 * @generated
+	 */
+	public Adapter createBinaryResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.CreateResourceAction <em>Create Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.CreateResourceAction
+	 * @generated
+	 */
+	public Adapter createCreateResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.CreateTextResourceAction <em>Create Text Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.CreateTextResourceAction
+	 * @generated
+	 */
+	public Adapter createCreateTextResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.CreateBinaryResourceAction <em>Create Binary Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.CreateBinaryResourceAction
+	 * @generated
+	 */
+	public Adapter createCreateBinaryResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.DeleteResourceAction <em>Delete Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.DeleteResourceAction
+	 * @generated
+	 */
+	public Adapter createDeleteResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.MoveResourceAction <em>Move Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.MoveResourceAction
+	 * @generated
+	 */
+	public Adapter createMoveResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.UpdateResourceAction <em>Update Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.UpdateResourceAction
+	 * @generated
+	 */
+	public Adapter createUpdateResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.UpdateTextResourceAction <em>Update Text Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.UpdateTextResourceAction
+	 * @generated
+	 */
+	public Adapter createUpdateTextResourceActionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.UpdateBinaryResourceAction <em>Update Binary Resource Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.UpdateBinaryResourceAction
+	 * @generated
+	 */
+	public Adapter createUpdateBinaryResourceActionAdapter() {
 		return null;
 	}
 

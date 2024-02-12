@@ -2,10 +2,14 @@
  */
 package org.nasdanika.models.rules.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.nasdanika.models.architecture.impl.NodeImpl;
+import org.nasdanika.models.rules.Action;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RulesPackage;
 import org.nasdanika.models.rules.Severity;
@@ -20,6 +24,7 @@ import org.nasdanika.models.rules.Severity;
  * <ul>
  *   <li>{@link org.nasdanika.models.rules.impl.RuleImpl#isSuppress <em>Suppress</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.impl.RuleImpl#getSeverity <em>Severity</em>}</li>
+ *   <li>{@link org.nasdanika.models.rules.impl.RuleImpl#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @generated
@@ -118,6 +123,17 @@ public class RuleImpl extends NodeImpl implements Rule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public EList<Action> getActions() {
+		return (EList<Action>)eDynamicGet(RulesPackage.RULE__ACTIONS, RulesPackage.Literals.RULE__ACTIONS, true, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -140,6 +156,8 @@ public class RuleImpl extends NodeImpl implements Rule {
 		switch (featureID) {
 			case RulesPackage.RULE__SEVERITY:
 				return basicSetSeverity(null, msgs);
+			case RulesPackage.RULE__ACTIONS:
+				return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -157,6 +175,8 @@ public class RuleImpl extends NodeImpl implements Rule {
 			case RulesPackage.RULE__SEVERITY:
 				if (resolve) return getSeverity();
 				return basicGetSeverity();
+			case RulesPackage.RULE__ACTIONS:
+				return getActions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -166,6 +186,7 @@ public class RuleImpl extends NodeImpl implements Rule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -174,6 +195,10 @@ public class RuleImpl extends NodeImpl implements Rule {
 				return;
 			case RulesPackage.RULE__SEVERITY:
 				setSeverity((Severity)newValue);
+				return;
+			case RulesPackage.RULE__ACTIONS:
+				getActions().clear();
+				getActions().addAll((Collection<? extends Action>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -193,6 +218,9 @@ public class RuleImpl extends NodeImpl implements Rule {
 			case RulesPackage.RULE__SEVERITY:
 				setSeverity((Severity)null);
 				return;
+			case RulesPackage.RULE__ACTIONS:
+				getActions().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -209,6 +237,8 @@ public class RuleImpl extends NodeImpl implements Rule {
 				return isSuppress() != SUPPRESS_EDEFAULT;
 			case RulesPackage.RULE__SEVERITY:
 				return basicGetSeverity() != null;
+			case RulesPackage.RULE__ACTIONS:
+				return !getActions().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

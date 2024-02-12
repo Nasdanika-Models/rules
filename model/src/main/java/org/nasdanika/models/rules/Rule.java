@@ -2,6 +2,7 @@
  */
 package org.nasdanika.models.rules;
 
+import org.eclipse.emf.common.util.EList;
 import org.nasdanika.models.architecture.Node;
 
 /**
@@ -15,6 +16,7 @@ import org.nasdanika.models.architecture.Node;
  * <ul>
  *   <li>{@link org.nasdanika.models.rules.Rule#isSuppress <em>Suppress</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.Rule#getSeverity <em>Severity</em>}</li>
+ *   <li>{@link org.nasdanika.models.rules.Rule#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @see org.nasdanika.models.rules.RulesPackage#getRule()
@@ -68,4 +70,19 @@ public interface Rule extends Node {
 	 * @generated
 	 */
 	void setSeverity(Severity value);
+
+	/**
+	 * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
+	 * The list contents are of type {@link org.nasdanika.models.rules.Action}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Actions to be taken to address rule violations. Rule actions serve as documentation and as templates/prototypes for violation actions.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Actions</em>' containment reference list.
+	 * @see org.nasdanika.models.rules.RulesPackage#getRule_Actions()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Action> getActions();
 } // Rule
