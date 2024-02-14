@@ -86,8 +86,6 @@ public class ReflectiveInspectors {
 			""",
 			condition = "name == 'buildTheory'") // For demo purposes generating a test case only for the buildTheory() method	
 	public Violation untestedMethodInspector(Method method) {
-		
-		
         String deploymentOrModelId = "gpt-3.5-turbo";
 
     	String key = System.getenv("OPENAI_API_KEY");
