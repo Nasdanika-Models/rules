@@ -31,10 +31,6 @@ import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.common.Util;
 import org.nasdanika.models.gitlab.util.GitLabApiProvider;
 import org.nasdanika.models.gitlab.util.GitLabURIHandler;
-import org.nasdanika.models.java.CompilationUnit;
-import org.nasdanika.models.java.Member;
-import org.nasdanika.models.java.Method;
-import org.nasdanika.models.java.Type;
 import org.nasdanika.models.java.util.JavaParserResourceFactory;
 import org.nasdanika.models.maven.Project;
 import org.nasdanika.models.maven.util.MavenResourceFactory;
@@ -46,17 +42,6 @@ import org.nasdanika.models.rules.Violation;
 import org.nasdanika.ncore.Tree;
 import org.nasdanika.ncore.TreeItem;
 import org.nasdanika.ncore.util.DirectoryContentFileURIHandler;
-
-import com.azure.ai.openai.OpenAIClient;
-import com.azure.ai.openai.OpenAIClientBuilder;
-import com.azure.ai.openai.models.ChatChoice;
-import com.azure.ai.openai.models.ChatCompletions;
-import com.azure.ai.openai.models.ChatCompletionsOptions;
-import com.azure.ai.openai.models.ChatRequestMessage;
-import com.azure.ai.openai.models.ChatRequestSystemMessage;
-import com.azure.ai.openai.models.ChatRequestUserMessage;
-import com.azure.ai.openai.models.ChatResponseMessage;
-import com.azure.core.credential.KeyCredential;
 
 /**
  * Tests of analyzers
@@ -271,7 +256,7 @@ public class TestAnalyzers {
 					}
 				}
 				
-				String branchName = "theory-builder-inspector-test";
+				String branchName = "theory-builder-inspector-test-3";
 				CommitsApi commitApi = gitLabApiProvider.getGitLabApi().getCommitsApi();
 				commitApi.createCommit(
 						PROJECT,

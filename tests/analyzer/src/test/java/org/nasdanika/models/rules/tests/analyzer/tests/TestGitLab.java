@@ -111,7 +111,7 @@ public class TestGitLab {
 										.withEncoding(Encoding.TEXT)
 										.withFilePath(TESTS_PATH + "TheoryBuilderTests.java");
 								
-								String branchName = "theory-builder-test";
+								String branchName = "theory-builder-test-3";
 								commitApi.createCommit(
 										PROJECT,
 										branchName, 
