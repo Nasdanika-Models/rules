@@ -1,8 +1,10 @@
 package org.nasdanika.models.rules.tests.inspectors;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.nasdanika.models.java.Method;
 import org.nasdanika.models.java.Type;
 import org.nasdanika.models.rules.CreateTextResourceAction;
@@ -10,6 +12,7 @@ import org.nasdanika.models.rules.RulesFactory;
 import org.nasdanika.models.rules.Violation;
 import org.nasdanika.models.rules.reflection.Inspector;
 import org.nasdanika.models.rules.reflection.RuleSet;
+import org.nasdanika.ncore.util.YamlResource;
 
 import com.azure.ai.openai.OpenAIClient;
 import com.azure.ai.openai.OpenAIClientBuilder;
@@ -132,5 +135,19 @@ public class ReflectiveInspectors {
 		
 		return violation;
 	}
+	
+	@Inspector(value = """
+			name: Invalid YAML
+			documentation:
+			  exec.content.Markdown:
+			    source:
+			      exec.content.Text: |
+			        YAML with syntax errors, e.g. duplicate keys.
+			""",
+			condition = "!errors.isEmpty()") 	
+	public Collection<String> yamlInspector(YamlResource yamlResource) {
+		return yamlResource.getErrors().stream().map(Diagnostic::getMessage).toList();
+	}
+	
 
 }

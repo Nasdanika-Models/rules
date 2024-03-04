@@ -42,6 +42,8 @@ import org.nasdanika.models.rules.Violation;
 import org.nasdanika.ncore.Tree;
 import org.nasdanika.ncore.TreeItem;
 import org.nasdanika.ncore.util.DirectoryContentFileURIHandler;
+import org.nasdanika.ncore.util.NcoreYamlHandler;
+import org.nasdanika.ncore.util.YamlResourceFactory;
 
 /**
  * Tests of analyzers
@@ -49,7 +51,7 @@ import org.nasdanika.ncore.util.DirectoryContentFileURIHandler;
 public class TestAnalyzers {
 	
 	@Test
-	public void tesInspectorFactory() {
+	public void testInspectorFactory() {
 		Iterable<Inspector.Factory> inspectorFactories = ServiceLoader.load(Inspector.Factory.class);
 		for (Inspector.Factory rsf: inspectorFactories) {
 			System.out.println(rsf);
@@ -277,6 +279,40 @@ public class TestAnalyzers {
 				mergeRequestApi.createMergeRequest(PROJECT, params);				
 			}			
 		}				
-	}	
+	}
+	
+	@Test
+	public void testInspectYAML() throws IOException {
+		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());		
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("yml", new YamlResourceFactory(new NcoreYamlHandler()));		
+		URIHandler fileDirectoryURIHandler = new DirectoryContentFileURIHandler();
+		resourceSet.getURIConverter().getURIHandlers().add(0, fileDirectoryURIHandler);
+		
+		String currentDir = new File("src/test/resources/org/nasdanika/models/rules/tests/analyzer/tests/yaml").getCanonicalPath();
+		URI currentDirURI = URI.createFileURI(currentDir).appendSegment("");
+		
+		Resource dirResource = resourceSet.getResource(currentDirURI, true);
+		
+		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
+		Inspector<Object> inspector = Inspector.load(progressMonitor);
+		
+		// Visiting only YAML 
+		Predicate<Notifier> predicate = obj -> {
+			if (obj instanceof TreeItem) {
+				return obj instanceof Tree || ((TreeItem) obj).getName().endsWith(".yml");
+			}
+			return true;
+		};
+		NotifierInspector notifierInspector = NotifierInspector.adapt(inspector);
+		notifierInspector
+			.asContentsInspector(false, predicate)
+			.inspect(
+					dirResource, 
+					this::consumeViolation, 
+					Context.EMPTY_CONTEXT, 
+					progressMonitor);				
+	}
+	
 				
 }
