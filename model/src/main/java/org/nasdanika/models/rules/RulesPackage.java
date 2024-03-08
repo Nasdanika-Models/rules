@@ -527,205 +527,17 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getViolation()
 	 * @generated
 	 */
-	int VIOLATION = 2;
+	int VIOLATION = 4;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The meta object id for the '{@link org.nasdanika.models.rules.impl.FailureImpl <em>Failure</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @see org.nasdanika.models.rules.impl.FailureImpl
+	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getFailure()
 	 * @generated
-	 * @ordered
 	 */
-	int VIOLATION__ID = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__ID;
-
-	/**
-	 * The feature id for the '<em><b>Semantic Mappings</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__SEMANTIC_MAPPINGS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__SEMANTIC_MAPPINGS;
-
-	/**
-	 * The feature id for the '<em><b>Markers</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__MARKERS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__MARKERS;
-
-	/**
-	 * The feature id for the '<em><b>Uris</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__URIS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__URIS;
-
-	/**
-	 * The feature id for the '<em><b>Description</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__DESCRIPTION = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__DESCRIPTION;
-
-	/**
-	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__UUID = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__UUID;
-
-	/**
-	 * The feature id for the '<em><b>Label Prototype</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__LABEL_PROTOTYPE = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__LABEL_PROTOTYPE;
-
-	/**
-	 * The feature id for the '<em><b>Representations</b></em>' map.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__REPRESENTATIONS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__REPRESENTATIONS;
-
-	/**
-	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__ANNOTATIONS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__ANNOTATIONS;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__NAME = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Documentation</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__DOCUMENTATION = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__DOCUMENTATION;
-
-	/**
-	 * The feature id for the '<em><b>Context Help</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__CONTEXT_HELP = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__CONTEXT_HELP;
-
-	/**
-	 * The feature id for the '<em><b>Start</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__START = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__START;
-
-	/**
-	 * The feature id for the '<em><b>End</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__END = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__END;
-
-	/**
-	 * The feature id for the '<em><b>Duration</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__DURATION = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__DURATION;
-
-	/**
-	 * The feature id for the '<em><b>Icon</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__ICON = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__ICON;
-
-	/**
-	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__ROLES = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__ROLES;
-
-	/**
-	 * The feature id for the '<em><b>Rule</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__RULE = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Waivers</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__WAIVERS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION__ACTIONS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of structural features of the '<em>Violation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION_FEATURE_COUNT = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT_FEATURE_COUNT + 3;
-
-	/**
-	 * The number of operations of the '<em>Violation</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int VIOLATION_OPERATION_COUNT = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT_OPERATION_COUNT + 0;
+	int FAILURE = 5;
 
 	/**
 	 * The meta object id for the '{@link org.nasdanika.models.rules.impl.WaiverImpl <em>Waiver</em>}' class.
@@ -735,7 +547,630 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getWaiver()
 	 * @generated
 	 */
-	int WAIVER = 3;
+	int WAIVER = 6;
+
+	/**
+	 * The meta object id for the '{@link org.nasdanika.models.rules.impl.InspectableImpl <em>Inspectable</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.nasdanika.models.rules.impl.InspectableImpl
+	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getInspectable()
+	 * @generated
+	 */
+	int INSPECTABLE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Inspection Results</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTABLE__INSPECTION_RESULTS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Waivers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTABLE__WAIVERS = 1;
+
+	/**
+	 * The number of structural features of the '<em>Inspectable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTABLE_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Inspectable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTABLE_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.nasdanika.models.rules.impl.InspectionResultImpl <em>Inspection Result</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.nasdanika.models.rules.impl.InspectionResultImpl
+	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getInspectionResult()
+	 * @generated
+	 */
+	int INSPECTION_RESULT = 3;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__ID = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Mappings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__SEMANTIC_MAPPINGS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__SEMANTIC_MAPPINGS;
+
+	/**
+	 * The feature id for the '<em><b>Markers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__MARKERS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__MARKERS;
+
+	/**
+	 * The feature id for the '<em><b>Uris</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__URIS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__URIS;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__DESCRIPTION = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__UUID = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Label Prototype</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__LABEL_PROTOTYPE = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__LABEL_PROTOTYPE;
+
+	/**
+	 * The feature id for the '<em><b>Representations</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__REPRESENTATIONS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__REPRESENTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__ANNOTATIONS = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__NAME = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Documentation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__DOCUMENTATION = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__DOCUMENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Context Help</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__CONTEXT_HELP = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__CONTEXT_HELP;
+
+	/**
+	 * The feature id for the '<em><b>Start</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__START = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__START;
+
+	/**
+	 * The feature id for the '<em><b>End</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__END = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__END;
+
+	/**
+	 * The feature id for the '<em><b>Duration</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__DURATION = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__DURATION;
+
+	/**
+	 * The feature id for the '<em><b>Icon</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__ICON = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__ICON;
+
+	/**
+	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__ROLES = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT__ROLES;
+
+	/**
+	 * The feature id for the '<em><b>Rule</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT__RULE = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Inspection Result</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT_FEATURE_COUNT = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Inspection Result</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INSPECTION_RESULT_OPERATION_COUNT = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT_OPERATION_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__ID = INSPECTION_RESULT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Mappings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__SEMANTIC_MAPPINGS = INSPECTION_RESULT__SEMANTIC_MAPPINGS;
+
+	/**
+	 * The feature id for the '<em><b>Markers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__MARKERS = INSPECTION_RESULT__MARKERS;
+
+	/**
+	 * The feature id for the '<em><b>Uris</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__URIS = INSPECTION_RESULT__URIS;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__DESCRIPTION = INSPECTION_RESULT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__UUID = INSPECTION_RESULT__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Label Prototype</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__LABEL_PROTOTYPE = INSPECTION_RESULT__LABEL_PROTOTYPE;
+
+	/**
+	 * The feature id for the '<em><b>Representations</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__REPRESENTATIONS = INSPECTION_RESULT__REPRESENTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__ANNOTATIONS = INSPECTION_RESULT__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__NAME = INSPECTION_RESULT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Documentation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__DOCUMENTATION = INSPECTION_RESULT__DOCUMENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Context Help</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__CONTEXT_HELP = INSPECTION_RESULT__CONTEXT_HELP;
+
+	/**
+	 * The feature id for the '<em><b>Start</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__START = INSPECTION_RESULT__START;
+
+	/**
+	 * The feature id for the '<em><b>End</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__END = INSPECTION_RESULT__END;
+
+	/**
+	 * The feature id for the '<em><b>Duration</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__DURATION = INSPECTION_RESULT__DURATION;
+
+	/**
+	 * The feature id for the '<em><b>Icon</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__ICON = INSPECTION_RESULT__ICON;
+
+	/**
+	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__ROLES = INSPECTION_RESULT__ROLES;
+
+	/**
+	 * The feature id for the '<em><b>Rule</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__RULE = INSPECTION_RESULT__RULE;
+
+	/**
+	 * The feature id for the '<em><b>Waivers</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__WAIVERS = INSPECTION_RESULT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION__ACTIONS = INSPECTION_RESULT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Violation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION_FEATURE_COUNT = INSPECTION_RESULT_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of operations of the '<em>Violation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIOLATION_OPERATION_COUNT = INSPECTION_RESULT_OPERATION_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__ID = INSPECTION_RESULT__ID;
+
+	/**
+	 * The feature id for the '<em><b>Semantic Mappings</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__SEMANTIC_MAPPINGS = INSPECTION_RESULT__SEMANTIC_MAPPINGS;
+
+	/**
+	 * The feature id for the '<em><b>Markers</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__MARKERS = INSPECTION_RESULT__MARKERS;
+
+	/**
+	 * The feature id for the '<em><b>Uris</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__URIS = INSPECTION_RESULT__URIS;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__DESCRIPTION = INSPECTION_RESULT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__UUID = INSPECTION_RESULT__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Label Prototype</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__LABEL_PROTOTYPE = INSPECTION_RESULT__LABEL_PROTOTYPE;
+
+	/**
+	 * The feature id for the '<em><b>Representations</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__REPRESENTATIONS = INSPECTION_RESULT__REPRESENTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__ANNOTATIONS = INSPECTION_RESULT__ANNOTATIONS;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__NAME = INSPECTION_RESULT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Documentation</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__DOCUMENTATION = INSPECTION_RESULT__DOCUMENTATION;
+
+	/**
+	 * The feature id for the '<em><b>Context Help</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__CONTEXT_HELP = INSPECTION_RESULT__CONTEXT_HELP;
+
+	/**
+	 * The feature id for the '<em><b>Start</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__START = INSPECTION_RESULT__START;
+
+	/**
+	 * The feature id for the '<em><b>End</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__END = INSPECTION_RESULT__END;
+
+	/**
+	 * The feature id for the '<em><b>Duration</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__DURATION = INSPECTION_RESULT__DURATION;
+
+	/**
+	 * The feature id for the '<em><b>Icon</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__ICON = INSPECTION_RESULT__ICON;
+
+	/**
+	 * The feature id for the '<em><b>Roles</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__ROLES = INSPECTION_RESULT__ROLES;
+
+	/**
+	 * The feature id for the '<em><b>Rule</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__RULE = INSPECTION_RESULT__RULE;
+
+	/**
+	 * The feature id for the '<em><b>Cause</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE__CAUSE = INSPECTION_RESULT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Failure</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_FEATURE_COUNT = INSPECTION_RESULT_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Failure</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FAILURE_OPERATION_COUNT = INSPECTION_RESULT_OPERATION_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -918,52 +1353,6 @@ public interface RulesPackage extends EPackage {
 	int WAIVER_OPERATION_COUNT = ArchitecturePackage.ARCHITECTURE_DESCRIPTION_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.nasdanika.models.rules.impl.InspectableImpl <em>Inspectable</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.nasdanika.models.rules.impl.InspectableImpl
-	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getInspectable()
-	 * @generated
-	 */
-	int INSPECTABLE = 4;
-
-	/**
-	 * The feature id for the '<em><b>Violations</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INSPECTABLE__VIOLATIONS = 0;
-
-	/**
-	 * The feature id for the '<em><b>Waivers</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INSPECTABLE__WAIVERS = 1;
-
-	/**
-	 * The number of structural features of the '<em>Inspectable</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INSPECTABLE_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>Inspectable</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INSPECTABLE_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link org.nasdanika.models.rules.impl.SeverityImpl <em>Severity</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -971,7 +1360,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getSeverity()
 	 * @generated
 	 */
-	int SEVERITY = 5;
+	int SEVERITY = 7;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1162,7 +1551,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 6;
+	int ACTION = 8;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1361,7 +1750,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getResourceAction()
 	 * @generated
 	 */
-	int RESOURCE_ACTION = 7;
+	int RESOURCE_ACTION = 9;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1569,7 +1958,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getTextResourceAction()
 	 * @generated
 	 */
-	int TEXT_RESOURCE_ACTION = 8;
+	int TEXT_RESOURCE_ACTION = 10;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1786,7 +2175,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getBinaryResourceAction()
 	 * @generated
 	 */
-	int BINARY_RESOURCE_ACTION = 9;
+	int BINARY_RESOURCE_ACTION = 11;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2003,7 +2392,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getCreateResourceAction()
 	 * @generated
 	 */
-	int CREATE_RESOURCE_ACTION = 10;
+	int CREATE_RESOURCE_ACTION = 12;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2211,7 +2600,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getCreateTextResourceAction()
 	 * @generated
 	 */
-	int CREATE_TEXT_RESOURCE_ACTION = 11;
+	int CREATE_TEXT_RESOURCE_ACTION = 13;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2428,7 +2817,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getCreateBinaryResourceAction()
 	 * @generated
 	 */
-	int CREATE_BINARY_RESOURCE_ACTION = 12;
+	int CREATE_BINARY_RESOURCE_ACTION = 14;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2645,7 +3034,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getDeleteResourceAction()
 	 * @generated
 	 */
-	int DELETE_RESOURCE_ACTION = 13;
+	int DELETE_RESOURCE_ACTION = 15;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2853,7 +3242,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getMoveResourceAction()
 	 * @generated
 	 */
-	int MOVE_RESOURCE_ACTION = 14;
+	int MOVE_RESOURCE_ACTION = 16;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -3070,7 +3459,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getUpdateResourceAction()
 	 * @generated
 	 */
-	int UPDATE_RESOURCE_ACTION = 15;
+	int UPDATE_RESOURCE_ACTION = 17;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -3278,7 +3667,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getUpdateTextResourceAction()
 	 * @generated
 	 */
-	int UPDATE_TEXT_RESOURCE_ACTION = 16;
+	int UPDATE_TEXT_RESOURCE_ACTION = 18;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -3495,7 +3884,7 @@ public interface RulesPackage extends EPackage {
 	 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getUpdateBinaryResourceAction()
 	 * @generated
 	 */
-	int UPDATE_BINARY_RESOURCE_ACTION = 17;
+	int UPDATE_BINARY_RESOURCE_ACTION = 19;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -3813,17 +4202,6 @@ public interface RulesPackage extends EPackage {
 	EClass getViolation();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.nasdanika.models.rules.Violation#getRule <em>Rule</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Rule</em>'.
-	 * @see org.nasdanika.models.rules.Violation#getRule()
-	 * @see #getViolation()
-	 * @generated
-	 */
-	EReference getViolation_Rule();
-
-	/**
 	 * Returns the meta object for the reference list '{@link org.nasdanika.models.rules.Violation#getWaivers <em>Waivers</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3844,6 +4222,27 @@ public interface RulesPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getViolation_Actions();
+
+	/**
+	 * Returns the meta object for class '{@link org.nasdanika.models.rules.Failure <em>Failure</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Failure</em>'.
+	 * @see org.nasdanika.models.rules.Failure
+	 * @generated
+	 */
+	EClass getFailure();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.nasdanika.models.rules.Failure#getCause <em>Cause</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Cause</em>'.
+	 * @see org.nasdanika.models.rules.Failure#getCause()
+	 * @see #getFailure()
+	 * @generated
+	 */
+	EReference getFailure_Cause();
 
 	/**
 	 * Returns the meta object for class '{@link org.nasdanika.models.rules.Waiver <em>Waiver</em>}'.
@@ -3877,15 +4276,15 @@ public interface RulesPackage extends EPackage {
 	EClass getInspectable();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.nasdanika.models.rules.Inspectable#getViolations <em>Violations</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.nasdanika.models.rules.Inspectable#getInspectionResults <em>Inspection Results</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Violations</em>'.
-	 * @see org.nasdanika.models.rules.Inspectable#getViolations()
+	 * @return the meta object for the containment reference list '<em>Inspection Results</em>'.
+	 * @see org.nasdanika.models.rules.Inspectable#getInspectionResults()
 	 * @see #getInspectable()
 	 * @generated
 	 */
-	EReference getInspectable_Violations();
+	EReference getInspectable_InspectionResults();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.nasdanika.models.rules.Inspectable#getWaivers <em>Waivers</em>}'.
@@ -3897,6 +4296,27 @@ public interface RulesPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getInspectable_Waivers();
+
+	/**
+	 * Returns the meta object for class '{@link org.nasdanika.models.rules.InspectionResult <em>Inspection Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Inspection Result</em>'.
+	 * @see org.nasdanika.models.rules.InspectionResult
+	 * @generated
+	 */
+	EClass getInspectionResult();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.nasdanika.models.rules.InspectionResult#getRule <em>Rule</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Rule</em>'.
+	 * @see org.nasdanika.models.rules.InspectionResult#getRule()
+	 * @see #getInspectionResult()
+	 * @generated
+	 */
+	EReference getInspectionResult_Rule();
 
 	/**
 	 * Returns the meta object for class '{@link org.nasdanika.models.rules.Severity <em>Severity</em>}'.
@@ -4183,13 +4603,6 @@ public interface RulesPackage extends EPackage {
 		 */
 		EClass VIOLATION = eINSTANCE.getViolation();
 		/**
-		 * The meta object literal for the '<em><b>Rule</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference VIOLATION__RULE = eINSTANCE.getViolation_Rule();
-		/**
 		 * The meta object literal for the '<em><b>Waivers</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4203,6 +4616,22 @@ public interface RulesPackage extends EPackage {
 		 * @generated
 		 */
 		EReference VIOLATION__ACTIONS = eINSTANCE.getViolation_Actions();
+		/**
+		 * The meta object literal for the '{@link org.nasdanika.models.rules.impl.FailureImpl <em>Failure</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.nasdanika.models.rules.impl.FailureImpl
+		 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getFailure()
+		 * @generated
+		 */
+		EClass FAILURE = eINSTANCE.getFailure();
+		/**
+		 * The meta object literal for the '<em><b>Cause</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FAILURE__CAUSE = eINSTANCE.getFailure_Cause();
 		/**
 		 * The meta object literal for the '{@link org.nasdanika.models.rules.impl.WaiverImpl <em>Waiver</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -4229,12 +4658,12 @@ public interface RulesPackage extends EPackage {
 		 */
 		EClass INSPECTABLE = eINSTANCE.getInspectable();
 		/**
-		 * The meta object literal for the '<em><b>Violations</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Inspection Results</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference INSPECTABLE__VIOLATIONS = eINSTANCE.getInspectable_Violations();
+		EReference INSPECTABLE__INSPECTION_RESULTS = eINSTANCE.getInspectable_InspectionResults();
 		/**
 		 * The meta object literal for the '<em><b>Waivers</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
@@ -4242,6 +4671,22 @@ public interface RulesPackage extends EPackage {
 		 * @generated
 		 */
 		EReference INSPECTABLE__WAIVERS = eINSTANCE.getInspectable_Waivers();
+		/**
+		 * The meta object literal for the '{@link org.nasdanika.models.rules.impl.InspectionResultImpl <em>Inspection Result</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.nasdanika.models.rules.impl.InspectionResultImpl
+		 * @see org.nasdanika.models.rules.impl.RulesPackageImpl#getInspectionResult()
+		 * @generated
+		 */
+		EClass INSPECTION_RESULT = eINSTANCE.getInspectionResult();
+		/**
+		 * The meta object literal for the '<em><b>Rule</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INSPECTION_RESULT__RULE = eINSTANCE.getInspectionResult_Rule();
 		/**
 		 * The meta object literal for the '{@link org.nasdanika.models.rules.impl.SeverityImpl <em>Severity</em>}' class.
 		 * <!-- begin-user-doc -->

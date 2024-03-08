@@ -18,7 +18,9 @@ import org.nasdanika.models.rules.CreateBinaryResourceAction;
 import org.nasdanika.models.rules.CreateResourceAction;
 import org.nasdanika.models.rules.CreateTextResourceAction;
 import org.nasdanika.models.rules.DeleteResourceAction;
+import org.nasdanika.models.rules.Failure;
 import org.nasdanika.models.rules.Inspectable;
+import org.nasdanika.models.rules.InspectionResult;
 import org.nasdanika.models.rules.MoveResourceAction;
 import org.nasdanika.models.rules.ResourceAction;
 import org.nasdanika.models.rules.Rule;
@@ -65,6 +67,13 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass failureEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass waiverEClass = null;
 	/**
 	 * <!-- begin-user-doc -->
@@ -72,6 +81,13 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 	 * @generated
 	 */
 	private EClass inspectableEClass = null;
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass inspectionResultEClass = null;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -336,7 +352,7 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getViolation_Rule() {
+	public EReference getViolation_Waivers() {
 		return (EReference)violationEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -346,7 +362,7 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getViolation_Waivers() {
+	public EReference getViolation_Actions() {
 		return (EReference)violationEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -356,8 +372,18 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getViolation_Actions() {
-		return (EReference)violationEClass.getEStructuralFeatures().get(2);
+	public EClass getFailure() {
+		return failureEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getFailure_Cause() {
+		return (EReference)failureEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -396,7 +422,7 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getInspectable_Violations() {
+	public EReference getInspectable_InspectionResults() {
 		return (EReference)inspectableEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -408,6 +434,26 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 	@Override
 	public EReference getInspectable_Waivers() {
 		return (EReference)inspectableEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getInspectionResult() {
+		return inspectionResultEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getInspectionResult_Rule() {
+		return (EReference)inspectionResultEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -630,17 +676,22 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		createEReference(ruleSetEClass, RULE_SET__RULES);
 		createEReference(ruleSetEClass, RULE_SET__SEVERITIES);
 
+		inspectableEClass = createEClass(INSPECTABLE);
+		createEReference(inspectableEClass, INSPECTABLE__INSPECTION_RESULTS);
+		createEReference(inspectableEClass, INSPECTABLE__WAIVERS);
+
+		inspectionResultEClass = createEClass(INSPECTION_RESULT);
+		createEReference(inspectionResultEClass, INSPECTION_RESULT__RULE);
+
 		violationEClass = createEClass(VIOLATION);
-		createEReference(violationEClass, VIOLATION__RULE);
 		createEReference(violationEClass, VIOLATION__WAIVERS);
 		createEReference(violationEClass, VIOLATION__ACTIONS);
 
+		failureEClass = createEClass(FAILURE);
+		createEReference(failureEClass, FAILURE__CAUSE);
+
 		waiverEClass = createEClass(WAIVER);
 		createEReference(waiverEClass, WAIVER__VIOLATIONS);
-
-		inspectableEClass = createEClass(INSPECTABLE);
-		createEReference(inspectableEClass, INSPECTABLE__VIOLATIONS);
-		createEReference(inspectableEClass, INSPECTABLE__WAIVERS);
 
 		severityEClass = createEClass(SEVERITY);
 		createEReference(severityEClass, SEVERITY__RULES);
@@ -699,6 +750,7 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 
 		// Obtain other dependent packages
 		ArchitecturePackage theArchitecturePackage = (ArchitecturePackage)EPackage.Registry.INSTANCE.getEPackage(ArchitecturePackage.eNS_URI);
+		NcorePackage theNcorePackage = (NcorePackage)EPackage.Registry.INSTANCE.getEPackage(NcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -707,7 +759,9 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		// Add supertypes to classes
 		ruleEClass.getESuperTypes().add(theArchitecturePackage.getNode());
 		ruleSetEClass.getESuperTypes().add(theArchitecturePackage.getDomain());
-		violationEClass.getESuperTypes().add(theArchitecturePackage.getArchitectureDescriptionElement());
+		inspectionResultEClass.getESuperTypes().add(theArchitecturePackage.getArchitectureDescriptionElement());
+		violationEClass.getESuperTypes().add(this.getInspectionResult());
+		failureEClass.getESuperTypes().add(this.getInspectionResult());
 		waiverEClass.getESuperTypes().add(theArchitecturePackage.getArchitectureDescriptionElement());
 		severityEClass.getESuperTypes().add(theArchitecturePackage.getArchitectureDescriptionElement());
 		actionEClass.getESuperTypes().add(theArchitecturePackage.getNode());
@@ -739,17 +793,22 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		initEReference(getRuleSet_Rules(), this.getRule(), null, "rules", null, 0, -1, RuleSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRuleSet_Severities(), this.getSeverity(), null, "severities", null, 0, -1, RuleSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(inspectableEClass, Inspectable.class, "Inspectable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getInspectable_InspectionResults(), this.getInspectionResult(), null, "inspectionResults", null, 0, -1, Inspectable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInspectable_Waivers(), this.getWaiver(), null, "waivers", null, 0, -1, Inspectable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(inspectionResultEClass, InspectionResult.class, "InspectionResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getInspectionResult_Rule(), this.getRule(), null, "rule", null, 1, 1, InspectionResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(violationEClass, Violation.class, "Violation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getViolation_Rule(), this.getRule(), null, "rule", null, 1, 1, Violation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getViolation_Waivers(), this.getWaiver(), this.getWaiver_Violations(), "waivers", null, 0, -1, Violation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getViolation_Actions(), this.getAction(), null, "actions", null, 0, -1, Violation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+		initEClass(failureEClass, Failure.class, "Failure", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getFailure_Cause(), theNcorePackage.getThrowable(), null, "cause", null, 0, 1, Failure.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(waiverEClass, Waiver.class, "Waiver", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getWaiver_Violations(), this.getViolation(), this.getViolation_Waivers(), "violations", null, 0, -1, Waiver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(inspectableEClass, Inspectable.class, "Inspectable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getInspectable_Violations(), this.getViolation(), null, "violations", null, 0, -1, Inspectable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getInspectable_Waivers(), this.getWaiver(), null, "waivers", null, 0, -1, Inspectable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(severityEClass, Severity.class, "Severity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSeverity_Rules(), this.getRule(), this.getRule_Severity(), "rules", null, 0, -1, Severity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

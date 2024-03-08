@@ -3,7 +3,6 @@
 package org.nasdanika.models.rules;
 
 import org.eclipse.emf.common.util.EList;
-import org.nasdanika.models.architecture.ArchitectureDescriptionElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,7 +13,6 @@ import org.nasdanika.models.architecture.ArchitectureDescriptionElement;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.nasdanika.models.rules.Violation#getRule <em>Rule</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.Violation#getWaivers <em>Waivers</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.Violation#getActions <em>Actions</em>}</li>
  * </ul>
@@ -23,29 +21,7 @@ import org.nasdanika.models.architecture.ArchitectureDescriptionElement;
  * @model
  * @generated
  */
-public interface Violation extends ArchitectureDescriptionElement {
-	/**
-	 * Returns the value of the '<em><b>Rule</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Rule</em>' reference.
-	 * @see #setRule(Rule)
-	 * @see org.nasdanika.models.rules.RulesPackage#getViolation_Rule()
-	 * @model required="true"
-	 * @generated
-	 */
-	Rule getRule();
-
-	/**
-	 * Sets the value of the '{@link org.nasdanika.models.rules.Violation#getRule <em>Rule</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Rule</em>' reference.
-	 * @see #getRule()
-	 * @generated
-	 */
-	void setRule(Rule value);
-
+public interface Violation extends InspectionResult {
 	/**
 	 * Returns the value of the '<em><b>Waivers</b></em>' reference list.
 	 * The list contents are of type {@link org.nasdanika.models.rules.Waiver}.

@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.nasdanika.models.rules.Inspectable#getViolations <em>Violations</em>}</li>
+ *   <li>{@link org.nasdanika.models.rules.Inspectable#getInspectionResults <em>Inspection Results</em>}</li>
  *   <li>{@link org.nasdanika.models.rules.Inspectable#getWaivers <em>Waivers</em>}</li>
  * </ul>
  *
@@ -25,16 +25,16 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Inspectable extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Violations</b></em>' containment reference list.
-	 * The list contents are of type {@link org.nasdanika.models.rules.Violation}.
+	 * Returns the value of the '<em><b>Inspection Results</b></em>' containment reference list.
+	 * The list contents are of type {@link org.nasdanika.models.rules.InspectionResult}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Violations</em>' containment reference list.
-	 * @see org.nasdanika.models.rules.RulesPackage#getInspectable_Violations()
+	 * @return the value of the '<em>Inspection Results</em>' containment reference list.
+	 * @see org.nasdanika.models.rules.RulesPackage#getInspectable_InspectionResults()
 	 * @model containment="true"
 	 * @generated
 	 */
-	EList<Violation> getViolations();
+	EList<InspectionResult> getInspectionResults();
 
 	/**
 	 * Returns the value of the '<em><b>Waivers</b></em>' containment reference list.

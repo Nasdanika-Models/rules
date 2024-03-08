@@ -11,16 +11,18 @@ import java.util.stream.Stream;
 
 import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.emf.persistence.EObjectLoader;
+import org.nasdanika.models.rules.InspectionResult;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.Violation;
 
 /**
  * Annotation for an inspector method.
  * The method shall take target as its first argument and may take {@link BiConsumer} and {@link ProgressMonitor}.
- * It may return a {@link Violation} or a String, an array of violations/strings, a {@link Stream} of violations/strings, {@link Iterator} or an {@link Iterable} of violations/strings.
- * The returned strings are wrapped into violations and used as violation names.
- * The returned violations are associated with the target argument.
- * If <code>value</code> or <code>rule</code> are defined then the violation is injected the resolved/created rule. 
+ * It may return an {@link InspectionResult} or a String, an array of inspection results/strings, 
+ * a {@link Stream} of inspection results/strings, {@link Iterator} or an {@link Iterable} of inspection results/strings.
+ * The returned strings are wrapped into {@link Violation}s and used as violation names.
+ * The returned inspection results are associated with the target argument.
+ * If <code>value</code> or <code>rule</code> are defined then inspection results are injected the resolved/created rule. 
  * Otherwise, it is injected with a rule if it doesn't already have a rule associated. The injected rule has the method FQN as it's name.
  * If reflection targets have {@link RuleSet} annotation, then the rule is added to the rule set.
  */

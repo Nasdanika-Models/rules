@@ -103,16 +103,24 @@ public class RulesAdapterFactory extends AdapterFactoryImpl {
 				return createRuleSetAdapter();
 			}
 			@Override
+			public Adapter caseInspectable(Inspectable object) {
+				return createInspectableAdapter();
+			}
+			@Override
+			public Adapter caseInspectionResult(InspectionResult object) {
+				return createInspectionResultAdapter();
+			}
+			@Override
 			public Adapter caseViolation(Violation object) {
 				return createViolationAdapter();
 			}
 			@Override
-			public Adapter caseWaiver(Waiver object) {
-				return createWaiverAdapter();
+			public Adapter caseFailure(Failure object) {
+				return createFailureAdapter();
 			}
 			@Override
-			public Adapter caseInspectable(Inspectable object) {
-				return createInspectableAdapter();
+			public Adapter caseWaiver(Waiver object) {
+				return createWaiverAdapter();
 			}
 			@Override
 			public Adapter caseSeverity(Severity object) {
@@ -337,6 +345,20 @@ public class RulesAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.Failure <em>Failure</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.Failure
+	 * @generated
+	 */
+	public Adapter createFailureAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.Waiver <em>Waiver</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -361,6 +383,20 @@ public class RulesAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createInspectableAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.nasdanika.models.rules.InspectionResult <em>Inspection Result</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.nasdanika.models.rules.InspectionResult
+	 * @generated
+	 */
+	public Adapter createInspectionResultAdapter() {
 		return null;
 	}
 

@@ -49,6 +49,15 @@ public interface RulesFactory extends EFactory {
 	Violation createViolation();
 
 	/**
+	 * Returns a new object of class '<em>Failure</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Failure</em>'.
+	 * @generated
+	 */
+	Failure createFailure();
+
+	/**
 	 * Returns a new object of class '<em>Waiver</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -65,6 +74,15 @@ public interface RulesFactory extends EFactory {
 	 * @generated
 	 */
 	Inspectable createInspectable();
+
+	/**
+	 * Returns a new object of class '<em>Inspection Result</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Inspection Result</em>'.
+	 * @generated
+	 */
+	InspectionResult createInspectionResult();
 
 	/**
 	 * Returns a new object of class '<em>Severity</em>'.

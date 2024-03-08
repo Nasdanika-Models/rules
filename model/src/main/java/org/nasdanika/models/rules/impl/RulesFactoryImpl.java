@@ -58,9 +58,11 @@ public class RulesFactoryImpl extends EFactoryImpl implements RulesFactory {
 		switch (eClass.getClassifierID()) {
 			case RulesPackage.RULE: return createRule();
 			case RulesPackage.RULE_SET: return createRuleSet();
-			case RulesPackage.VIOLATION: return createViolation();
-			case RulesPackage.WAIVER: return createWaiver();
 			case RulesPackage.INSPECTABLE: return createInspectable();
+			case RulesPackage.INSPECTION_RESULT: return createInspectionResult();
+			case RulesPackage.VIOLATION: return createViolation();
+			case RulesPackage.FAILURE: return createFailure();
+			case RulesPackage.WAIVER: return createWaiver();
 			case RulesPackage.SEVERITY: return createSeverity();
 			case RulesPackage.ACTION: return createAction();
 			case RulesPackage.RESOURCE_ACTION: return createResourceAction();
@@ -118,6 +120,17 @@ public class RulesFactoryImpl extends EFactoryImpl implements RulesFactory {
 	 * @generated
 	 */
 	@Override
+	public Failure createFailure() {
+		FailureImpl failure = new FailureImpl();
+		return failure;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Waiver createWaiver() {
 		WaiverImpl waiver = new WaiverImpl();
 		return waiver;
@@ -132,6 +145,17 @@ public class RulesFactoryImpl extends EFactoryImpl implements RulesFactory {
 	public Inspectable createInspectable() {
 		InspectableImpl inspectable = new InspectableImpl();
 		return inspectable;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public InspectionResult createInspectionResult() {
+		InspectionResultImpl inspectionResult = new InspectionResultImpl();
+		return inspectionResult;
 	}
 
 	/**

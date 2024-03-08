@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.nasdanika.models.java.Method;
 import org.nasdanika.models.java.Type;
 import org.nasdanika.models.rules.CreateTextResourceAction;
+import org.nasdanika.models.rules.Failure;
 import org.nasdanika.models.rules.RulesFactory;
 import org.nasdanika.models.rules.Violation;
 import org.nasdanika.models.rules.reflection.Inspector;
@@ -149,5 +150,43 @@ public class ReflectiveInspectors {
 		return yamlResource.getErrors().stream().map(Diagnostic::getMessage).toList();
 	}
 	
+	@Inspector(value = """
+			name: Faulty inspector
+			documentation:
+			  exec.content.Markdown:
+			    source:
+			      exec.content.Text: |
+			        Throws an exception to test wrapping into a failure.
+			""") 	
+	public void faultyInspector(YamlResource yamlResource) {
+		throw new IllegalArgumentException("Something is wrong about " + yamlResource.getURI());
+	}
+	
+	@Inspector(value = """
+			name: Explicitly faulty inspector 
+			documentation:
+			  exec.content.Markdown:
+			    source:
+			      exec.content.Text: |
+			        Explicitly returns failure because, say, some conditions for inspection are not met - some API is down, configuration cannot be read, ...
+			""") 	
+	public Failure explicitlyFaultyInspector(YamlResource yamlResource) {
+		Failure ret = RulesFactory.eINSTANCE.createFailure();
+		ret.setName("Unable to inspect");
+		ret.setDescription("Unable to retrieve reference data from XYZ API");
+		return ret;
+	}
+	
+	@Inspector(value = """
+			name: Unexpected result inspector 
+			documentation:
+			  exec.content.Markdown:
+			    source:
+			      exec.content.Text: |
+			        Returns a result of unexpected type (Long). Tests wrapping of unexpected results into failures.
+			""") 	
+	public long unexpectedResultInspector(YamlResource yamlResource) {
+		return System.currentTimeMillis();
+	}
 
 }

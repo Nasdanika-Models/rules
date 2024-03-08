@@ -10,7 +10,7 @@ import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
 
 /**
- * Inspects provided object and passes findings (violation to a violation sink
+ * Inspects provided object and passes inspection results to a consumer
  */
 public interface Inspector<T> extends Composeable<Inspector<T>> {
 	
@@ -32,7 +32,7 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 
 	}	
 	
-	void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor);
+	void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor);
 	
 	/**
 	 * @param type
@@ -49,13 +49,13 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					if (Inspector.this.isForType(target.getClass())) {
-						Inspector.this.inspect(target, violationConsumer, context, progressMonitor);
+						Inspector.this.inspect(target, inspectionResultConsumer, context, progressMonitor);
 					}
 					if (other.isForType(target.getClass())) {
-						other.inspect(target, violationConsumer, context, progressMonitor);
+						other.inspect(target, inspectionResultConsumer, context, progressMonitor);
 					}
 				}
 				
@@ -74,11 +74,11 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					for (Inspector<T> inspector: inspectors) {
 						if (inspector.isForType(target.getClass())) {
-							inspector.inspect(target, violationConsumer, context, progressMonitor);
+							inspector.inspect(target, inspectionResultConsumer, context, progressMonitor);
 						}
 					}
 				}				
@@ -101,13 +101,13 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					Stream<Inspector<T>> iStream = inspectors.stream();
 					if (parallel) {
 						iStream = iStream.parallel();
 					}
-					iStream.forEach(inspector -> inspector.inspect(target, violationConsumer, context, progressMonitor));
+					iStream.forEach(inspector -> inspector.inspect(target, inspectionResultConsumer, context, progressMonitor));
 				}				
 			}
 
@@ -126,7 +126,7 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				// NOP				
 			}
 

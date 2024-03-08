@@ -35,10 +35,10 @@ import org.nasdanika.models.java.util.JavaParserResourceFactory;
 import org.nasdanika.models.maven.Project;
 import org.nasdanika.models.maven.util.MavenResourceFactory;
 import org.nasdanika.models.rules.CreateTextResourceAction;
+import org.nasdanika.models.rules.InspectionResult;
 import org.nasdanika.models.rules.Inspector;
 import org.nasdanika.models.rules.NotifierInspector;
 import org.nasdanika.models.rules.ResourceAction;
-import org.nasdanika.models.rules.Violation;
 import org.nasdanika.ncore.Tree;
 import org.nasdanika.ncore.TreeItem;
 import org.nasdanika.ncore.util.DirectoryContentFileURIHandler;
@@ -118,7 +118,7 @@ public class TestAnalyzers {
 					@Override
 					public void inspect(
 							Notifier target, 
-							BiConsumer<? super Notifier, Violation> violationConsumer,
+							BiConsumer<? super Notifier, InspectionResult> inspectionResultConsumer,
 							Context context, 
 							ProgressMonitor progressMonitor) {
 						
@@ -191,13 +191,13 @@ public class TestAnalyzers {
 			.asContentsInspector(false, predicate)
 			.inspect(
 					dirResource, 
-					this::consumeViolation, 
+					this::consumeInspectionResult, 
 					Context.EMPTY_CONTEXT, 
 					progressMonitor);				
 	}
 	
-	protected void consumeViolation(Notifier target, Violation violation) {
-		System.out.println(target + " -> " + violation + " " + violation.getRule() + " " + violation.getRule().eContainer());
+	protected void consumeInspectionResult(Notifier target, InspectionResult inspectionResult) {
+		System.out.println("[" + inspectionResult.eClass().getName() +"] " + inspectionResult.getName() + " " + target + " -> " + inspectionResult + " " + inspectionResult.getRule() + " " + inspectionResult.getRule().eContainer());
 	}
 	
 	private static final String MAIN_BRANCH = "main";
@@ -309,7 +309,7 @@ public class TestAnalyzers {
 			.asContentsInspector(false, predicate)
 			.inspect(
 					dirResource, 
-					this::consumeViolation, 
+					this::consumeInspectionResult, 
 					Context.EMPTY_CONTEXT, 
 					progressMonitor);				
 	}

@@ -22,8 +22,16 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="severities" upperBound="-1"
         eType="#//Severity" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Violation" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Inspectable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inspectionResults" upperBound="-1"
+        eType="#//InspectionResult" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="waivers" upperBound="-1"
+        eType="#//Waiver" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InspectionResult" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rule" lowerBound="1" eType="#//Rule"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Violation" eSuperTypes="#//InspectionResult">
     <eStructuralFeatures xsi:type="ecore:EReference" name="waivers" upperBound="-1"
         eType="#//Waiver" eOpposite="#//Waiver/violations"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
@@ -33,15 +41,13 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Failure" eSuperTypes="#//InspectionResult">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cause" eType="ecore:EClass ../../org.nasdanika.ncore/model/ncore.ecore#//Throwable"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Waiver" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="violations" upperBound="-1"
         eType="#//Violation" eOpposite="#//Violation/waivers"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Inspectable">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="violations" upperBound="-1"
-        eType="#//Violation" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="waivers" upperBound="-1"
-        eType="#//Waiver" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Severity" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"

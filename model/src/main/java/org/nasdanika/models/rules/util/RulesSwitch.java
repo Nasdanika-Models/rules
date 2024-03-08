@@ -148,9 +148,38 @@ public class RulesSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case RulesPackage.INSPECTABLE: {
+				Inspectable inspectable = (Inspectable)theEObject;
+				T result = caseInspectable(inspectable);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case RulesPackage.INSPECTION_RESULT: {
+				InspectionResult inspectionResult = (InspectionResult)theEObject;
+				T result = caseInspectionResult(inspectionResult);
+				if (result == null) result = caseArchitectureDescriptionElement(inspectionResult);
+				if (result == null) result = caseDocumentedNamedGraphElement(inspectionResult);
+				if (result == null) result = caseArchitectureElement(inspectionResult);
+				if (result == null) result = caseUndergoer(inspectionResult);
+				if (result == null) result = caseGraphElement(inspectionResult);
+				if (result == null) result = caseDocumentedNamedStringIdentity(inspectionResult);
+				if (result == null) result = casePeriod(inspectionResult);
+				if (result == null) result = caseStringIdentity(inspectionResult);
+				if (result == null) result = caseSemanticElement(inspectionResult);
+				if (result == null) result = caseDocumentedNamedElement(inspectionResult);
+				if (result == null) result = caseNamedElement(inspectionResult);
+				if (result == null) result = caseDocumented(inspectionResult);
+				if (result == null) result = caseModelElement(inspectionResult);
+				if (result == null) result = caseMarked(inspectionResult);
+				if (result == null) result = caseAdaptable(inspectionResult);
+				if (result == null) result = caseIMarked(inspectionResult);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case RulesPackage.VIOLATION: {
 				Violation violation = (Violation)theEObject;
 				T result = caseViolation(violation);
+				if (result == null) result = caseInspectionResult(violation);
 				if (result == null) result = caseArchitectureDescriptionElement(violation);
 				if (result == null) result = caseDocumentedNamedGraphElement(violation);
 				if (result == null) result = caseArchitectureElement(violation);
@@ -167,6 +196,29 @@ public class RulesSwitch<T> extends Switch<T> {
 				if (result == null) result = caseMarked(violation);
 				if (result == null) result = caseAdaptable(violation);
 				if (result == null) result = caseIMarked(violation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case RulesPackage.FAILURE: {
+				Failure failure = (Failure)theEObject;
+				T result = caseFailure(failure);
+				if (result == null) result = caseInspectionResult(failure);
+				if (result == null) result = caseArchitectureDescriptionElement(failure);
+				if (result == null) result = caseDocumentedNamedGraphElement(failure);
+				if (result == null) result = caseArchitectureElement(failure);
+				if (result == null) result = caseUndergoer(failure);
+				if (result == null) result = caseGraphElement(failure);
+				if (result == null) result = caseDocumentedNamedStringIdentity(failure);
+				if (result == null) result = casePeriod(failure);
+				if (result == null) result = caseStringIdentity(failure);
+				if (result == null) result = caseSemanticElement(failure);
+				if (result == null) result = caseDocumentedNamedElement(failure);
+				if (result == null) result = caseNamedElement(failure);
+				if (result == null) result = caseDocumented(failure);
+				if (result == null) result = caseModelElement(failure);
+				if (result == null) result = caseMarked(failure);
+				if (result == null) result = caseAdaptable(failure);
+				if (result == null) result = caseIMarked(failure);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -189,12 +241,6 @@ public class RulesSwitch<T> extends Switch<T> {
 				if (result == null) result = caseMarked(waiver);
 				if (result == null) result = caseAdaptable(waiver);
 				if (result == null) result = caseIMarked(waiver);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case RulesPackage.INSPECTABLE: {
-				Inspectable inspectable = (Inspectable)theEObject;
-				T result = caseInspectable(inspectable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -647,6 +693,21 @@ public class RulesSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Failure</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Failure</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFailure(Failure object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Waiver</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -673,6 +734,21 @@ public class RulesSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseInspectable(Inspectable object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Inspection Result</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Inspection Result</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseInspectionResult(InspectionResult object) {
 		return null;
 	}
 

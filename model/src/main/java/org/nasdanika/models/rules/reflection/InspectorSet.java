@@ -18,6 +18,8 @@ import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.common.Reflector;
 import org.nasdanika.common.Util;
+import org.nasdanika.models.rules.Failure;
+import org.nasdanika.models.rules.InspectionResult;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RulesFactory;
 import org.nasdanika.models.rules.Violation;
@@ -135,7 +137,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			@Override
 			public void inspect(
 					Object target, 
-					BiConsumer<? super Object, Violation> violationConsumer, 
+					BiConsumer<? super Object, InspectionResult> inspectionResultConsumer, 
 					Context context, 
 					ProgressMonitor progressMonitor) {
 				
@@ -161,7 +163,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 				// Binding parameters
 				for (int i = 1; i < parameters.length; ++i) {
 					if (!violationConsumerBound && parameters[i].getType().isAssignableFrom(BiConsumer.class)) {
-						args[i] = violationConsumer;
+						args[i] = inspectionResultConsumer;
 						violationConsumerBound = true;
 					} else if (!contextBound && parameters[i].getType().isAssignableFrom(Context.class)) {
 						args[i] = context;
@@ -174,8 +176,19 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 					}
 				}					
 				
-				Object result = aer.invoke(args);
-				handleInspectorResult(target, result, rule[0], violationConsumer, context, progressMonitor);
+				Object[] result = null;
+				try {
+					result = new Object[] { aer.invoke(args) };
+				} catch (Exception e) {
+					Failure failure = createFailure();
+					failure.setName(e.toString());
+					failure.setCause(org.nasdanika.ncore.Throwable.wrap(e));
+					failure.setRule(rule[0]);
+					inspectionResultConsumer.accept(target, failure);
+				}
+				if (result != null) {
+					handleInspectorResult(target, result[0], rule[0], inspectionResultConsumer, context, progressMonitor);
+				}
 			}
 
 			@Override
@@ -240,7 +253,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			Object target, 
 			Object result, 
 			Rule rule,
-			BiConsumer<? super Object, Violation> violationConsumer, 
+			BiConsumer<? super Object, InspectionResult> inspectionResultConsumer, 
 			Context context, 
 			ProgressMonitor progressMonitor) {
 		
@@ -248,31 +261,32 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			if (result instanceof Iterator) {
 				Iterator<?> iterator = (Iterator<?>) result;
 				while (iterator.hasNext()) {
-					handleInspectorResult(target, iterator.next(), rule, violationConsumer, context, progressMonitor);
+					handleInspectorResult(target, iterator.next(), rule, inspectionResultConsumer, context, progressMonitor);
 				}
 			} else if (result instanceof Iterable) {
-				handleInspectorResult(target, ((Iterable<?>) result).iterator(), rule, violationConsumer, context, progressMonitor);
+				handleInspectorResult(target, ((Iterable<?>) result).iterator(), rule, inspectionResultConsumer, context, progressMonitor);
 			} else if (result instanceof Stream) {				
-				((Stream<?>) result).forEach(re -> handleInspectorResult(target, re, rule, violationConsumer, context, progressMonitor));
+				((Stream<?>) result).forEach(re -> handleInspectorResult(target, re, rule, inspectionResultConsumer, context, progressMonitor));
 			} else if (result.getClass().isArray()) {
 				for (int i = 0; i < Array.getLength(result); ++i) {
-					handleInspectorResult(target, Array.get(result, i), rule, violationConsumer, context, progressMonitor);
+					handleInspectorResult(target, Array.get(result, i), rule, inspectionResultConsumer, context, progressMonitor);
 				}
 			} else {
-				Violation violation;
+				InspectionResult inspectionResult;
 				if (result instanceof String) {
-					violation = createViolation();
-					violation.setName((String) result);
-				} else if (result instanceof Violation) {
-					violation = (Violation) result;
+					inspectionResult = createViolation();
+					inspectionResult.setName((String) result);
+				} else if (result instanceof InspectionResult) {
+					inspectionResult = (InspectionResult) result;
 				} else {
-					throw new IllegalArgumentException("Unexpected result type: " + result);
+					inspectionResult = createFailure();
+					inspectionResult.setName("Unexpected result type: " + result);
 				}
 				
-				if (violation.getRule() == null) {
-					violation.setRule(rule);
+				if (inspectionResult.getRule() == null) {
+					inspectionResult.setRule(rule);
 				}
-				violationConsumer.accept(target, violation);
+				inspectionResultConsumer.accept(target, inspectionResult);
 			}
 		}				
 	}
@@ -280,17 +294,21 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 	protected Violation createViolation() {
 		return RulesFactory.eINSTANCE.createViolation();
 	}
+	
+	protected Failure createFailure() {
+		return RulesFactory.eINSTANCE.createFailure();
+	}
 
 	@Override
-	public void inspect(Object target, BiConsumer<Object, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
+	public void inspect(Object target, BiConsumer<Object, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 		if (target != null) {
 			Stream<org.nasdanika.models.rules.Inspector<Object>> iStream = inspectors.stream();
 			if (parallel) {
 				iStream = iStream.parallel();
 			}
 			iStream
-			.filter(inspector -> target != null && inspector.isForType(target.getClass()))
-			.forEach(inspector -> inspector.inspect(target, violationConsumer, context, progressMonitor));
+				.filter(inspector -> target != null && inspector.isForType(target.getClass()))
+				.forEach(inspector -> inspector.inspect(target, inspectionResultConsumer, context, progressMonitor));
 		}				
 	}
 

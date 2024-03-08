@@ -55,23 +55,23 @@ public interface NotifierInspector extends Inspector<Notifier> {
 			}
 
 			@Override
-			public void inspect(Notifier target, BiConsumer<? super Notifier, Violation> violationConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(Notifier target, BiConsumer<? super Notifier, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (predicate == null || predicate.test(target)) {
 					if (NotifierInspector.this.isForType(target.getClass())) {
-						NotifierInspector.this.inspect(target, violationConsumer, context, progressMonitor);
+						NotifierInspector.this.inspect(target, inspectionResultConsumer, context, progressMonitor);
 					}
 					if (target instanceof ResourceSet) {
 						Stream<Resource> rStream = ((ResourceSet) target).getResources().stream();
 						if (parallel) {
 							rStream = rStream.parallel();
 						} 
-						rStream.forEach(resource -> inspect(resource, violationConsumer, context, progressMonitor));
+						rStream.forEach(resource -> inspect(resource, inspectionResultConsumer, context, progressMonitor));
 					} else if (target instanceof Resource) {
 						Stream<EObject> contentsStream = ((Resource) target).getContents().stream();
 						if (parallel) {
 							contentsStream = contentsStream.parallel();
 						}
-						contentsStream.forEach(root -> inspect(root, violationConsumer, context, progressMonitor));
+						contentsStream.forEach(root -> inspect(root, inspectionResultConsumer, context, progressMonitor));
 					} else if (target instanceof EObject) {
 						if (target instanceof TreeItem && ((TreeItem) target).eContainer() != null) {
 							URI targetURI = resolve((TreeItem) target);
@@ -84,7 +84,7 @@ public interface NotifierInspector extends Inspector<Notifier> {
 									ResourceSet resourceSet = eResource.getResourceSet();
 									if (resourceSet != null) {
 										Resource targetResource = resourceSet.getResource(targetURI, true);
-										inspect(targetResource, violationConsumer, context, progressMonitor);
+										inspect(targetResource, inspectionResultConsumer, context, progressMonitor);
 									}
 								}
 							}
@@ -94,7 +94,7 @@ public interface NotifierInspector extends Inspector<Notifier> {
 						if (parallel) {
 							contentsStream = contentsStream.parallel();
 						}
-						contentsStream.forEach(contents -> inspect(contents, violationConsumer, context, progressMonitor));
+						contentsStream.forEach(contents -> inspect(contents, inspectionResultConsumer, context, progressMonitor));
 					}
 				}
 			}
@@ -113,11 +113,11 @@ public interface NotifierInspector extends Inspector<Notifier> {
 			@Override
 			public void inspect(
 					Notifier target, 
-					BiConsumer<? super Notifier, Violation> violationConsumer, 
+					BiConsumer<? super Notifier, InspectionResult> inspectionResultConsumer, 
 					Context context,
 					ProgressMonitor progressMonitor) {
 				
-				inspector.inspect(target, (t,v) -> violationConsumer.accept((Notifier) t, v), context, progressMonitor);
+				inspector.inspect(target, (t,v) -> inspectionResultConsumer.accept((Notifier) t, v), context, progressMonitor);
 			}
 			
 			@Override
