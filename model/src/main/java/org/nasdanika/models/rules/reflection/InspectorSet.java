@@ -137,7 +137,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			@Override
 			public void inspect(
 					Object target, 
-					BiConsumer<? super Object, InspectionResult> inspectionResultConsumer, 
+					BiConsumer<? super Object, ? super InspectionResult> inspectionResultConsumer, 
 					Context context, 
 					ProgressMonitor progressMonitor) {
 				
@@ -159,11 +159,18 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 				boolean violationConsumerBound = false; 
 				boolean contextBound = false; 
 				boolean progressMonitorBound = false; 
-
+				
+				BiConsumer<? super Object, InspectionResult> injectingInspectionResultConsumer = (trg, inspectionResult) -> {
+					if (inspectionResult != null && inspectionResult.getRule() == null) {
+						inspectionResult.setRule(rule[0]);
+					}
+					inspectionResultConsumer.accept(trg, inspectionResult);
+				};
+				
 				// Binding parameters
 				for (int i = 1; i < parameters.length; ++i) {
 					if (!violationConsumerBound && parameters[i].getType().isAssignableFrom(BiConsumer.class)) {
-						args[i] = inspectionResultConsumer;
+						args[i] = injectingInspectionResultConsumer;
 						violationConsumerBound = true;
 					} else if (!contextBound && parameters[i].getType().isAssignableFrom(Context.class)) {
 						args[i] = context;
@@ -184,10 +191,10 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 					failure.setName(e.toString());
 					failure.setCause(org.nasdanika.ncore.Throwable.wrap(e));
 					failure.setRule(rule[0]);
-					inspectionResultConsumer.accept(target, failure);
+					injectingInspectionResultConsumer.accept(target, failure);
 				}
 				if (result != null) {
-					handleInspectorResult(target, result[0], rule[0], inspectionResultConsumer, context, progressMonitor);
+					handleInspectorResult(target, result[0], rule[0], injectingInspectionResultConsumer, context, progressMonitor);
 				}
 			}
 
@@ -283,9 +290,6 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 					inspectionResult.setName("Unexpected result type: " + result);
 				}
 				
-				if (inspectionResult.getRule() == null) {
-					inspectionResult.setRule(rule);
-				}
 				inspectionResultConsumer.accept(target, inspectionResult);
 			}
 		}				
@@ -300,7 +304,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 	}
 
 	@Override
-	public void inspect(Object target, BiConsumer<Object, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+	public void inspect(Object target, BiConsumer<Object, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 		if (target != null) {
 			Stream<org.nasdanika.models.rules.Inspector<Object>> iStream = inspectors.stream();
 			if (parallel) {

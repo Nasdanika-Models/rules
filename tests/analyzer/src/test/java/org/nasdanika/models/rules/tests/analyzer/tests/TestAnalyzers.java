@@ -118,7 +118,7 @@ public class TestAnalyzers {
 					@Override
 					public void inspect(
 							Notifier target, 
-							BiConsumer<? super Notifier, InspectionResult> inspectionResultConsumer,
+							BiConsumer<? super Notifier, ? super InspectionResult> inspectionResultConsumer,
 							Context context, 
 							ProgressMonitor progressMonitor) {
 						

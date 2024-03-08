@@ -55,7 +55,7 @@ public interface NotifierInspector extends Inspector<Notifier> {
 			}
 
 			@Override
-			public void inspect(Notifier target, BiConsumer<? super Notifier, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(Notifier target, BiConsumer<? super Notifier, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (predicate == null || predicate.test(target)) {
 					if (NotifierInspector.this.isForType(target.getClass())) {
 						NotifierInspector.this.inspect(target, inspectionResultConsumer, context, progressMonitor);
@@ -113,7 +113,7 @@ public interface NotifierInspector extends Inspector<Notifier> {
 			@Override
 			public void inspect(
 					Notifier target, 
-					BiConsumer<? super Notifier, InspectionResult> inspectionResultConsumer, 
+					BiConsumer<? super Notifier, ? super InspectionResult> inspectionResultConsumer, 
 					Context context,
 					ProgressMonitor progressMonitor) {
 				

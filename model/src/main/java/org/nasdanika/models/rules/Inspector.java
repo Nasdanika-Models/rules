@@ -32,7 +32,7 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 
 	}	
 	
-	void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor);
+	void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor);
 	
 	/**
 	 * @param type
@@ -49,7 +49,7 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					if (Inspector.this.isForType(target.getClass())) {
 						Inspector.this.inspect(target, inspectionResultConsumer, context, progressMonitor);
@@ -74,7 +74,7 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					for (Inspector<T> inspector: inspectors) {
 						if (inspector.isForType(target.getClass())) {
@@ -101,7 +101,7 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					Stream<Inspector<T>> iStream = inspectors.stream();
 					if (parallel) {
@@ -126,7 +126,7 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				// NOP				
 			}
 
