@@ -791,7 +791,9 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		initEReference(getRuleSet_Extends(), this.getRuleSet(), this.getRuleSet_Extensions(), "extends", null, 0, -1, RuleSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRuleSet_Extensions(), this.getRuleSet(), this.getRuleSet_Extends(), "extensions", null, 0, -1, RuleSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRuleSet_Rules(), this.getRule(), null, "rules", null, 0, -1, RuleSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		getRuleSet_Rules().getEKeys().add(theNcorePackage.getStringIdentity_Id());
 		initEReference(getRuleSet_Severities(), this.getSeverity(), null, "severities", null, 0, -1, RuleSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		getRuleSet_Severities().getEKeys().add(theNcorePackage.getStringIdentity_Id());
 
 		initEClass(inspectableEClass, Inspectable.class, "Inspectable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getInspectable_InspectionResults(), this.getInspectionResult(), null, "inspectionResults", null, 0, -1, Inspectable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -847,6 +849,8 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		// Create annotations
 		// http://www.eclipse.org/emf/2002/GenModel
 		createGenModelAnnotations();
+		// urn:org.nasdanika
+		createUrnorgAnnotations();
 	}
 
 	/**
@@ -898,6 +902,22 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		   source,
 		   new String[] {
 			   "documentation", "New identifier"
+		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>urn:org.nasdanika</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createUrnorgAnnotations() {
+		String source = "urn:org.nasdanika";
+		addAnnotation
+		  (getRuleSet_Severities(),
+		   source,
+		   new String[] {
+			   "homogeneous", "true"
 		   });
 	}
 

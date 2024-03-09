@@ -39,6 +39,8 @@ import org.nasdanika.models.rules.InspectionResult;
 import org.nasdanika.models.rules.Inspector;
 import org.nasdanika.models.rules.NotifierInspector;
 import org.nasdanika.models.rules.ResourceAction;
+import org.nasdanika.models.rules.RuleSet;
+import org.nasdanika.models.rules.Severity;
 import org.nasdanika.ncore.Tree;
 import org.nasdanika.ncore.TreeItem;
 import org.nasdanika.ncore.util.DirectoryContentFileURIHandler;
@@ -197,7 +199,15 @@ public class TestAnalyzers {
 	}
 	
 	protected void consumeInspectionResult(Notifier target, InspectionResult inspectionResult) {
-		System.out.println("[" + inspectionResult.eClass().getName() +"] " + inspectionResult.getName() + " " + target + " -> " + inspectionResult + " " + inspectionResult.getRule() + " " + inspectionResult.getRule().eContainer());
+		System.out.println("[" + inspectionResult.eClass().getName() +"] " + inspectionResult.getName());
+		System.out.println("\tTarget: " + target);
+		System.out.println("\tRule: " + inspectionResult.getRule().getName());
+		Severity severity = inspectionResult.getRule().getSeverity();
+		if (severity != null) {
+			System.out.println("\tSeverity: " + severity.getId() + " " + severity.getDescription());
+		}
+		System.out.println("\tRule set: " + ((RuleSet) inspectionResult.getRule().eContainer()).getName());
+		
 	}
 	
 	private static final String MAIN_BRANCH = "main";

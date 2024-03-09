@@ -22,6 +22,7 @@ import org.nasdanika.models.rules.Failure;
 import org.nasdanika.models.rules.InspectionResult;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RulesFactory;
+import org.nasdanika.models.rules.Severity;
 import org.nasdanika.models.rules.Violation;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
@@ -129,6 +130,24 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			org.nasdanika.models.rules.RuleSet ruleSet = getRuleSet(aer, progressMonitor);
 			if (ruleSet != null) {
 				ruleSet.getRules().add(rule[0]);
+			}
+		}
+		
+		String severityId = inspectorAnnotation.severity();
+		if (!Util.isBlank(severityId) && rule[0].eContainer() instanceof org.nasdanika.models.rules.RuleSet) {
+			org.nasdanika.models.rules.RuleSet ruleSet = (org.nasdanika.models.rules.RuleSet) rule[0].eContainer();
+			for (Severity severity: ruleSet.getSeverities()) {
+				if (severityId.equals(severity.getId())) {
+					rule[0].setSeverity(severity);
+					break;
+				}
+			}
+			if (rule[0].getSeverity() == null) {
+				Severity severity = RulesFactory.eINSTANCE.createSeverity();
+				severity.setId(severityId);
+				severity.setName(severityId);
+				ruleSet.getSeverities().add(severity);
+				rule[0].setSeverity(severity);
 			}
 		}
 		

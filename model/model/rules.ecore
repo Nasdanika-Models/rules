@@ -18,9 +18,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="extensions" upperBound="-1"
         eType="#//RuleSet" eOpposite="#//RuleSet/extends"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
-        eType="#//Rule" containment="true"/>
+        eType="#//Rule" containment="true" eKeys="../../org.nasdanika.ncore/model/ncore.ecore#//StringIdentity/id"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="severities" upperBound="-1"
-        eType="#//Severity" containment="true"/>
+        eType="#//Severity" containment="true" eKeys="../../org.nasdanika.ncore/model/ncore.ecore#//StringIdentity/id">
+      <eAnnotations source="urn:org.nasdanika">
+        <details key="homogeneous" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Inspectable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="inspectionResults" upperBound="-1"

@@ -32,6 +32,10 @@ import com.azure.core.credential.KeyCredential;
 
 @RuleSet("""		
 		name: Sample Java Rules
+		severities:
+		  error:
+		    name: Error
+		    description: Artifacts with this severity are not allowed to be further processed (e.g. deployed, published to a repository) 
 		documentation:
 		  exec.content.Markdown:
 		    source:
@@ -145,12 +149,13 @@ public class ReflectiveInspectors {
 			      exec.content.Text: |
 			        YAML with syntax errors, e.g. duplicate keys.
 			""",
+			severity = "error",
 			condition = "!errors.isEmpty()") 	
 	public Collection<String> yamlInspector(YamlResource yamlResource) {
 		return yamlResource.getErrors().stream().map(Diagnostic::getMessage).toList();
 	}
 	
-	@Inspector(value = """
+	@Inspector("""
 			name: Faulty inspector
 			documentation:
 			  exec.content.Markdown:
@@ -162,7 +167,7 @@ public class ReflectiveInspectors {
 		throw new IllegalArgumentException("Something is wrong about " + yamlResource.getURI());
 	}
 	
-	@Inspector(value = """
+	@Inspector("""
 			name: Explicitly faulty inspector 
 			documentation:
 			  exec.content.Markdown:
@@ -184,7 +189,8 @@ public class ReflectiveInspectors {
 			    source:
 			      exec.content.Text: |
 			        Returns a result of unexpected type (Long). Tests wrapping of unexpected results into failures.
-			""") 	
+			""",
+			severity = "warning") 	
 	public long unexpectedResultInspector(YamlResource yamlResource) {
 		return System.currentTimeMillis();
 	}

@@ -67,7 +67,7 @@ public interface RuleSet extends Domain {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Rules</em>' containment reference list.
 	 * @see org.nasdanika.models.rules.RulesPackage#getRuleSet_Rules()
-	 * @model containment="true"
+	 * @model containment="true" keys="id"
 	 * @generated
 	 */
 	EList<Rule> getRules();
@@ -79,7 +79,8 @@ public interface RuleSet extends Domain {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Severities</em>' containment reference list.
 	 * @see org.nasdanika.models.rules.RulesPackage#getRuleSet_Severities()
-	 * @model containment="true"
+	 * @model containment="true" keys="id"
+	 *        annotation="urn:org.nasdanika homogeneous='true'"
 	 * @generated
 	 */
 	EList<Severity> getSeverities();

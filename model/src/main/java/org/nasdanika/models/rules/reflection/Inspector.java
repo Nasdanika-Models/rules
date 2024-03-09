@@ -44,6 +44,13 @@ public @interface Inspector {
 	String rule() default "";
 	
 	/**
+	 * Rule severity id to be looked up in the rule set.
+	 * If severity is not found, it is created.
+	 * @return
+	 */
+	String severity() default "";
+	
+	/**
 	 * SpEL boolean expression evaluated in the context of the target object with <code>context</code> variable.	
 	 * @return
 	 */
