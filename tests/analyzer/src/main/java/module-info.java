@@ -1,5 +1,3 @@
-import org.nasdanika.models.rules.Inspector;
-
 module org.nasdanika.models.rules.tests.analyzer{
 		
 	requires transitive org.nasdanika.models.rules.tests.inspectors;
@@ -8,7 +6,5 @@ module org.nasdanika.models.rules.tests.analyzer{
 	requires org.nasdanika.models.gitlab;
 	
 	exports org.nasdanika.models.rules.tests.analyzer;
-	
-	uses Inspector.Factory;
-	
+		
 }

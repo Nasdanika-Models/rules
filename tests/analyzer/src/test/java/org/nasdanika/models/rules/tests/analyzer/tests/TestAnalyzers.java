@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.ServiceLoader;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
@@ -25,6 +24,9 @@ import org.gitlab4j.api.models.CommitAction;
 import org.gitlab4j.api.models.CommitAction.Action;
 import org.gitlab4j.api.models.MergeRequestParams;
 import org.junit.jupiter.api.Test;
+import org.nasdanika.capability.CapabilityLoader;
+import org.nasdanika.capability.CapabilityProvider;
+import org.nasdanika.capability.ServiceCapabilityFactory;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.PrintStreamProgressMonitor;
 import org.nasdanika.common.ProgressMonitor;
@@ -54,9 +56,10 @@ public class TestAnalyzers {
 	
 	@Test
 	public void testInspectorFactory() {
-		Iterable<Inspector.Factory> inspectorFactories = ServiceLoader.load(Inspector.Factory.class);
-		for (Inspector.Factory rsf: inspectorFactories) {
-			System.out.println(rsf);
+		CapabilityLoader capabilitLoader = new CapabilityLoader();
+		Iterable<CapabilityProvider<Object>> providers = capabilitLoader.load(ServiceCapabilityFactory.createRequirement(Inspector.class),  new PrintStreamProgressMonitor());
+		for (CapabilityProvider<Object> provider: providers) {
+			provider.getPublisher().subscribe(System.out::println);
 		}
 	}
 		
@@ -179,7 +182,7 @@ public class TestAnalyzers {
 //		};
 		
 		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
-		Inspector<Object> inspector = Inspector.load(progressMonitor);
+		Inspector<Object> inspector = Inspector.load(null, progressMonitor);
 		
 		// Visiting only Java 
 		Predicate<Notifier> predicate = obj -> {
@@ -221,7 +224,7 @@ public class TestAnalyzers {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("java", new JavaParserResourceFactory());	
 		
 		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
-		Inspector<Object> inspector = Inspector.load(progressMonitor);
+		Inspector<Object> inspector = Inspector.load(null, progressMonitor);
 		NotifierInspector notifierInspector = NotifierInspector.adapt(inspector);
 		NotifierInspector contentsInspector = notifierInspector.asContentsInspector(false, null);
 		
@@ -305,7 +308,7 @@ public class TestAnalyzers {
 		Resource dirResource = resourceSet.getResource(currentDirURI, true);
 		
 		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
-		Inspector<Object> inspector = Inspector.load(progressMonitor);
+		Inspector<Object> inspector = Inspector.load(null, progressMonitor);
 		
 		// Visiting only YAML 
 		Predicate<Notifier> predicate = obj -> {

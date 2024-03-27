@@ -1,5 +1,4 @@
-import org.nasdanika.models.rules.Inspector;
-import org.nasdanika.models.rules.RuleSet;
+import org.nasdanika.capability.CapabilityFactory;
 import org.nasdanika.models.rules.tests.inspectors.NopInspectorFactory;
 import org.nasdanika.models.rules.tests.inspectors.ReflectiveInspectorFactory;
 
@@ -13,8 +12,6 @@ module org.nasdanika.models.rules.tests.inspectors {
 	
 	opens org.nasdanika.models.rules.tests.inspectors; // For reflection
 	
-	uses RuleSet.Factory;
-	
-	provides Inspector.Factory with ReflectiveInspectorFactory, NopInspectorFactory;
+	provides CapabilityFactory with ReflectiveInspectorFactory, NopInspectorFactory;
 	
 }

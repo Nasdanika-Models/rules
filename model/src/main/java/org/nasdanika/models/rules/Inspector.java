@@ -1,10 +1,12 @@
 package org.nasdanika.models.rules;
 
 import java.util.Collection;
-import java.util.ServiceLoader;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
+import org.nasdanika.capability.CapabilityLoader;
+import org.nasdanika.capability.CapabilityProvider;
+import org.nasdanika.capability.ServiceCapabilityFactory;
 import org.nasdanika.common.Composeable;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
@@ -13,25 +15,7 @@ import org.nasdanika.common.ProgressMonitor;
  * Inspects provided object and passes inspection results to a consumer
  */
 public interface Inspector<T> extends Composeable<Inspector<T>> {
-	
-	interface Factory extends Composeable<Factory> {
 		
-		Inspector<Object> getInspector(ProgressMonitor progressMonitor);
-		
-		@Override
-		default Factory compose(Factory other) {
-			if (other == null) {
-				return this;
-			}
-			return pm -> {
-				Inspector<Object> inspector = getInspector(pm);
-				Inspector<Object> otherInspector = other.getInspector(pm);
-				return inspector.compose(otherInspector);
-			};
-		}
-
-	}	
-	
 	void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor);
 	
 	/**
@@ -142,12 +126,17 @@ public interface Inspector<T> extends Composeable<Inspector<T>> {
 	 * Loads inspectors from Inspector.Factory services and composes them.
 	 * @return
 	 */
-	static Inspector<Object> load(ProgressMonitor progressMonitor) {
+	static Inspector<Object> load(Object requirement, ProgressMonitor progressMonitor) {
 		Inspector<Object> ret = null;
-		Iterable<Inspector.Factory> inspectorFactories = ServiceLoader.load(Inspector.Factory.class);
-		for (Inspector.Factory inspectorFactory: inspectorFactories) {			
-			ret = ret == null ? inspectorFactory.getInspector(progressMonitor) : compose(ret, inspectorFactory.getInspector(progressMonitor));
-		}		
+		CapabilityLoader capabilityLoader = new CapabilityLoader();
+		Iterable<CapabilityProvider<Object>> providers = capabilityLoader.load(ServiceCapabilityFactory.createRequirement(Inspector.class, null, requirement), progressMonitor);
+		for (CapabilityProvider<Object> provider: providers) {
+			for (Object obj: provider.getPublisher().toIterable()) {
+				@SuppressWarnings("unchecked")
+				Inspector<Object> inspector = (Inspector<Object>) obj;
+				ret = ret == null ? inspector : compose(ret, inspector);
+			}
+		}
 		return ret == null ? nop() : ret;
 	}
 

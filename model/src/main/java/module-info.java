@@ -8,7 +8,5 @@ module org.nasdanika.models.rules {
 	requires transitive org.eclipse.emf.ecore;
 	requires transitive org.eclipse.emf.common;
 	requires transitive org.nasdanika.models.architecture;
-	
-	uses org.nasdanika.models.rules.Inspector.Factory;
-	
+		
 }
