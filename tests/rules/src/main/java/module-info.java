@@ -1,5 +1,4 @@
 import org.nasdanika.capability.CapabilityFactory;
-import org.nasdanika.models.rules.RuleSet;
 import org.nasdanika.models.rules.tests.rules.NopRuleSetFactory;
 
 module org.nasdanika.models.rules.tests.rules {

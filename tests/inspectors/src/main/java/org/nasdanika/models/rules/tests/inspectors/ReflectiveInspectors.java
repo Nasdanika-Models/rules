@@ -194,5 +194,5 @@ public class ReflectiveInspectors {
 	public long unexpectedResultInspector(YamlResource yamlResource) {
 		return System.currentTimeMillis();
 	}
-
+	
 }

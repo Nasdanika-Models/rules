@@ -28,7 +28,12 @@ public class ReflectiveInspectorFactory extends ServiceCapabilityFactory<Object,
 			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
 			ProgressMonitor progressMonitor) {
 		
-		Inspector<Object> inspector = new InspectorSet(RuleManager.LOADING_RULE_MANAGER, false, progressMonitor, new ReflectiveInspectors());;
+		Inspector<Object> inspector = new InspectorSet(
+				RuleManager.LOADING_RULE_MANAGER, 
+				false, 
+				progressMonitor, 
+				new ReflectiveInspectors(),
+				new JavaCoverageReflectiveInspectors());;
 		
 		CapabilityProvider<Inspector<Object>> capabilityProvider = new CapabilityProvider<Inspector<Object>>() {
 
