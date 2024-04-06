@@ -1,5 +1,7 @@
 import org.nasdanika.capability.CapabilityFactory;
 import org.nasdanika.models.rules.tests.inspectors.NopInspectorFactory;
+import org.nasdanika.models.rules.tests.inspectors.OpenAIClientFactory;
+import org.nasdanika.models.rules.tests.inspectors.OpenAITestGeneratorFactory;
 import org.nasdanika.models.rules.tests.inspectors.ReflectiveInspectorFactory;
 
 module org.nasdanika.models.rules.tests.inspectors {
@@ -12,6 +14,10 @@ module org.nasdanika.models.rules.tests.inspectors {
 	
 	opens org.nasdanika.models.rules.tests.inspectors; // For reflection
 	
-	provides CapabilityFactory with ReflectiveInspectorFactory, NopInspectorFactory;
+	provides CapabilityFactory with 
+		OpenAIClientFactory,
+		OpenAITestGeneratorFactory,
+		ReflectiveInspectorFactory,
+		NopInspectorFactory;
 	
 }

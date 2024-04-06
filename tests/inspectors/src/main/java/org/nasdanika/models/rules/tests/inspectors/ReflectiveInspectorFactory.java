@@ -1,7 +1,8 @@
 package org.nasdanika.models.rules.tests.inspectors;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
 
@@ -27,16 +28,30 @@ public class ReflectiveInspectorFactory extends ServiceCapabilityFactory<Object,
 			Object serviceRequirement,
 			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
 			ProgressMonitor progressMonitor) {
-		
-		Inspector<Object> inspector = new InspectorSet(
-				RuleManager.LOADING_RULE_MANAGER, 
-				false, 
-				progressMonitor, 
-				new ReflectiveInspectors(),
-				new JavaCoverageReflectiveInspectors());;
-		
-		CapabilityProvider<Inspector<Object>> capabilityProvider = new CapabilityProvider<Inspector<Object>>() {
 
+			CompletionStage<Iterable<CapabilityProvider<Object>>> testGeneratorCS = resolver.apply(ServiceCapabilityFactory.createRequirement(TestGenerator.class, null, new JUnitTestRequirement("5")), progressMonitor);
+			return testGeneratorCS.thenApply(testGenerators -> applyTestGenerators(testGenerators, progressMonitor));
+	}
+	
+	protected Iterable<CapabilityProvider<Inspector<Object>>> applyTestGenerators(
+			Iterable<CapabilityProvider<Object>> testGeneratorsCapabilityProviders,
+			ProgressMonitor progressMonitor) {
+		
+		Collection<TestGenerator> testGenerators = new ArrayList<>();
+		
+		for (CapabilityProvider<Object> tgp: testGeneratorsCapabilityProviders) {
+			tgp.getPublisher().subscribe(tg -> testGenerators.add((TestGenerator) tg));
+		}
+
+		Inspector<Object> inspector = new InspectorSet(
+			RuleManager.LOADING_RULE_MANAGER, 
+			false, 
+			progressMonitor, 
+			new ReflectiveInspectors(),
+			new JavaCoverageReflectiveInspectors(testGenerators));;
+	
+		CapabilityProvider<Inspector<Object>> capabilityProvider = new CapabilityProvider<Inspector<Object>>() {
+		
 			@Override
 			public Flux<Inspector<Object>> getPublisher() {
 				return Flux.just(inspector);
@@ -44,7 +59,7 @@ public class ReflectiveInspectorFactory extends ServiceCapabilityFactory<Object,
 			
 		};
 		
-		return CompletableFuture.completedStage(Collections.singleton(capabilityProvider));
+		return Collections.singleton(capabilityProvider);
 	}
 
 }

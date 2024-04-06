@@ -10,12 +10,17 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: org.nasdanika.models.rules,
  org.nasdanika.models.rules.impl,
+ org.nasdanika.models.rules.java,
+ org.nasdanika.models.rules.java.impl,
+ org.nasdanika.models.rules.java.util,
  org.nasdanika.models.rules.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.nasdanika.models.architecture;visibility:=reexport,
+ org.nasdanika.models.coverage;visibility:=reexport,
  org.nasdanika.drawio.model;visibility:=reexport,
  org.nasdanika.graph.model;visibility:=reexport,
+ org.nasdanika.models.java;visibility:=reexport,
  org.nasdanika.ncore;visibility:=reexport,
  org.nasdanika.models.party;visibility:=reexport
 Bundle-ActivationPolicy: lazy

@@ -4,7 +4,7 @@
     editorDirectory="" modelPluginID="org.nasdanika.models.rules" modelName="Rules"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
     featureDelegation="Dynamic" complianceLevel="17.0" suppressGenModelAnnotations="false"
-    copyrightFields="false" usedGenPackages="../../org.nasdanika.models.architecture/model/architecture.genmodel#//architecture ../../org.nasdanika.drawio.model/model/drawio.genmodel#//model ../../org.nasdanika.graph.model/model/graph.genmodel#//model ../../org.nasdanika.ncore/model/ncore.genmodel#//ncore ../../org.nasdanika.models.party/model/party.genmodel#//party"
+    copyrightFields="false" usedGenPackages="../../org.nasdanika.models.architecture/model/architecture.genmodel#//architecture ../../org.nasdanika.models.coverage/model/coverage.genmodel#//coverage ../../org.nasdanika.drawio.model/model/drawio.genmodel#//model ../../org.nasdanika.graph.model/model/graph.genmodel#//model ../../org.nasdanika.models.java/model/java.genmodel#//java ../../org.nasdanika.ncore/model/ncore.genmodel#//ncore ../../org.nasdanika.models.party/model/party.genmodel#//party"
     operationReflection="true" importOrganizing="true">
   <foreignModel>rules.ecore</foreignModel>
   <genPackages prefix="Rules" basePackage="org.nasdanika.models" disposableProviderFactory="true"
@@ -60,5 +60,20 @@
     <genClasses ecoreClass="rules.ecore#//UpdateResourceAction"/>
     <genClasses ecoreClass="rules.ecore#//UpdateTextResourceAction"/>
     <genClasses ecoreClass="rules.ecore#//UpdateBinaryResourceAction"/>
+    <nestedGenPackages prefix="Java" basePackage="org.nasdanika.models.rules" disposableProviderFactory="true"
+        ecorePackage="rules.ecore#//java">
+      <genClasses ecoreClass="rules.ecore#//java/CompilationUnitAction"/>
+      <genClasses ecoreClass="rules.ecore#//java/CreateCompilationUnitAction">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference rules.ecore#//java/CreateCompilationUnitAction/compilationUnit"/>
+      </genClasses>
+      <genClasses ecoreClass="rules.ecore#//java/DeleteCompilationUnitAction">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference rules.ecore#//java/DeleteCompilationUnitAction/compilationUnit"/>
+      </genClasses>
+      <genClasses ecoreClass="rules.ecore#//java/UpdateCompilationUnitAction">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rules.ecore#//java/UpdateCompilationUnitAction/compilationUnit"/>
+      </genClasses>
+    </nestedGenPackages>
   </genPackages>
 </genmodel:GenModel>

@@ -1,7 +1,16 @@
 package org.nasdanika.models.rules.tests.inspectors;
 
-import org.nasdanika.models.java.Method;
+import java.util.Collection;
+
+import org.nasdanika.common.ProgressMonitor;
+import org.nasdanika.models.coverage.Counter;
+import org.nasdanika.models.coverage.Coverage;
+import org.nasdanika.models.java.CompilationUnit;
+import org.nasdanika.models.java.Operation;
+import org.nasdanika.models.rules.RulesFactory;
 import org.nasdanika.models.rules.Violation;
+import org.nasdanika.models.rules.java.CreateCompilationUnitAction;
+import org.nasdanika.models.rules.java.JavaFactory;
 import org.nasdanika.models.rules.reflection.Inspector;
 import org.nasdanika.models.rules.reflection.RuleSet;
 
@@ -17,6 +26,12 @@ import org.nasdanika.models.rules.reflection.RuleSet;
 		    description: Artifacts with this severity are not allowed to be further processed (e.g. deployed, published to a repository) 
 		""")
 public class JavaCoverageReflectiveInspectors {
+	
+	private Collection<TestGenerator> testGenerators;
+
+	public JavaCoverageReflectiveInspectors(Collection<TestGenerator> testGenerators) {
+		this.testGenerators = testGenerators;
+	}
 	
 //	/**
 //	 * Inspector with single parameter returning string.
@@ -45,26 +60,41 @@ public class JavaCoverageReflectiveInspectors {
 //	}
 	
 	@Inspector("""
-			name: Metod with no test coverage
+			name: Metod or constructor with low test coverage
 			documentation:
 			  exec.content.Markdown:
 			    source:
 			      exec.content.Text: |
-			        This method is not referenced from test cases
-			        
-			        This inspector is a demo implementation of a code generating inspector - an automated developer assistant
-			        It generates a JUnit test case based on the method body using OpenAI
-			          
-			        TODO:
-			        
-			          * Exclude private types (optionally) and anonymous
-			          * Fully qualified name
-			          * Marked/Markers 
-			          * Appending test case to a test class instead of overwriting like in this demo - aggregation of violations. 
-			          * Merging using JMerge - adding @generated tag to generated methods and then adding NOT (dirtying) upon manual changes			          
+			        Method or constructor with low test coverage.
 			""") 	
-	public Violation untestedMethodInspector(Method method) {
-		System.out.println(">>> Here we are: " + method + " " + method.getName() + " " + method.getSource());
+	public Violation untestedMethodInspector(Operation operation, ProgressMonitor progressMonitor) {
+		// TODO - only for top level or nested classes' constructors and methods
+		
+		// Using line coverage
+		int covered = 0;
+		int missed = 0;
+		for (Coverage coverage:	operation.getCoverage()) {
+			Counter lineCounter = coverage.getLineCounter();
+			covered += lineCounter.getCovered();
+			missed += lineCounter.getMissed();
+		}
+		
+		int total = covered + missed;
+		
+		if (total > 0 && covered * 3 < total) { // For this demo using coverage below 33% as low
+			Violation result = RulesFactory.eINSTANCE.createViolation();
+			result.setDescription("Low test coverage for " + operation.getName()); // TODO - FQN			
+			// Reporting a violation with low coverage and a compilation unit actions containing generated tests if test generators are present
+			for (TestGenerator testGenerator: testGenerators) {
+				for (CompilationUnit testCU: testGenerator.generateTest(operation, null, progressMonitor)) {
+					CreateCompilationUnitAction cca = JavaFactory.eINSTANCE.createCreateCompilationUnitAction();
+					cca.setCompilationUnit(testCU);
+					result.getActions().add(cca);									
+				}				
+			}
+			
+			return result;
+		}
 		return null;
 	}
 	

@@ -15,7 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.PrintStreamProgressMonitor;
 import org.nasdanika.common.ProgressMonitor;
+import org.nasdanika.models.coverage.ModuleCoverage;
 import org.nasdanika.models.java.util.JavaParserResourceFactory;
+import org.nasdanika.models.java.util.ModuleCoverageProvider;
 import org.nasdanika.models.rules.InspectionResult;
 import org.nasdanika.models.rules.Inspector;
 import org.nasdanika.models.rules.NotifierInspector;
@@ -24,9 +26,6 @@ import org.nasdanika.models.rules.Severity;
 import org.nasdanika.ncore.Tree;
 import org.nasdanika.ncore.TreeItem;
 import org.nasdanika.ncore.util.DirectoryContentFileURIHandler;
-
-import com.github.javaparser.ParserConfiguration.LanguageLevel;
-import com.github.javaparser.StaticJavaParser;
 
 /**
  * Tests of java analyzers
@@ -48,20 +47,23 @@ public class TestJavaAnalyzers {
 	@Test
 	public void testAttachCoverage() throws IOException {
 		// Copying graph sources to target
-		File graphDir = new File("..\\..\\..\\..\\git\\core\\graph");
-		File targetGraphDir = new File("target\\test-java-sources\\graph");
-		targetGraphDir.mkdirs();
-		org.nasdanika.common.Util.copy(new File(graphDir, "src/main/java"), targetGraphDir, true, null);
+		File projectDir = new File("../../../coverage/model/testData").getCanonicalFile();
+		File targetProjectDir = new File("target/test-data");
+		targetProjectDir.mkdirs();
+		org.nasdanika.common.Util.copy(projectDir, targetProjectDir, true, null);
 		
+		
+		File jacocoExec = new File(targetProjectDir, "target/jacoco.exec");
 		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());		
-		StaticJavaParser.getParserConfiguration().setLanguageLevel(LanguageLevel.JAVA_17);
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("java", new JavaParserResourceFactory());		
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+		ModuleCoverage moduleCoverage = ModuleCoverage.loadJacoco("org.nasdanika.graph", jacocoExec, new File(targetProjectDir, "target/classes"));
+		
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("java", new JavaParserResourceFactory(new ModuleCoverageProvider(moduleCoverage)));		
 		URIHandler fileDirectoryURIHandler = new DirectoryContentFileURIHandler();
 		resourceSet.getURIConverter().getURIHandlers().add(0, fileDirectoryURIHandler);
 		
-		URI graphDirURI = URI.createFileURI(targetGraphDir.getCanonicalPath()).appendSegment("");		
-		Resource dirResource = resourceSet.getResource(graphDirURI, true);
+		URI sourceDirURI = URI.createFileURI(new File(targetProjectDir, "src/main/java").getCanonicalPath()).appendSegment("");		
+		Resource dirResource = resourceSet.getResource(sourceDirURI, true);
 		
 		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
 		Inspector<Object> inspector = Inspector.load(null, progressMonitor);
@@ -82,26 +84,5 @@ public class TestJavaAnalyzers {
 					Context.EMPTY_CONTEXT, 
 					progressMonitor);				
 	}
-	
-
-	@Test
-	public void testLinkingCoverage() throws IOException {
-		
-//		ResourceSet resourceSet = new ResourceSetImpl();
-//		
-//		String javaPackagePath = new File("src/main/java/org/nasdanika/models/java/JavaPackage.java").getCanonicalPath();
-//		Resource javaPackageResource = resourceSet.getResource(URI.createFileURI(javaPackagePath), true);
-//		for (EObject root: javaPackageResource.getContents()) {
-//			System.out.println(root);
-//		}		
-	}
-	
-	// Test loading with coverage
-	
-	// Test saving
-	
-	// Test modifying, updating and then saving
-	
-	
 				
 }

@@ -95,4 +95,22 @@
   <eClassifiers xsi:type="ecore:EClass" name="UpdateResourceAction" eSuperTypes="#//ResourceAction"/>
   <eClassifiers xsi:type="ecore:EClass" name="UpdateTextResourceAction" eSuperTypes="#//UpdateResourceAction #//TextResourceAction"/>
   <eClassifiers xsi:type="ecore:EClass" name="UpdateBinaryResourceAction" eSuperTypes="#//UpdateResourceAction #//BinaryResourceAction"/>
+  <eSubpackages name="java" nsURI="ecore://nasdanika.org/models/rules/java" nsPrefix="org.nasdanika.models.rules.java">
+    <eClassifiers xsi:type="ecore:EClass" name="CompilationUnitAction" eSuperTypes="#//Action">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An action on a compilation unit"/>
+      </eAnnotations>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="CreateCompilationUnitAction" eSuperTypes="#//java/CompilationUnitAction">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="compilationUnit" eType="ecore:EClass ../../org.nasdanika.models.java/model/java.ecore#//CompilationUnit"
+          containment="true"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="DeleteCompilationUnitAction" eSuperTypes="#//java/CompilationUnitAction">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="compilationUnit" eType="ecore:EClass ../../org.nasdanika.models.java/model/java.ecore#//CompilationUnit"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="UpdateCompilationUnitAction" eSuperTypes="#//java/CompilationUnitAction">
+      <eStructuralFeatures xsi:type="ecore:EReference" name="compilationUnit" eType="ecore:EClass ../../org.nasdanika.models.java/model/java.ecore#//CompilationUnit"
+          containment="true"/>
+    </eClassifiers>
+  </eSubpackages>
 </ecore:EPackage>

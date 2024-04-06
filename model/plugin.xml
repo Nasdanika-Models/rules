@@ -14,4 +14,12 @@
             genModel="model/rules.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated rules -->
+      <package
+            uri="ecore://nasdanika.org/models/rules/java"
+            class="org.nasdanika.models.rules.java.JavaPackage"
+            genModel="model/rules.genmodel"/>
+   </extension>
+
 </plugin>

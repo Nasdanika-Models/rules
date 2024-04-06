@@ -11,6 +11,8 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import org.nasdanika.drawio.model.ModelPackage;
 import org.nasdanika.models.architecture.ArchitecturePackage;
+import org.nasdanika.models.coverage.CoveragePackage;
+import org.nasdanika.models.java.JavaPackage;
 import org.nasdanika.models.party.PartyPackage;
 import org.nasdanika.models.rules.Action;
 import org.nasdanika.models.rules.BinaryResourceAction;
@@ -34,6 +36,7 @@ import org.nasdanika.models.rules.UpdateResourceAction;
 import org.nasdanika.models.rules.UpdateTextResourceAction;
 import org.nasdanika.models.rules.Violation;
 import org.nasdanika.models.rules.Waiver;
+import org.nasdanika.models.rules.java.impl.JavaPackageImpl;
 import org.nasdanika.ncore.NcorePackage;
 
 /**
@@ -227,16 +230,24 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 
 		// Initialize simple dependencies
 		ArchitecturePackage.eINSTANCE.eClass();
+		CoveragePackage.eINSTANCE.eClass();
 		ModelPackage.eINSTANCE.eClass();
 		org.nasdanika.graph.model.ModelPackage.eINSTANCE.eClass();
+		JavaPackage.eINSTANCE.eClass();
 		NcorePackage.eINSTANCE.eClass();
 		PartyPackage.eINSTANCE.eClass();
 
+		// Obtain or create and register interdependencies
+		Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(org.nasdanika.models.rules.java.JavaPackage.eNS_URI);
+		JavaPackageImpl theJavaPackage_1 = (JavaPackageImpl)(registeredPackage instanceof JavaPackageImpl ? registeredPackage : org.nasdanika.models.rules.java.JavaPackage.eINSTANCE);
+
 		// Create package meta-data objects
 		theRulesPackage.createPackageContents();
+		theJavaPackage_1.createPackageContents();
 
 		// Initialize created meta-data
 		theRulesPackage.initializePackageContents();
+		theJavaPackage_1.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theRulesPackage.freeze();
@@ -749,8 +760,12 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
+		org.nasdanika.models.rules.java.JavaPackage theJavaPackage_1 = (org.nasdanika.models.rules.java.JavaPackage)EPackage.Registry.INSTANCE.getEPackage(org.nasdanika.models.rules.java.JavaPackage.eNS_URI);
 		ArchitecturePackage theArchitecturePackage = (ArchitecturePackage)EPackage.Registry.INSTANCE.getEPackage(ArchitecturePackage.eNS_URI);
 		NcorePackage theNcorePackage = (NcorePackage)EPackage.Registry.INSTANCE.getEPackage(NcorePackage.eNS_URI);
+
+		// Add subpackages
+		getESubpackages().add(theJavaPackage_1);
 
 		// Create type parameters
 

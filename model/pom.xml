@@ -63,6 +63,11 @@
 		    <version>${architecture.version}</version>
 		</dependency> 		
 		<dependency>
+		    <groupId>org.nasdanika.models.java</groupId>
+		    <artifactId>model</artifactId>
+		    <version>2024.3.0</version>
+		</dependency> 		
+		<dependency>
 		    <groupId>org.nasdanika.core</groupId>
 		    <artifactId>capability</artifactId>
 		    <version>${core.version}</version>
