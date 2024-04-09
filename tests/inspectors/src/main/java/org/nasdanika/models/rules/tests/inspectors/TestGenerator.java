@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.models.java.Code;
 import org.nasdanika.models.java.CompilationUnit;
+import org.nasdanika.models.java.Source;
 
 /**
  * Service interface to be implemented by test generators
@@ -17,6 +18,6 @@ public interface TestGenerator {
 	 * @param prompt Additional instructions
 	 * @return A list of compilation units.  
 	 */
-	Collection<CompilationUnit> generateTest(Code code, String prompt, ProgressMonitor progressMonitor);
+	Collection<CompilationUnit> generateTest(Source source, String prompt, ProgressMonitor progressMonitor);
 
 }

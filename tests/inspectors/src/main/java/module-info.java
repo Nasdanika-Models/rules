@@ -11,6 +11,7 @@ module org.nasdanika.models.rules.tests.inspectors {
 	requires transitive org.nasdanika.models.rules.tests.rules;
 	requires transitive org.nasdanika.models.java;
 	requires org.nasdanika.models.rules; // For testing Java inspectors
+	requires org.apache.commons.lang3;
 	
 	opens org.nasdanika.models.rules.tests.inspectors; // For reflection
 	

@@ -29,7 +29,16 @@ public class ReflectiveInspectorFactory extends ServiceCapabilityFactory<Object,
 			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
 			ProgressMonitor progressMonitor) {
 
-			CompletionStage<Iterable<CapabilityProvider<Object>>> testGeneratorCS = resolver.apply(ServiceCapabilityFactory.createRequirement(TestGenerator.class, null, new JUnitTestRequirement("5")), progressMonitor);
+			JUnitTestRequirement jUnitTestRequirement = new JUnitTestRequirement(
+					"5", 
+					true, 
+					true, 
+					true, 
+					false,
+					false, 
+					false);
+			
+			CompletionStage<Iterable<CapabilityProvider<Object>>> testGeneratorCS = resolver.apply(ServiceCapabilityFactory.createRequirement(TestGenerator.class, null, jUnitTestRequirement), progressMonitor);
 			return testGeneratorCS.thenApply(testGenerators -> applyTestGenerators(testGenerators, progressMonitor));
 	}
 	
