@@ -74,8 +74,7 @@ public class TestJavaAnalyzers {
 		File targetProjectDir = new File("target/test-data");
 		targetProjectDir.mkdirs();
 		org.nasdanika.common.Util.copy(projectDir, targetProjectDir, true, null);
-		
-		
+				
 		File jacocoExec = new File(targetProjectDir, "target/jacoco.exec");
 		ResourceSet resourceSet = new ResourceSetImpl();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
