@@ -131,8 +131,7 @@ public class TestJavaAnalyzers {
 				mergedCompilationUnitResource.getContents().add(mergedCompilationUnit);
 				mergedCompilationUnitResource.save(null);
 			}
-		}
-			
+		}			
 	}
 	
 	protected CompilationUnit merge(CompilationUnit a, CompilationUnit b) {
