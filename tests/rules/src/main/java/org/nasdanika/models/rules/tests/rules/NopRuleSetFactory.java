@@ -8,7 +8,6 @@ import java.util.function.BiFunction;
 import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
 import org.nasdanika.common.ProgressMonitor;
-import org.nasdanika.models.rules.Inspector;
 import org.nasdanika.models.rules.RuleSet;
 import org.nasdanika.models.rules.RulesFactory;
 

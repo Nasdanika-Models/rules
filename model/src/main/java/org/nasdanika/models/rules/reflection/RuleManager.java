@@ -73,13 +73,21 @@ public interface RuleManager {
 		Rule rule = createRule();
 		
 		URI baseURI = Util.createClassURI(inspectorMethod.getDeclaringClass());		
-			eObjectLoader.loadYaml(
-					spec, 
-					rule, 
-					baseURI, 
-					null, 
-					Collections.emptyList(), 
-					progressMonitor);
+		eObjectLoader.loadYaml(
+			spec, 
+			rule, 
+			baseURI, 
+			null, 
+			Collections.emptyList(), 
+			progressMonitor);
+		
+		String methodName = inspectorMethod.getName();		
+		if (Util.isBlank(rule.getName())) {
+			rule.setName(Util.nameToLabel(methodName));
+		}
+		if (Util.isBlank(rule.getId())) {
+			rule.setId(inspectorMethod.getDeclaringClass().getName() + "." + methodName);
+		}
 
 		return rule;
 	}
@@ -201,14 +209,25 @@ public interface RuleManager {
 		
 		org.nasdanika.models.rules.RuleSet ruleSet = createRuleSet();
 		
-		URI baseURI = Util.createClassURI(target.getClass());		
-			eObjectLoader.loadYaml(
-					spec, 
-					ruleSet, 
-					baseURI, 
-					null, 
-					Collections.emptyList(), 
-					progressMonitor);
+		Class<? extends Object> clazz = target.getClass();
+		URI baseURI = Util.createClassURI(clazz);		
+		eObjectLoader.loadYaml(
+			spec, 
+			ruleSet, 
+			baseURI, 
+			null, 
+			Collections.emptyList(), 
+			progressMonitor);
+			
+		String className = clazz.getName();
+		if (Util.isBlank(ruleSet.getName())) {
+			int lastDot = className.lastIndexOf('.');
+			ruleSet.setName(Util.nameToLabel(lastDot == -1 ? className : className.substring(lastDot + 1)));
+		}
+		
+		if (Util.isBlank(ruleSet.getId())) {
+			ruleSet.setId(className);
+		}
 
 		return ruleSet;		
 	}

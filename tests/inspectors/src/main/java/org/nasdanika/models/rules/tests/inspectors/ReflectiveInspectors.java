@@ -183,7 +183,7 @@ public class ReflectiveInspectors {
 	}
 	
 	@Inspector(value = """
-			name: Unexpected result inspector 
+			#name: Unexpected result inspector 
 			documentation:
 			  exec.content.Markdown:
 			    source:
