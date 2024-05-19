@@ -7,14 +7,14 @@ import java.util.stream.Stream;
 import org.nasdanika.capability.CapabilityLoader;
 import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
-import org.nasdanika.common.Composeable;
+import org.nasdanika.common.Composable;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
 
 /**
  * Inspects provided object and passes inspection results to a consumer
  */
-public interface Inspector<T> extends Composeable<Inspector<T>> {
+public interface Inspector<T> extends Composable<Inspector<T>> {
 		
 	void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor);
 	
