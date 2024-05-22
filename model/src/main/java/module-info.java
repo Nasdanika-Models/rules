@@ -1,3 +1,6 @@
+import org.nasdanika.capability.CapabilityFactory;
+import org.nasdanika.models.rules.java.util.RulesJavaEPackageResourceSetCapabilityFactory;
+import org.nasdanika.models.rules.util.RulesEPackageResourceSetCapabilityFactory;
 
 module org.nasdanika.models.rules {
 	exports org.nasdanika.models.rules;
@@ -12,5 +15,9 @@ module org.nasdanika.models.rules {
 	requires transitive org.eclipse.emf.common;
 	requires transitive org.nasdanika.models.architecture;
 	requires transitive org.nasdanika.models.java;
+	
+	provides CapabilityFactory with
+		RulesEPackageResourceSetCapabilityFactory,
+		RulesJavaEPackageResourceSetCapabilityFactory;
 		
 }
