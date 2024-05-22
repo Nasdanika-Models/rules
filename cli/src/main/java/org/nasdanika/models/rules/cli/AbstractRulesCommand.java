@@ -1,5 +1,6 @@
 package org.nasdanika.models.rules.cli;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,7 +8,9 @@ import java.util.LinkedHashMap;
 //import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -25,6 +28,8 @@ import org.nasdanika.models.rules.Failure;
 import org.nasdanika.models.rules.InspectionResult;
 import org.nasdanika.models.rules.Inspector;
 import org.nasdanika.models.rules.NotifierInspector;
+import org.nasdanika.models.rules.Rule;
+import org.nasdanika.models.rules.RuleSet;
 import org.nasdanika.models.rules.Severity;
 import org.nasdanika.models.rules.Violation;
 import org.nasdanika.ncore.Tree;
@@ -149,6 +154,40 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 		return obj -> match(obj, baseURI);
 	}
 	
+	protected boolean isIncluded(String path) {
+		String[] includes = getIncludes();
+		
+		if (includes == null || includes.length == 0) {
+			return false;
+		}
+		
+		AntPathMatcher matcher = new AntPathMatcher();
+		for (String include: includes) {
+			if (matcher.match(include, path)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	protected boolean isExcluded(String path) {
+		String[] excludes = getExcludes();
+		
+		if (excludes == null || excludes.length == 0) {
+			return false;
+		}
+		AntPathMatcher matcher = new AntPathMatcher();
+		for (String exclude: excludes) {
+			if (matcher.match(exclude, path)) {
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+	
 	protected boolean match(Notifier obj, URI baseURI) {
 		URI resourceURI = getResource(obj).getURI();
 		if (Objects.equals(baseURI, resourceURI)) {
@@ -158,38 +197,19 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 		if (obj instanceof Tree) {
 			return true;
 		}
-		
-		String[] includes = getIncludes();
-		
-		if (includes == null || includes.length == 0) {
-			return false;
-		}
-		
+				
 		if (obj instanceof TreeItem) {
 			String name = ((TreeItem) obj).getName();
 			URI uri = URI.createURI(name).resolve(resourceURI);
 			String path = uri.deresolve(baseURI).toString();
-			AntPathMatcher matcher = new AntPathMatcher();
-			
-			boolean matched = false;
-			for (String include: includes) {
-				if (matcher.match(include, path)) {
-					matched = true;
-					break;
-				}
-			}
-			if (!matched) {
+
+			if (!isIncluded(path)) {
 				return false;
 			}
 			
-			String[] excludes = getExcludes();
-			if (excludes != null) {
-				for (String exclude: excludes) {
-					if (matcher.match(exclude, path)) {
-						return false;
-					}
-				}
-			}			
+			if (isExcluded(path)) {
+				return false;
+			}
 		}
 		
 		return true;
@@ -226,13 +246,16 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 			}
 			
 			Map<Resource, List<Map.Entry<Notifier, List<InspectionResult>>>> groupedByResource = Util.groupBy(inspectionResults.entrySet(), e -> getResource(e.getKey()));
-			report(groupedByResource, progressMonitor.split("Generating report", 1));
+			generateReport(groupedByResource, progressMonitor.split("Generating report", 1));
 			
-			boolean fail = false;
-			for (InspectionResult inspectionResult: inspectionResults.values().stream().flatMap(Collection::stream).toList()) {
-			}
+			Optional<InspectionResult> failure = inspectionResults
+				.values()
+				.stream()
+				.flatMap(Collection::stream)
+				.filter(this::isFail)
+				.findAny();
 			
-			return fail ? 1 : 0;
+			return failure.isPresent() ? 1 : 0;
 		}
 	}
 	
@@ -240,12 +263,48 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 		if (inspectionResult instanceof Failure) {
 			return true;
 		}
-		if (inspectionResult isntanceof Violation) {
-			
+		if (inspectionResult instanceof Violation) {
+			Rule rule = inspectionResult.getRule();
+			if (rule != null && isFailOnSeverity(rule.getSeverity())) {
+				return true;
+			}
 		}
-
+		return false;
 	}
 	
-	protected abstract void report(Map<Resource, List<Map.Entry<Notifier, List<InspectionResult>>>> results, ProgressMonitor progressMonitor);
+	protected abstract void generateReport(Map<Resource, List<Map.Entry<Notifier, List<InspectionResult>>>> results, ProgressMonitor progressMonitor);
+	
+	/**
+	 * Subclasses may leverage this method to output findings as text
+	 * @param results
+	 * @param out
+	 * @param progressMonitor
+	 */
+	protected void generateTextReport(
+			Map<Resource, List<Map.Entry<Notifier, List<InspectionResult>>>> results, 
+			PrintStream out,
+			ProgressMonitor progressMonitor) {
+		
+		for (Entry<Resource, List<Entry<Notifier, List<InspectionResult>>>> resultEntry: results.entrySet().stream().sorted((a, b) -> a.getKey().getURI().toString().compareTo(b.getKey().getURI().toString())).toList()) {
+			out.println(resultEntry.getKey().getURI());
+			for (Entry<Notifier, List<InspectionResult>> notifierEntry: resultEntry.getValue()) {
+				for (InspectionResult inspectionResult: notifierEntry.getValue()) {
+					printInspectionResult(inspectionResult, out);
+				}
+			}
+		}		
+	}
+	
+	protected void printInspectionResult(InspectionResult inspectionResult, PrintStream out) {
+		out.println("\t[" + inspectionResult.eClass().getName() + "] " + inspectionResult.getName());
+		Rule rule = inspectionResult.getRule();
+		if (rule != null) {
+			out.println("\t\tRule: " + rule.getName());
+			EObject ruleContainer = rule.eContainer();
+			if (ruleContainer instanceof RuleSet) {
+				out.println("\t\tRule set: " + ((RuleSet) ruleContainer).getName());
+			}
+		}		
+	}
 
 }
