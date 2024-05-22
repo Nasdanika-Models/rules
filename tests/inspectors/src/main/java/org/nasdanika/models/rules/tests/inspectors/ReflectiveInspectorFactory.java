@@ -54,6 +54,7 @@ public class ReflectiveInspectorFactory extends ServiceCapabilityFactory<Object,
 
 		Inspector<Object> inspector = new InspectorSet(
 			RuleManager.LOADING_RULE_MANAGER, 
+			null,
 			false, 
 			progressMonitor, 
 			new ReflectiveInspectors(),

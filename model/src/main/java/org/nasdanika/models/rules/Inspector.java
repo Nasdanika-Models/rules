@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.nasdanika.capability.CapabilityLoader;
@@ -150,7 +151,7 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 	 * Loads inspectors from Inspector.Factory services and composes them.
 	 * @return
 	 */
-	static Inspector<Object> load(Object requirement, ProgressMonitor progressMonitor) {
+	static Inspector<Object> load(Predicate<Inspector<Object>> requirement, ProgressMonitor progressMonitor) {
 		Inspector<Object> ret = null;
 		CapabilityLoader capabilityLoader = new CapabilityLoader();
 		Iterable<CapabilityProvider<Object>> providers = capabilityLoader.load(ServiceCapabilityFactory.createRequirement(Inspector.class, null, requirement), progressMonitor);

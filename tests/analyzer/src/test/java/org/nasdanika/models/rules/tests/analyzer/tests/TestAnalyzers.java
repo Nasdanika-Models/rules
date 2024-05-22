@@ -311,8 +311,12 @@ public class TestAnalyzers {
 		
 		Resource dirResource = resourceSet.getResource(currentDirURI, true);
 		
-		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();
-		Inspector<Object> inspector = Inspector.load(null, progressMonitor);
+		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();		
+		Predicate<Inspector<Object>> inspectorPredicate = inspector -> {
+			System.out.println("Inspector >>> " + inspector);
+			return true;
+		};
+		Inspector<Object> inspector = Inspector.load(inspectorPredicate, progressMonitor);
 		
 		// Visiting only YAML 
 		Predicate<Notifier> predicate = obj -> {

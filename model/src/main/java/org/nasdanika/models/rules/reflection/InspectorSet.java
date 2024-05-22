@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 import org.nasdanika.common.Context;
@@ -49,6 +50,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 	 */
 	public InspectorSet(
 			RuleManager ruleManager, 
+			Predicate<org.nasdanika.models.rules.Inspector<Object>> inspectorPredicate,
 			boolean parallel, 
 			ProgressMonitor progressMonitor,
 			Object... factories) {
@@ -58,8 +60,13 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			getAnnotatedElementRecords(factory, Collections.singletonList(factory))
 				.filter(aer -> aer.getAnnotation(Inspector.class) != null)
 				.map(aer -> createInspector(aer, progressMonitor))
+				.filter(i -> inspectorPredicate == null || inspectorPredicate.test(i))
 				.forEach(inspectors::add);
 		}
+	}
+	
+	public boolean isEmpty() {
+		return inspectors.isEmpty();
 	}
 	
 	@Override
