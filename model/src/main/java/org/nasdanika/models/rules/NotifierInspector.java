@@ -1,5 +1,6 @@
 package org.nasdanika.models.rules;
 
+import java.util.Collection;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -52,6 +53,11 @@ public interface NotifierInspector extends Inspector<Notifier> {
 					return containerURI.appendSegment(((TreeItem) eObj).getName());
 				}
 				return containerURI;
+			}
+			
+			@Override
+			public Collection<Rule> getRules() {
+				return NotifierInspector.this.getRules();
 			}
 
 			@Override
@@ -111,6 +117,11 @@ public interface NotifierInspector extends Inspector<Notifier> {
 		return new NotifierInspector() {
 			
 			@Override
+			public Collection<Rule> getRules() {
+				return inspector.getRules();
+			}
+			
+			@Override
 			public void inspect(
 					Notifier target, 
 					BiConsumer<? super Notifier, ? super InspectionResult> inspectionResultConsumer, 
@@ -124,6 +135,7 @@ public interface NotifierInspector extends Inspector<Notifier> {
 			public boolean isForType(Class<?> targetType) {
 				return inspector.isForType(targetType);
 			}
+			
 		};
 	}
 

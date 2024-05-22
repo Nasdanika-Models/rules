@@ -63,6 +63,11 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 	}
 	
 	@Override
+	public Collection<Rule> getRules() {
+		return inspectors.stream().flatMap(i -> i.getRules().stream()).toList();
+	}
+	
+	@Override
 	protected Stream<AnnotatedElementRecord> getAnnotatedElementRecords(Object target, List<Object> factoryPath) {
 		return super.getAnnotatedElementRecords(target, factoryPath);
 	}
@@ -78,9 +83,9 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		return RulesFactory.eINSTANCE.createRule();
 	}
 	
-	protected org.nasdanika.models.rules.RuleSet createRuleSet() {
-		return RulesFactory.eINSTANCE.createRuleSet();
-	}
+//	protected org.nasdanika.models.rules.RuleSet createRuleSet() {
+//		return RulesFactory.eINSTANCE.createRuleSet();
+//	}
 	
 	protected RuleManager getRuleManager(AnnotatedElementRecord aer) {
 		Object aerTarget = aer.getTarget();
@@ -152,6 +157,11 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		}
 		
 		return new org.nasdanika.models.rules.Inspector<Object>() {
+			
+			@Override
+			public Collection<Rule> getRules() {
+				return Collections.singleton(rule[0]);
+			}
 
 			@Override
 			public void inspect(

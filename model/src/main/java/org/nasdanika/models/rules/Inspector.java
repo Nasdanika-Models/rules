@@ -1,6 +1,8 @@
 package org.nasdanika.models.rules;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.function.BiConsumer;
 import java.util.stream.Stream;
 
@@ -15,6 +17,13 @@ import org.nasdanika.common.ProgressMonitor;
  * Inspects provided object and passes inspection results to a consumer
  */
 public interface Inspector<T> extends Composable<Inspector<T>> {
+	
+	/**
+	 * @return
+	 */
+	default Collection<Rule> getRules() {
+		return Collections.emptySet();
+	}
 		
 	void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor);
 	
@@ -31,6 +40,11 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 		}
 		
 		return new Inspector<T>() {
+			
+			@Override
+			public Collection<Rule> getRules() {
+				return Stream.of(this, other).flatMap(i -> i.getRules().stream()).toList();
+			}			
 
 			@Override
 			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
@@ -56,6 +70,11 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 	@SafeVarargs
 	static <T> Inspector<T> compose(Inspector<T>... inspectors) {
 		return new Inspector<T>() {
+			
+			@Override
+			public Collection<Rule> getRules() {
+				return Arrays.stream(inspectors).flatMap(i -> i.getRules().stream()).toList();
+			}
 
 			@Override
 			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
@@ -83,6 +102,11 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 	
 	static <T> Inspector<T> compose(Collection<Inspector<T>> inspectors, boolean parallel) {
 		return new Inspector<T>() {
+			
+			@Override
+			public Collection<Rule> getRules() {
+				return inspectors.stream().flatMap(i -> i.getRules().stream()).toList();
+			}
 
 			@Override
 			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
