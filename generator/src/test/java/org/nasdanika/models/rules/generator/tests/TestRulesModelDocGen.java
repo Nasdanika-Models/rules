@@ -25,11 +25,10 @@ import org.nasdanika.html.bootstrap.Theme;
 import org.nasdanika.html.model.app.Action;
 import org.nasdanika.html.model.app.gen.ActionSiteGenerator;
 import org.nasdanika.models.architecture.ArchitecturePackage;
-import org.nasdanika.models.echarts.graph.GraphPackage;
 import org.nasdanika.models.ecore.graph.processors.EcoreActionGenerator;
 import org.nasdanika.models.ecore.graph.processors.EcoreNodeProcessorFactory;
 import org.nasdanika.models.rules.RulesPackage;
-import org.nasdanika.models.rules.processors.ecore.EcoreGenRulesProcessorsFactory;
+import org.nasdanika.models.rules.processors.ecore.RulesEcoreGenProcessorsFactory;
 import org.nasdanika.ncore.NcorePackage;
 
 /**
@@ -45,7 +44,7 @@ public class TestRulesModelDocGen {
 		MutableContext context = Context.EMPTY_CONTEXT.fork();
 		Consumer<Diagnostic> diagnosticConsumer = d -> d.dump(System.out, 0);
 		List<Function<URI,Action>> actionProviders = new ArrayList<>();		
-		EcoreGenRulesProcessorsFactory ecoreGenExcelProcessorFactory = new EcoreGenRulesProcessorsFactory(context);		
+		RulesEcoreGenProcessorsFactory ecoreGenRulesProcessorFactory = new RulesEcoreGenProcessorsFactory(context);		
 		EcoreNodeProcessorFactory ecoreNodeProcessorFactory = new EcoreNodeProcessorFactory(
 				context, 
 				(uri, pm) -> {
@@ -58,7 +57,7 @@ public class TestRulesModelDocGen {
 					return null;
 				},
 				diagnosticConsumer,
-				ecoreGenExcelProcessorFactory);
+				ecoreGenRulesProcessorFactory);
 				
 		File actionModelsDir = new File("target\\action-models\\");
 		actionModelsDir.mkdirs();		

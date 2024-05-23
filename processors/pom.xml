@@ -21,6 +21,11 @@
 			<artifactId>graph</artifactId>
 			<version>${models.ecore.version}</version>
 		</dependency>		
+		<dependency>
+			<groupId>org.nasdanika.models.architecture</groupId>
+			<artifactId>processors</artifactId>
+			<version>2024.5.0</version>
+		</dependency>		
 	</dependencies>
 </project>
 

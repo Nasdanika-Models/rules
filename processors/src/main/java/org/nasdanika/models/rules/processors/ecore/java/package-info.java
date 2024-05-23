@@ -1,0 +1,1 @@
+package org.nasdanika.models.rules.processors.ecore.java;
