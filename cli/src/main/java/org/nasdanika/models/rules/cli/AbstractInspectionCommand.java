@@ -15,11 +15,13 @@ import java.util.function.Predicate;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.nasdanika.cli.ContextCommand;
-import org.nasdanika.cli.ProgressMonitorMixIn;
+import org.nasdanika.cli.ContextMixIn;
 import org.nasdanika.cli.ResourceSetMixIn;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
@@ -44,12 +46,9 @@ import picocli.CommandLine.ParameterException;
 import picocli.CommandLine.Spec;
 
 /**
- * Base abstract class for rules/inspector commands
+ * Base abstract class for commands performing inspections using rules and inspectors
  */
-public abstract class AbstractRulesCommand extends ContextCommand {
-	
-	@Mixin
-	private ProgressMonitorMixIn progressMonitorMixIn;
+public abstract class AbstractInspectionCommand extends AbstractInspectorCommand {
 	
 	@Mixin 
 	private ResourceSetMixIn resourceSetMixIn;
@@ -68,30 +67,44 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 //	File[] inputs;
 	
 	@Option(
-			names = {"-e", "--exclude"},
+			names = {"-e", "--exclude-resources"},
 			arity = "*",
 			description = {
 					"Resources to exclude from inspection",
 					"Ant pattern"
 				})
-	private String[] excludes;
+	private String[] resourceExcludes;
 	
-	protected String[] getExcludes() {
-		return excludes;
+	protected String[] getResourceExcludes() {
+		return resourceExcludes;
 	}
 	
 	@Option(
-			names = {"-i", "--include"},
+			names = {"-i", "--include-resources"},
 			arity = "*",
 			description = {
 					"Resources to include in inspection",
 					"Ant pattern"
 				})
-	private String[] includes;
+	private String[] resourceIncludes;
 	
-	protected String[] getIncludes() {
-		return includes;
+	protected String[] getResourceIncludes() {
+		return resourceIncludes;
 	}
+	
+	@Option(
+			names = "--exclude-types",
+			arity = "*",
+			description = "Target types to exclude"
+			)
+	protected String[] typeExcludes;
+	
+	@Option(
+			names = "--include-types",
+			arity = "*",
+			description = "Target types to include"
+			)
+	protected String[] typeIncludes;
 		
 	@Option(
 			names = {"-f", "--fail-on"},
@@ -115,10 +128,6 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 		return resourceSetMixIn.createResourceSet(progressMonitor);
 	}
 	
-	protected Object getInspectorRequirement() {
-		return null;
-	}
-	
 	protected boolean isFailOnSeverity(Severity severity) {
 		if (severity != null && failOnSeverities != null) {
 			for (String sName: failOnSeverities) {
@@ -140,22 +149,13 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 		}
 		return null;
 	}
-	
-	/**
-	 * Uses Inspector.load
-	 * @param progressMonitor
-	 * @return
-	 */
-	protected Inspector<Object> loadInspector(ProgressMonitor progressMonitor) {
-		return Inspector.load(getInspectorRequirement(), progressMonitor);
-	}
-	
+		
 	protected Predicate<Notifier> createPredicate(URI baseURI) {
 		return obj -> match(obj, baseURI);
 	}
 	
 	protected boolean isIncluded(String path) {
-		String[] includes = getIncludes();
+		String[] includes = getResourceIncludes();
 		
 		if (includes == null || includes.length == 0) {
 			return false;
@@ -172,7 +172,7 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 	}
 	
 	protected boolean isExcluded(String path) {
-		String[] excludes = getExcludes();
+		String[] excludes = getResourceExcludes();
 		
 		if (excludes == null || excludes.length == 0) {
 			return false;
@@ -197,6 +197,21 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 		if (obj instanceof Tree) {
 			return true;
 		}
+		
+		// Matching type
+		if ((typeIncludes != null || typeExcludes != null) && obj instanceof EObject) {
+			EClass type = ((EObject) obj).eClass();
+			if (typeIncludes != null) {
+				if (!matchType(type, typeIncludes)) {
+					return false;
+				}
+			}
+			if (typeExcludes != null) {
+				if (matchType(type, typeExcludes)) {
+					return false;
+				}
+			}
+		}
 				
 		if (obj instanceof TreeItem) {
 			String name = ((TreeItem) obj).getName();
@@ -215,6 +230,9 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 		return true;
 	}
 	
+	@Mixin
+	private ContextMixIn contextMixIn;
+	
 	@Spec CommandSpec spec;
 	
 	@Override
@@ -231,7 +249,7 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 			ResourceSet resourceSet = createResourceSet(progressMonitor.split("Creating Resource Set", 1));
 			Inspector<Object> inspector = loadInspector(progressMonitor.split("Loading Inspector", 1));
 			NotifierInspector notifierInspector = NotifierInspector.adapt(inspector);
-			Context context = createContext(progressMonitor.split("Creating context", 1));
+			Context context = contextMixIn.createContext(progressMonitor.split("Creating context", 1));
 			for (URI input: inputs) {
 				try (ProgressMonitor inputProgressMonitor = progressMonitor.split("Inspecting " + input, 1)) {
 					Resource inputResource = resourceSet.getResource(input, true);
@@ -306,5 +324,44 @@ public abstract class AbstractRulesCommand extends ContextCommand {
 			}
 		}		
 	}
+		
+	public boolean matchType(EClassifier eClassifier, String[] types) {
+		if (types != null && eClassifier != null) {
+			for (String type: types) {
+				URI typeURI = URI.createURI(type);
+				if (typeURI.hasFragment()) {
+					URI ePackageNsURI = typeURI.trimFragment();
+					EPackage ePackage = eClassifier.getEPackage();
+					if (ePackageNsURI.equals(URI.createURI(ePackage.getNsURI()))) {
+						String fragment = typeURI.fragment();
+						if (fragment.startsWith("//")) {
+							String eClassifierName = fragment.substring(2);
+							if (eClassifierName.equals(eClassifier.getName())) {
+								return true;
+							}
+						} 
+					}
+					continue;
+				}
+				
+				int dotIdx = type.indexOf('.');
+				if (dotIdx == -1) {
+					String name = eClassifier.getName();
+					for (EPackage ePkg = eClassifier.getEPackage(); ePkg != null; ePkg = ePkg.getESuperPackage()) {
+						name = ePkg.getName() + "." + name;
+					}
+					if (type.equals(name)) {
+						return true;
+					}
+					continue;
+				}
+				
+				if (type.equals(eClassifier.getName())) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}	
 
 }

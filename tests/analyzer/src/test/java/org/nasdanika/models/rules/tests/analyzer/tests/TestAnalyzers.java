@@ -44,6 +44,7 @@ import org.nasdanika.models.rules.ResourceAction;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RuleSet;
 import org.nasdanika.models.rules.Severity;
+import org.nasdanika.models.rules.reflection.InspectorSet;
 import org.nasdanika.ncore.Tree;
 import org.nasdanika.ncore.TreeItem;
 import org.nasdanika.ncore.util.DirectoryContentFileURIHandler;
@@ -314,6 +315,15 @@ public class TestAnalyzers {
 		ProgressMonitor progressMonitor = new PrintStreamProgressMonitor();		
 		Predicate<Inspector<Object>> inspectorPredicate = inspector -> {
 			System.out.println("Inspector >>> " + inspector);
+			if (inspector instanceof InspectorSet) {
+				for (RuleSet ruleSet: ((InspectorSet) inspector).getRuleSets()) {
+					System.out.println("\t[Rule Set] " + ruleSet.getName() + " " + ruleSet.getId());;
+				}								
+			} else {
+				for (Rule rule: inspector.getRules()) {
+					System.out.println("\t" + rule.getName() + " " + rule.getId());;
+				}				
+			}
 			return true;
 		};
 		Inspector<Object> inspector = Inspector.load(inspectorPredicate, progressMonitor);
