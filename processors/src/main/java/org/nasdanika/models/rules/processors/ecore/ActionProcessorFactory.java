@@ -24,30 +24,30 @@ public class ActionProcessorFactory /* extends NodeProcessorFactory */ {
 	}
 	
 	
-	@EClassifierNodeProcessorFactory(
-			description = "Description TODO",
-			documentation = 
-                    """
-					Documentation TODO 
-                    """
-	)
-	public EClassNodeProcessor createEClassNodeProcessor(
-			NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
-			java.util.function.Function<ProgressMonitor, Action> prototypeProvider,
-			BiConsumer<Label, ProgressMonitor> labelConfigurator,
-			ProgressMonitor progressMonitor) {		
-		return new EClassNodeProcessor(config, context, prototypeProvider) {
-			
-			@Override
-			public void configureLabel(Object source, Label label, ProgressMonitor progressMonitor) {
-				super.configureLabel(source, label, progressMonitor);
-				if (labelConfigurator != null) {
-					labelConfigurator.accept(label, progressMonitor);
-				}
-			}	
-			
-		};
-	}
+//	@EClassifierNodeProcessorFactory(
+//			description = "Description TODO",
+//			documentation = 
+//                    """
+//					Documentation TODO 
+//                    """
+//	)
+//	public EClassNodeProcessor createEClassNodeProcessor(
+//			NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
+//			java.util.function.Function<ProgressMonitor, Action> prototypeProvider,
+//			BiConsumer<Label, ProgressMonitor> labelConfigurator,
+//			ProgressMonitor progressMonitor) {		
+//		return new EClassNodeProcessor(config, context, prototypeProvider) {
+//			
+//			@Override
+//			public void configureLabel(Object source, Label label, ProgressMonitor progressMonitor) {
+//				super.configureLabel(source, label, progressMonitor);
+//				if (labelConfigurator != null) {
+//					labelConfigurator.accept(label, progressMonitor);
+//				}
+//			}	
+//			
+//		};
+//	}
 	
 	
 } 
