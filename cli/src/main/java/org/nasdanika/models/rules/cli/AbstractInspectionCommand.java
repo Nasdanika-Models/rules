@@ -68,7 +68,7 @@ public abstract class AbstractInspectionCommand extends AbstractInspectorCommand
 //	File[] inputs;
 	
 	@Option(
-			names = {"-e", "--exclude-resources"},
+			names = {"-e", "--exclude-resource"},
 			arity = "*",
 			description = {
 					"Resources to exclude from inspection",
@@ -81,7 +81,7 @@ public abstract class AbstractInspectionCommand extends AbstractInspectorCommand
 	}
 	
 	@Option(
-			names = {"-i", "--include-resources"},
+			names = {"-i", "--include-resource"},
 			arity = "*",
 			description = {
 					"Resources to include in inspection",
@@ -94,14 +94,14 @@ public abstract class AbstractInspectionCommand extends AbstractInspectorCommand
 	}
 	
 	@Option(
-			names = "--exclude-types",
+			names = "--exclude-type",
 			arity = "*",
 			description = "Target types to exclude"
 			)
 	protected String[] typeExcludes;
 	
 	@Option(
-			names = "--include-types",
+			names = "--include-type",
 			arity = "*",
 			description = "Target types to include"
 			)
@@ -130,8 +130,7 @@ public abstract class AbstractInspectionCommand extends AbstractInspectorCommand
 			description = "Max number of results to report"
 			)
 	private int limit;
-	
-	
+		
 	/**
 	 * Obtains {@link ResourceSet} from resourceSetMixIn.
 	 * Override for additional configuration
@@ -379,7 +378,16 @@ public abstract class AbstractInspectionCommand extends AbstractInspectorCommand
 					return true;
 				}
 			}
+			
+			if (eClassifier instanceof EClass) {
+				for (EClass superType: ((EClass) eClassifier).getESuperTypes()) {
+					if (matchType(superType, types)) {
+						return true;
+					}
+				}
+			}			
 		}
+		
 		return false;
 	}	
 

@@ -79,4 +79,12 @@ public interface RuleSet extends Domain {
 	 */
 	EList<Severity> getSeverities();
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model
+	 * @generated
+	 */
+	RuleSet resolve();
+
 } // RuleSet

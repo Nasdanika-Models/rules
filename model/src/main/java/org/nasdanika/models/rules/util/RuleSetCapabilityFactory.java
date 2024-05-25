@@ -26,43 +26,8 @@ public abstract class RuleSetCapabilityFactory extends ObjectLoaderCapabilityFac
 
 	@Override
 	protected RuleSet load(Predicate<RuleSet> requirement, ResourceSet resourceSet, ProgressMonitor progressMonitor) {
-		RuleSet ruleSet = resolve((RuleSet) resourceSet.getEObject(getResourceSetURI(), true));
+		RuleSet ruleSet = (RuleSet) resourceSet.getEObject(getResourceSetURI(), true);
 		return requirement == null || requirement.test(ruleSet) ? ruleSet : null;
-	}
-	
-	/**
-	 * If there are extends, makes a copy of the rule set and then applies extends. 
-	 * @param ruleSet
-	 * @return
-	 */
-	protected RuleSet resolve(RuleSet ruleSet) {
-		if (ruleSet == null || ruleSet.getExtends().isEmpty()) {
-			return ruleSet;
-		}
-		RuleSet copy = EcoreUtil.copy(ruleSet);
-		for (RuleSet base: ruleSet.getExtends()) {
-			RuleSet resolvedBase = resolve(base);
-			Z: for (Rule baseRule: resolvedBase.getRules()) {
-				for (Rule rule: copy.getRules()) {
-					if (Objects.equals(baseRule.getId(), rule.getId())) {
-						continue Z; // The base rule is present in the copy
-					}
-				}
-				copy.getRules().add(EcoreUtil.copy(baseRule)); // Adding the base rule to the copy
-			}
-		}		
-		
-		Iterator<Rule> rit = copy.getRules().iterator();
-		while (rit.hasNext()) {
-			Rule rule = rit.next();
-			if (rule.isSuppress()) {
-				rit.remove();
-			}
-		}
-		
-		// TODO - severities
-		
-		return copy;
 	}
 	
 	protected abstract URI getResourceSetURI();

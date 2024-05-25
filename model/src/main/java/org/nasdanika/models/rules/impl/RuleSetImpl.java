@@ -2,16 +2,19 @@
  */
 package org.nasdanika.models.rules.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.IdentityHashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.nasdanika.models.architecture.impl.DomainImpl;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RuleSet;
@@ -96,6 +99,67 @@ public class RuleSetImpl extends DomainImpl implements RuleSet {
 	@Override
 	public EList<Severity> getSeverities() {
 		return (EList<Severity>)eDynamicGet(RulesPackage.RULE_SET__SEVERITIES, RulesPackage.Literals.RULE_SET__SEVERITIES, true, true);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public RuleSet resolve() {
+		if (getExtends().isEmpty()) {
+			return this;
+		}
+		RuleSet copy = EcoreUtil.copy(this);
+
+		Map<Severity, Severity> severityMap = new IdentityHashMap<>();
+		// Severities
+		for (RuleSet base: getExtends()) {
+			RuleSet resolvedBase = base.resolve();
+			Z: for (Severity baseSeverity: resolvedBase.getSeverities()) {
+				for (Severity severity: copy.getSeverities()) {
+					if (Objects.equals(baseSeverity.getId(), severity.getId())) {
+						severityMap.put(baseSeverity, severity);
+						continue Z; // The base rule is present in the copy
+					}
+				}
+				Severity severityCopy = EcoreUtil.copy(baseSeverity);
+				copy.getSeverities().add(severityCopy); // Adding the base rule to the copy
+				severityMap.put(baseSeverity, severityCopy);
+			}
+		}		
+		
+		for (RuleSet base: getExtends()) {
+			RuleSet resolvedBase = base.resolve();
+			Z: for (Rule baseRule: resolvedBase.getRules()) {
+				for (Rule rule: copy.getRules()) {
+					if (Objects.equals(baseRule.getId(), rule.getId())) {
+						continue Z; // The base rule is present in the copy
+					}
+				}
+				Rule ruleCopy = EcoreUtil.copy(baseRule);
+				Severity severity = ruleCopy.getSeverity();
+				if (severity != null) {
+					Severity mappedSeverity = severityMap.get(severity);
+					if (mappedSeverity != null) {
+						ruleCopy.setSeverity(mappedSeverity);
+					}
+				}
+							
+				copy.getRules().add(ruleCopy); // Adding the base rule to the copy
+			}
+		}		
+		
+		Iterator<Rule> rit = copy.getRules().iterator();
+		while (rit.hasNext()) {
+			Rule rule = rit.next();
+			if (rule.isSuppress()) {
+				rit.remove();
+			}
+		}
+		
+		return copy;
 	}
 
 	/**
@@ -226,6 +290,20 @@ public class RuleSetImpl extends DomainImpl implements RuleSet {
 				return !getSeverities().isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case RulesPackage.RULE_SET___RESOLVE:
+				return resolve();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 } //RuleSetImpl

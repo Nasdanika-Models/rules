@@ -4,6 +4,7 @@ package org.nasdanika.models.rules.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.EReference;
@@ -37,6 +38,7 @@ import org.nasdanika.models.rules.UpdateTextResourceAction;
 import org.nasdanika.models.rules.Violation;
 import org.nasdanika.models.rules.Waiver;
 import org.nasdanika.models.rules.java.impl.JavaPackageImpl;
+import org.nasdanika.models.source.SourcePackage;
 import org.nasdanika.ncore.NcorePackage;
 
 /**
@@ -236,6 +238,7 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		JavaPackage.eINSTANCE.eClass();
 		NcorePackage.eINSTANCE.eClass();
 		PartyPackage.eINSTANCE.eClass();
+		SourcePackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
 		Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(org.nasdanika.models.rules.java.JavaPackage.eNS_URI);
@@ -345,6 +348,16 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 	@Override
 	public EReference getRuleSet_Severities() {
 		return (EReference)ruleSetEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getRuleSet__Resolve() {
+		return ruleSetEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -686,6 +699,7 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		createEReference(ruleSetEClass, RULE_SET__EXTENSIONS);
 		createEReference(ruleSetEClass, RULE_SET__RULES);
 		createEReference(ruleSetEClass, RULE_SET__SEVERITIES);
+		createEOperation(ruleSetEClass, RULE_SET___RESOLVE);
 
 		inspectableEClass = createEClass(INSPECTABLE);
 		createEReference(inspectableEClass, INSPECTABLE__INSPECTION_RESULTS);
@@ -809,6 +823,8 @@ public class RulesPackageImpl extends EPackageImpl implements RulesPackage {
 		getRuleSet_Rules().getEKeys().add(theNcorePackage.getStringIdentity_Id());
 		initEReference(getRuleSet_Severities(), this.getSeverity(), null, "severities", null, 0, -1, RuleSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getRuleSet_Severities().getEKeys().add(theNcorePackage.getStringIdentity_Id());
+
+		initEOperation(getRuleSet__Resolve(), this.getRuleSet(), "resolve", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(inspectableEClass, Inspectable.class, "Inspectable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getInspectable_InspectionResults(), this.getInspectionResult(), null, "inspectionResults", null, 0, -1, Inspectable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

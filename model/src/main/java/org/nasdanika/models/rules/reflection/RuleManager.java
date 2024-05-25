@@ -52,7 +52,7 @@ public interface RuleManager {
 				Iterable<CapabilityProvider<Object>> ruleSetProviders = capabilityLoader.load(ServiceCapabilityFactory.createRequirement(RuleSet.class), progressMonitor);
 				List<Throwable> failures = new ArrayList<>();
 				for (CapabilityProvider<Object> provider: ruleSetProviders) {
-					provider.getPublisher().subscribe(rs -> ruleSets.add((RuleSet) rs), failures::add);
+					provider.getPublisher().subscribe(rs -> ruleSets.add(((RuleSet) rs).resolve()), failures::add);
 				}
 				
 				if (failures.size() == 1) {

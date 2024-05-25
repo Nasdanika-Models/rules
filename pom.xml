@@ -182,6 +182,7 @@
 
 	<modules>
 		<module>model</module>
+		<module>cli</module>
 		<!--
 		<module>processors</module>
 		<module>generator</module>

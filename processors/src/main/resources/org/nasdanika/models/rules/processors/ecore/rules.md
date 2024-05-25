@@ -30,7 +30,8 @@ Green shapes represent Ecore model elements, blue shapes represent Java-only con
 An important thing to note is that rules can be used without inspectors and inspectors can be used without rules.
 One usage scenario is to define and publish a set of rules and then gradually introduce inspectors enforcing the rules.
 
-[Sources](https://github.com/Nasdanika-models/rules)
+* [Sources](https://github.com/Nasdanika-models/rules)
+* [Javadoc](https://javadoc.io/doc/org.nasdanika.models.rules/model/)
 
 ## Rules
 
@@ -108,16 +109,72 @@ for (CapabilityProvider<Object> provider: ruleSetProviders) {
 ## Inspectors
 
 Inspectors implement [Inspector](https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/Inspector.html) interface. 
-They can be created by "traditional" means of implementing ``Inspector`` and by using annotations. 
+They can be created by "traditional" means of implementing ``Inspector`` interfaces and by using [Inspector](https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/reflection/Inspector.html) annotation. 
 The "traditional" way is kinda obvious, so this section focuses on how to create inspectors using annotations and register then as capabilities.
 
-Let's start with a code snippet:
-
 ```java
-
+// Name is derived from the class name
+@RuleSet("""		
+		severities:
+		  error:
+		    name: Error
+		    description: Artifacts with this severity are not allowed to be further processed (e.g. deployed, published to a repository) 
+		documentation:
+		  exec.content.Markdown:
+		    source:
+		      exec.content.Text: |
+		        TODO:
+		        
+		        * specRef attribute to RuleSet and Rule - support of loading from classloader resources 
+		        * Generation of HTML documentation
+		""")
+public class DemoInspectors {
+	
+	@Inspector(value = """
+			name: Invalid YAML
+			documentation:
+			  exec.content.Markdown:
+			    source:
+			      exec.content.Text: |
+			        YAML with syntax errors, e.g. duplicate keys.
+			""",
+			severity = "error",
+			condition = "!errors.isEmpty()") 	
+	public Collection<String> invalidYaml(YamlResource yamlResource) {
+		return yamlResource.getErrors().stream().map(Diagnostic::getMessage).toList();
+	}
+	
+	@Inspector(rule = "nasdanika://rules/demo-rule-set/rules/my-rule")
+	public String myRuleInspector(YamlResource yamlResource) {
+		return "My finding";
+	}
+	
+}
 ```
 
-To register a factory, create a subclass of [InspectorCapabilityFactory](https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/InspectorCapabilityFactory.html):
+In the above snippet the class is a collection of inspector methods.
+It is annotated with [RuleSet](https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/reflection/RuleSet.html) annotation which 
+defines an in-line rule set. 
+``invalidYaml`` is annotated with Inspector annotation which contains in-line rule definition.
+``myRuleInspector`` is also annotated with Inspector annotation, but references an externally defined rule by its logical URI - ``nasdanika://rules/demo-rule-set/rules/my-rule``.
+
+Type of the first parameter of inspector methods defines the inspection target type, ``YamlResource`` in the above example. 
+Inspector set dispatches targets it inspects to compatible methods.
+Inspector methods may have parameters compatible with the below types in any order:
+
+* ``BiPredicate`` - takes inspected object and InspectionResult. Can be used if the inspector reports more than one finding or findings shall be associated an object other than the target.
+* [Context](https://javadoc.io/doc/org.nasdanika.core/common/latest/org.nasdanika.common/org/nasdanika/common/Context.html) - can be used to configure inspector or provide helper objects. 
+* [ProgressMonitor](https://javadoc.io/doc/org.nasdanika.core/common/latest/org.nasdanika.common/org/nasdanika/common/ProgressMonitor.html) - to report progress and check for cancellation.
+
+Return values of non-void inspector methods are processed as follows:
+
+* If the value is an ``Iterator``, ``Iterable``, ``Stream``, or array then it is iterated and each element is processed as explained here
+* If the value is an instance of ``InspectionResult`` (``Violation`` or ``Failure``) then it is used AS-IS
+* If the value is a ``String`` then it is wrapped into a ``Violation``. The string value is used as the violation name. The violation is associated with the inspector rule.
+
+If an inspector method throws an exception, it is wrapped into a ``Failure``.
+
+To register an inspector, create a subclass of [InspectorCapabilityFactory](https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/InspectorCapabilityFactory.html):
 
 ```java
 public class ReflectiveInspectorFactory extends InspectorCapabilityFactory<Object> {
@@ -153,9 +210,165 @@ provides CapabilityFactory with <factory class>;
 Registered inspectors can be loaded by calling ``Inspector.load()``. 
 This method can load all registered inspectors or inspectors matching a predicate, e.g. enforcing rules from a specific  rule set.
 
+Inspectors are responsible for traversing (visiting) their targets and shall be aware of the targets' internal structure. 
+[NotifierInspector](https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/NotifierInspector.html) is aware of internal structures
+of [Notifiers](https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.common/2.28.0/org/eclipse/emf/common/notify/Notifier.html) - [ResourceSet](https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.ecore/2.33.0/org/eclipse/emf/ecore/resource/ResourceSet.html), [Resource](https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.ecore/2.33.0/org/eclipse/emf/ecore/resource/Resource.html), [EObject](https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.ecore/2.33.0/org/eclipse/emf/ecore/EObject.html).
+To inspect notifiers:
+
+* Create an inspector compatible with Notifier
+* Adapt it to NotifierInspector with ``NotifierInspector.adapt()``
+* Obtain content inspector by calling ``asContentInspector()``
+* Call ``inspect``
+
+```java
+Inspector<Object> inspector = loadInspector(progressMonitor.split("Loading Inspector", 1));
+NotifierInspector notifierInspector = NotifierInspector.adapt(inspector);
+Resource inputResource = resourceSet.getResource(input, true); // Notifier to inspect
+notifierInspector
+	.asContentsInspector(parallel, createPredicate(input))
+	.inspect(
+		inputResource, 
+		inspectionResultConsumer, 
+		context, 
+		inputProgressMonitor);					
+```
+
 ## CLI
 
-TODO - doc generation, listing or rule sets
+[``org.nasdanika.models.rules.cli``](https://javadoc.io/doc/org.nasdanika.models.rules/cli) module provides several abstract classes for building commands which deal with rule and inspectors.
 
-TODO - creating inspection commands
+### AbstractRuleCommand
+
+This command provides options to include and exclude rules and rule sets.
+All options can be specified more than once.
+
+* ``--exclude-rule`` - URI of a rule to exclude from, say, inspection. 
+* ``--include-rule`` - URI of a rule to include to, say, inspection. 
+* ``--exclude-rule-set`` - URI of a rule set to exclude from, say, inspection. 
+* ``--include-rule-set`` - URI of a rule set to include to, say, inspection. 
+
+If neither of ``--include-rule`` or ``--include-rule-set`` options are specified, then all rules and rule sets are included by default
+unless they are excluded by one of exclude options. 
+Include and exclude options can be used together. 
+For example, you may include a rule set and then exclude some rules from it.
+
+### AbstractInspectorCommand
+
+This command extends AbstractRuleCommand. 
+It loads registered inspectors using ``Inspector.load()`` and includes only inspectors for matching rules and rule sets.
+
+This command can be used as a base for commands which generate documentation about available rules and rule sets.
+
+Below is a fragment of the [list-rules](https://docs.nasdanika.org/nsd-demo-cli/nsd/list-rules/index.html) command which extends ``AbstractInspectorCommand``:
+
+```java
+@Command(
+		description = "Lists available rules",
+		name = "list-inspectable-rules",
+		versionProvider = ModuleVersionProvider.class,
+		mixinStandardHelpOptions = true)
+@ParentCommands(RootCommand.class)
+public class ListInspectableRulesCommand extends AbstractInspectorCommand {
+
+	...	
+
+	@Override
+	public Integer call() throws Exception {
+		ProgressMonitor progressMonitor = progressMonitorMixIn.createProgressMonitor(1);
+		Inspector<Object> inspector = loadInspector(progressMonitor);
+		Map<EObject, List<Rule>> grouped = Util.groupBy(inspector.getRules(), EObject::eContainer);
+		if (output == null) {
+			generateReport(grouped, System.out, progressMonitor);
+		} else {
+			try (PrintStream out = new PrintStream(output)) {
+				generateReport(grouped, out, progressMonitor);
+			} catch (FileNotFoundException e) {
+				throw new NasdanikaException(e);
+			}
+		}
+		return 0;
+	}
+	
+	...
+	
+}
+```
+
+### AbstractInspectionCommand
+
+This command extends ``AbstractInspectorCommand`` and provides base functionality for inspecting resources loaded from URI's and their contents.
+
+In addition to rule and rule set inclusion/exclusion provided by ``AbstractRuleCommand`` this class provides the following options: 
+
+* ``-e``, ``--exclude-resource`` - An [Ant pattern](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/util/AntPathMatcher.html) of resources to exclude from inspection. The pattern is matched against the resource path computed relative to the root resource. For example, ``dev/*.yml`` - exclude YAML files in the ``dev`` folder. This option can be specified multiple times.
+* ``-i``, ``--include-resource`` - An Ant pattern for resources to include. This option can be specified multiple times.
+* ``--exclude-type`` - model type to exclude from inspection. For example, exclude constructors or field declarations from inspection of Java code. This option can be specified multiple times. Matching includes super types, i.e. excluding [Type](https://java.models.nasdanika.org/references/eClassifiers/Type/index.html) would exclude its sub-types as well - Class, Interface, ... Type can be specified in the following ways:
+    * Class name, e.g. ``Type``
+    * Qualified class name, e.g. ``java.Type``
+    * URI - ``<EPackage NS URI>#//<Class name``, e.g. ``ecore://nasdanika.org/models/java#//Type``
+* ``--include-type`` - model type to include. This option can be specified multiple times. Can be combined with type exclusion. For example, you may exclude a super-type, but include one of its sub-types. Say, exclude types, but include interfaces. Or, the opposite - include types, but exclude interfaces.
+* ``-f``, ``--fail-on`` - Names of severities to fail on (return non-zero exit code). E.g. ``Error``. This option can be specified multiple times.
+* ``--parallel`` - Perform inspection in multiple threads.
+* ``--stop-on-first-fail`` - stop inspection on first failure - a ``Violation`` with severity specified in ``--fail-on`` or a ``Failure``. This option can be used in builds/pipelines to fail fast. 
+* ``--limit`` - Maximum number of results to report. Stop inspection once the limit is reached. This option can be used, for example, to gradually address technical debt - collect a specified number of things to work on in the next iteration (e.g. sprint).
+
+Subclasses must implement ``getInputs()`` method and may override ``createResourceSet()`` method to register resource factories, adapter factories, or URI handlers as shown below in a fragment of [inspect-yaml](https://docs.nasdanika.org/nsd-demo-cli/nsd/inspect-yaml/index.html) command:
+
+```java
+@Command(
+		description = "Demo of YAML inspection",
+		name = "inspect-yaml",
+		versionProvider = ModuleVersionProvider.class,
+		mixinStandardHelpOptions = true)
+@ParentCommands(RootCommand.class)
+public class InspectYamlCommand extends AbstractInspectionCommand {
+	
+	@Parameters(description = {
+			"Files and directories",
+			"to inspect"
+			},
+			arity = "1..*")
+	File[] inputs;	
+
+	@Override
+	protected List<URI> getInputs() {
+		List<URI> ret = new ArrayList<>();
+		for (File input: inputs) {
+			URI uri = URI.createFileURI(input.getAbsolutePath());
+			if (input.isDirectory()) {
+				uri = uri.appendSegment("");
+			}
+			ret.add(uri);
+		}
+		return ret;
+	}
+
+	...	
+	
+	@Override
+	protected ResourceSet createResourceSet(ProgressMonitor progressMonitor) {
+		ResourceSet resourceSet = super.createResourceSet(progressMonitor);
+		// Basic YAML. Add semantic handlers for your problem domain as needed (you'd need to create them). 
+		YamlResourceFactory yamlResourceFactory = new YamlResourceFactory(new NcoreYamlHandler());
+		Map<String, Object> extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+		extensionToFactoryMap.put("yml", yamlResourceFactory);
+		extensionToFactoryMap.put("yaml", yamlResourceFactory);
+		
+		// To load directories as resources in order to traverse them
+		resourceSet.getURIConverter().getURIHandlers().add(0, new DirectoryContentFileURIHandler()); 
+		return resourceSet;
+	}
+
+	@Override
+	protected boolean isIncluded(String path) {
+		String[] includes = getResourceIncludes();
+		if (includes == null) {
+			return path.endsWith(".yml") || path.endsWith(".yaml");
+		}
+		return super.isIncluded(path);
+	}
+
+	...
+}
+```
 

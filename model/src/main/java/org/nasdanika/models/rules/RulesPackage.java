@@ -4,6 +4,7 @@ package org.nasdanika.models.rules;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.nasdanika.models.architecture.ArchitecturePackage;
@@ -511,13 +512,22 @@ public interface RulesPackage extends EPackage {
 	int RULE_SET_FEATURE_COUNT = ArchitecturePackage.DOMAIN_FEATURE_COUNT + 4;
 
 	/**
+	 * The operation id for the '<em>Resolve</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_SET___RESOLVE = ArchitecturePackage.DOMAIN_OPERATION_COUNT + 0;
+
+	/**
 	 * The number of operations of the '<em>Rule Set</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_SET_OPERATION_COUNT = ArchitecturePackage.DOMAIN_OPERATION_COUNT + 0;
+	int RULE_SET_OPERATION_COUNT = ArchitecturePackage.DOMAIN_OPERATION_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.nasdanika.models.rules.impl.ViolationImpl <em>Violation</em>}' class.
@@ -4192,6 +4202,16 @@ public interface RulesPackage extends EPackage {
 	EReference getRuleSet_Severities();
 
 	/**
+	 * Returns the meta object for the '{@link org.nasdanika.models.rules.RuleSet#resolve() <em>Resolve</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve</em>' operation.
+	 * @see org.nasdanika.models.rules.RuleSet#resolve()
+	 * @generated
+	 */
+	EOperation getRuleSet__Resolve();
+
+	/**
 	 * Returns the meta object for class '{@link org.nasdanika.models.rules.Violation <em>Violation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4593,6 +4613,13 @@ public interface RulesPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RULE_SET__SEVERITIES = eINSTANCE.getRuleSet_Severities();
+		/**
+		 * The meta object literal for the '<em><b>Resolve</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation RULE_SET___RESOLVE = eINSTANCE.getRuleSet__Resolve();
 		/**
 		 * The meta object literal for the '{@link org.nasdanika.models.rules.impl.ViolationImpl <em>Violation</em>}' class.
 		 * <!-- begin-user-doc -->

@@ -13,6 +13,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RuleSet" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//Domain">
+    <eOperations name="resolve" eType="#//RuleSet"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extends" upperBound="-1"
         eType="#//RuleSet" eOpposite="#//RuleSet/extensions"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extensions" upperBound="-1"

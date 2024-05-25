@@ -13,28 +13,28 @@ import picocli.CommandLine.Option;
 public abstract class AbstractRuleCommand extends CommandBase {
 	
 	@Option(
-			names = "--exclude-rules",
+			names = "--exclude-rule",
 			arity = "*",
 			description = "ID's of rules to exclude"
 			)
 	protected String[] ruleExcludes;
 	
 	@Option(
-			names = "--include-rules",
+			names = "--include-rule",
 			arity = "*",
 			description = "ID's of rules to include"
 			)
 	protected String[] ruleIncludes;
 	
 	@Option(
-			names = "--exclude-rule-sets",
+			names = "--exclude-rule-set",
 			arity = "*",
 			description = "ID's of rule sets to exclude"
 			)
 	protected String[] ruleSetExcludes;
 	
 	@Option(
-			names = "--include-rule-sets",
+			names = "--include-rule-set",
 			arity = "*",
 			description = "ID's of rule sets to include"
 			)

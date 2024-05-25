@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -203,7 +202,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 				
 				// Binding parameters
 				for (int i = 1; i < parameters.length; ++i) {
-					if (!violationConsumerBound && parameters[i].getType().isAssignableFrom(BiConsumer.class)) {
+					if (!violationConsumerBound && parameters[i].getType().isAssignableFrom(BiPredicate.class)) {
 						args[i] = injectingInspectionResultConsumer;
 						violationConsumerBound = true;
 					} else if (!contextBound && parameters[i].getType().isAssignableFrom(Context.class)) {

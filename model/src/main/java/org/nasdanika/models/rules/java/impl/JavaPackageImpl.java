@@ -27,6 +27,7 @@ import org.nasdanika.models.rules.java.JavaFactory;
 import org.nasdanika.models.rules.java.JavaPackage;
 import org.nasdanika.models.rules.java.UpdateCompilationUnitAction;
 
+import org.nasdanika.models.source.SourcePackage;
 import org.nasdanika.ncore.NcorePackage;
 
 /**
@@ -118,6 +119,7 @@ public class JavaPackageImpl extends EPackageImpl implements JavaPackage {
 		org.nasdanika.models.java.JavaPackage.eINSTANCE.eClass();
 		NcorePackage.eINSTANCE.eClass();
 		PartyPackage.eINSTANCE.eClass();
+		SourcePackage.eINSTANCE.eClass();
 
 		// Obtain or create and register interdependencies
 		Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(RulesPackage.eNS_URI);
