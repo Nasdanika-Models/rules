@@ -34,13 +34,128 @@ One usage scenario is to define and publish a set of rules and then gradually in
 
 ## Rules
 
+Rules and rule sets can be created programmatically, loaded from XMI or YAML, or defined in inspector and inspector set annotations.
+This section explains how to define rule sets and rules in YAML and register rule set capability factories.
 
+Below is an example of rule set YAML definition:
+
+```yaml
+rules-rule-set:
+  uris: nasdanika://rules/demo-rule-set  
+  id: demo-rule-set
+  name: Demo Rule Set
+  documentation:
+    content-markdown:
+      source:
+        content-resource:
+          location: demo-rule-set.md
+          interpolate: true  
+  severities:
+    error:
+      name: Error      
+      documentation:
+        content-markdown:
+          source:
+           content-text: |+2
+             Inline markdown ``example``.
+             
+             * One
+             * Two    
+  rules:
+    my-rule:
+      rules-rule:
+        name: My rule
+        severity: nasdanika://rules/demo-rule-set/severities/error
+```
+
+Consult [rule set load specification](references/eClassifiers/RuleSet/load-specification.html) for supported configuration keys.
+See [Markdown](https://exec.models.nasdanika.org/references/eSubpackages/content/references/eClassifiers/Markdown/index.html) for details regarding how to write markdown documentation.
+
+Rule sets can be registered as capabilities to make them available to reflective inspectors.
+To register a rule set create a class extending [RuleSetCapabilityFactory](https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/util/RuleSetCapabilityFactory.html):
+
+```java
+public class DemoRuleSetCapabilityFactory extends RuleSetCapabilityFactory {
+
+	@Override
+	protected URI getResourceSetURI() {
+		return URI.createURI("demo-rule-set.yml").resolve(Util.createClassURI(getClass()));
+	}
+
+}
+```
+
+The above factory loads rule set from a class loader resource.
+Then open the package which contains rule set definition and add ``provides`` to ``module-info.java``:
+
+```java
+opens <rule set package>;
+
+provides CapabilityFactory with DemoRuleSetCapabilityFactory;
+```
+
+After that rule set and its rules can be referenced from reflective inspectors, used by CLI commands to list available rule sets and generate documentation, and loaded programmatically as shown below:
+
+```java
+CapabilityLoader capabilityLoader = new CapabilityLoader();
+ProgressMonitor progressMonitor = ...
+Iterable<CapabilityProvider<Object>> ruleSetProviders = capabilityLoader.load(ServiceCapabilityFactory.createRequirement(RuleSet.class), progressMonitor);
+for (CapabilityProvider<Object> provider: ruleSetProviders) {
+	provider.getPublisher().subscribe(ruleSetConsumer, errorConsumer);
+}
+``` 
 
 ## Inspectors
 
+Inspectors implement [Inspector](https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/Inspector.html) interface. 
+They can be created by "traditional" means of implementing ``Inspector`` and by using annotations. 
+The "traditional" way is kinda obvious, so this section focuses on how to create inspectors using annotations and register then as capabilities.
 
-### Reflective
+Let's start with a code snippet:
 
+```java
 
+```
+
+To register a factory, create a subclass of [InspectorCapabilityFactory](https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/InspectorCapabilityFactory.html):
+
+```java
+public class ReflectiveInspectorFactory extends InspectorCapabilityFactory<Object> {
+
+	@Override
+	protected CompletionStage<Iterable<CapabilityProvider<Inspector<Object>>>> createService(
+			Class<Inspector<Object>> serviceType, 
+			Predicate<Inspector<Object>> serviceRequirement,
+			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
+			ProgressMonitor progressMonitor) {
+
+		Inspector<Object> inspector = new InspectorSet(
+			RuleManager.LOADING_RULE_MANAGER, 
+			serviceRequirement,
+			false, 
+			progressMonitor, 
+			new DemoInspectors());
+		
+		return serviceRequirement == null || serviceRequirement.test(inspector) ? wrap(inspector) : empty();
+	}
+
+}
+```
+
+and add ``opens`` and ``provides`` to ``module-info.java``:
+
+```java
+opens <inspectors package> to org.nasdanika.common; // For inspector reflection
+	
+provides CapabilityFactory with <factory class>;
+```
+
+Registered inspectors can be loaded by calling ``Inspector.load()``. 
+This method can load all registered inspectors or inspectors matching a predicate, e.g. enforcing rules from a specific  rule set.
 
 ## CLI
+
+TODO - doc generation, listing or rule sets
+
+TODO - creating inspection commands
+
