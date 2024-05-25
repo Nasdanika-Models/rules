@@ -1,7 +1,10 @@
 package org.nasdanika.models.rules.reflection;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -12,6 +15,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.nasdanika.capability.CapabilityLoader;
+import org.nasdanika.capability.CapabilityProvider;
+import org.nasdanika.capability.ServiceCapabilityFactory;
+import org.nasdanika.common.NasdanikaException;
 import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.common.Util;
 import org.nasdanika.emf.persistence.EObjectLoader;
@@ -21,6 +28,7 @@ import org.nasdanika.models.rules.RuleSet;
 import org.nasdanika.models.rules.RulesFactory;
 import org.nasdanika.models.rules.RulesPackage;
 import org.nasdanika.ncore.NcorePackage;
+import org.nasdanika.ncore.util.NcoreUtil;
 import org.nasdanika.persistence.ConfigurationException;
 import org.nasdanika.persistence.ObjectLoader;
 
@@ -34,15 +42,59 @@ public interface RuleManager {
 	 * Rule manager which can load rules from YAML spec, but cannot resolve them.
 	 */
 	static RuleManager LOADING_RULE_MANAGER = new RuleManager() {
+		CapabilityLoader capabilityLoader = new CapabilityLoader();
 		
+		private Collection<RuleSet> ruleSets;
+		
+		private synchronized Collection<RuleSet> getRuleSets(ProgressMonitor progressMonitor) {
+			if (ruleSets == null) {
+				ruleSets = Collections.synchronizedCollection(new ArrayList<>());
+				Iterable<CapabilityProvider<Object>> ruleSetProviders = capabilityLoader.load(ServiceCapabilityFactory.createRequirement(RuleSet.class), progressMonitor);
+				List<Throwable> failures = new ArrayList<>();
+				for (CapabilityProvider<Object> provider: ruleSetProviders) {
+					provider.getPublisher().subscribe(rs -> ruleSets.add((RuleSet) rs), failures::add);
+				}
+				
+				if (failures.size() == 1) {
+					throw new NasdanikaException("Error during rule set loading: " + failures.get(0), failures.get(0));
+				} else if (!failures.isEmpty()) {
+					NasdanikaException nasdanikaException = new NasdanikaException("Errors during rule set loading: " + failures);
+					failures.forEach(nasdanikaException::addSuppressed);
+					throw nasdanikaException;
+				}
+			}
+			return ruleSets;
+		}
+
+		/**
+		 * Resolves by URI
+		 */
 		@Override
 		public RuleSet resolveRuleSet(Object target, String ruleSet, ProgressMonitor progressMonitor) {
-			throw new UnsupportedOperationException();
+			URI ruleSetURI = URI.createURI(ruleSet);
+			for (RuleSet rs: getRuleSets(progressMonitor)) {
+				for (URI uri: NcoreUtil.getIdentifiers(rs)) {
+					if (ruleSetURI.equals(uri)) {
+						return rs;
+					}
+				}
+			}
+			throw new IllegalArgumentException("Rule set not found: " + ruleSet);
 		}
 		
 		@Override
-		public Rule resolveRule(Method inspectorMethod, String rule) {
-			throw new UnsupportedOperationException();
+		public Rule resolveRule(Method inspectorMethod, String rule, ProgressMonitor progressMonitor) {
+			URI ruleURI = URI.createURI(rule);
+			for (RuleSet rs: getRuleSets(progressMonitor)) {
+				for (Rule r: rs.getRules()) {
+					for (URI uri: NcoreUtil.getIdentifiers(r)) {
+						if (ruleURI.equals(uri)) {
+							return r;
+						}
+					}
+				}
+			}
+			throw new IllegalArgumentException("Rule not found: " + rule);
 		}
 	};
 	
@@ -52,7 +104,7 @@ public interface RuleManager {
 	 * @param rule value of 'rule' attribute
 	 * @return
 	 */
-	Rule resolveRule(Method inspectorMethod, String rule);
+	Rule resolveRule(Method inspectorMethod, String rule, ProgressMonitor progressMonitor);
 	
 	/**
 	 * @param inspectorMethod Inspector method

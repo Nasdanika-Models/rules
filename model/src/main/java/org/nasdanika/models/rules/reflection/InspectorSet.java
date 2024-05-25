@@ -11,7 +11,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -90,10 +92,6 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		return RulesFactory.eINSTANCE.createRule();
 	}
 	
-//	protected org.nasdanika.models.rules.RuleSet createRuleSet() {
-//		return RulesFactory.eINSTANCE.createRuleSet();
-//	}
-	
 	protected RuleManager getRuleManager(AnnotatedElementRecord aer) {
 		Object aerTarget = aer.getTarget();
 		if (aerTarget instanceof RuleManager) {
@@ -133,7 +131,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		} else if (!Util.isBlank(ruleSpec)) {
 			rule[0] = getRuleManager(aer).loadRule(method, ruleSpec, progressMonitor);
 		} else if (!Util.isBlank(ruleId)) {
-			rule[0] = getRuleManager(aer).resolveRule(method, ruleId);
+			rule[0] = getRuleManager(aer).resolveRule(method, ruleId, progressMonitor);
 		} else {
 			throw new IllegalArgumentException("Inspector 'value' and 'rule' are mutually exclusive: " + method);
 		}	
@@ -173,7 +171,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			@Override
 			public void inspect(
 					Object target, 
-					BiConsumer<? super Object, ? super InspectionResult> inspectionResultConsumer, 
+					BiPredicate<? super Object, ? super InspectionResult> inspectionResultConsumer, 
 					Context context, 
 					ProgressMonitor progressMonitor) {
 				
@@ -196,11 +194,11 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 				boolean contextBound = false; 
 				boolean progressMonitorBound = false; 
 				
-				BiConsumer<? super Object, InspectionResult> injectingInspectionResultConsumer = (trg, inspectionResult) -> {
+				BiPredicate<? super Object, InspectionResult> injectingInspectionResultConsumer = (trg, inspectionResult) -> {
 					if (inspectionResult != null && inspectionResult.getRule() == null) {
 						inspectionResult.setRule(rule[0]);
 					}
-					inspectionResultConsumer.accept(trg, inspectionResult);
+					return inspectionResultConsumer.test(trg, inspectionResult);
 				};
 				
 				// Binding parameters
@@ -227,7 +225,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 					failure.setName(e.toString());
 					failure.setCause(org.nasdanika.ncore.Throwable.wrap(e));
 					failure.setRule(rule[0]);
-					injectingInspectionResultConsumer.accept(target, failure);
+					injectingInspectionResultConsumer.test(target, failure);
 				}
 				if (result != null) {
 					handleInspectorResult(target, result[0], rule[0], injectingInspectionResultConsumer, context, progressMonitor);
@@ -296,7 +294,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 			Object target, 
 			Object result, 
 			Rule rule,
-			BiConsumer<? super Object, InspectionResult> inspectionResultConsumer, 
+			BiPredicate<? super Object, InspectionResult> inspectionResultConsumer, 
 			Context context, 
 			ProgressMonitor progressMonitor) {
 		
@@ -326,7 +324,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 					inspectionResult.setName("Unexpected result type: " + result);
 				}
 				
-				inspectionResultConsumer.accept(target, inspectionResult);
+				inspectionResultConsumer.test(target, inspectionResult);
 			}
 		}				
 	}
@@ -340,15 +338,21 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 	}
 
 	@Override
-	public void inspect(Object target, BiConsumer<Object, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+	public void inspect(Object target, BiPredicate<Object, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 		if (target != null) {
 			Stream<org.nasdanika.models.rules.Inspector<Object>> iStream = inspectors.stream();
 			if (parallel) {
 				iStream = iStream.parallel();
 			}
+			AtomicBoolean isCancelled = new AtomicBoolean();
+			BiPredicate<Object, ? super InspectionResult> filterInspectionResultConsumer = org.nasdanika.models.rules.Inspector.filterInspectionResultConsumer(inspectionResultConsumer, () -> isCancelled.set(true));					
 			iStream
 				.filter(inspector -> target != null && inspector.isForType(target.getClass()))
-				.forEach(inspector -> inspector.inspect(target, inspectionResultConsumer, context, progressMonitor));
+				.forEach(inspector -> {
+					if (!isCancelled.get() && (progressMonitor == null || !progressMonitor.isCancelled())) {
+						inspector.inspect(target, filterInspectionResultConsumer, context, progressMonitor);
+					}
+				});
 		}				
 	}
 

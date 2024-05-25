@@ -3,7 +3,8 @@ package org.nasdanika.models.rules;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.function.BiConsumer;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -26,7 +27,32 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 		return Collections.emptySet();
 	}
 		
-	void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor);
+	/**
+	 * Inspects the target and reports results to the consumer.
+	 * The consumer may return <code>false</code> to indicate that it has received enough results and inspection shall stop.
+	 * @param target
+	 * @param inspectionResultConsumer
+	 * @param context
+	 * @param progressMonitor
+	 */
+	void inspect(T target, BiPredicate<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor);
+	
+	/**
+	 * Calls onCancel {@link Runnable} if the argument predicate return false. 
+	 * @param <T>
+	 * @param inspectionResultConsumer
+	 * @param onCancel
+	 * @return
+	 */
+	static <T> BiPredicate<? super T, ? super InspectionResult> filterInspectionResultConsumer(BiPredicate<? super T, ? super InspectionResult> inspectionResultConsumer, Runnable onCancel) {
+		return (target, result) -> {
+			if (inspectionResultConsumer.test(target, result)) {
+				return true;
+			}
+			onCancel.run();
+			return false;
+		};		
+	}
 	
 	/**
 	 * @param type
@@ -48,13 +74,15 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 			}			
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiPredicate<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
+					AtomicBoolean isCancelled = new AtomicBoolean();
+					BiPredicate<? super T, ? super InspectionResult> filterInspectionResultConsumer = filterInspectionResultConsumer(inspectionResultConsumer, () -> isCancelled.set(true));
 					if (Inspector.this.isForType(target.getClass())) {
-						Inspector.this.inspect(target, inspectionResultConsumer, context, progressMonitor);
+						Inspector.this.inspect(target, filterInspectionResultConsumer, context, progressMonitor);
 					}
-					if (other.isForType(target.getClass())) {
-						other.inspect(target, inspectionResultConsumer, context, progressMonitor);
+					if (!isCancelled.get() && (progressMonitor == null || !progressMonitor.isCancelled()) && other.isForType(target.getClass())) {
+						other.inspect(target, filterInspectionResultConsumer, context, progressMonitor);
 					}
 				}
 				
@@ -78,11 +106,13 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 			}
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiPredicate<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
+					AtomicBoolean isCancelled = new AtomicBoolean();
+					BiPredicate<? super T, ? super InspectionResult> filterInspectionResultConsumer = filterInspectionResultConsumer(inspectionResultConsumer, () -> isCancelled.set(true));
 					for (Inspector<T> inspector: inspectors) {
-						if (inspector.isForType(target.getClass())) {
-							inspector.inspect(target, inspectionResultConsumer, context, progressMonitor);
+						if (!isCancelled.get() && (progressMonitor == null || !progressMonitor.isCancelled()) && inspector.isForType(target.getClass())) {
+							inspector.inspect(target, filterInspectionResultConsumer, context, progressMonitor);
 						}
 					}
 				}				
@@ -110,13 +140,19 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 			}
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiPredicate<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (target != null) {
 					Stream<Inspector<T>> iStream = inspectors.stream();
 					if (parallel) {
 						iStream = iStream.parallel();
 					}
-					iStream.forEach(inspector -> inspector.inspect(target, inspectionResultConsumer, context, progressMonitor));
+					AtomicBoolean isCancelled = new AtomicBoolean();
+					BiPredicate<? super T, ? super InspectionResult> filterInspectionResultConsumer = filterInspectionResultConsumer(inspectionResultConsumer, () -> isCancelled.set(true));					
+					iStream.forEach(inspector -> {
+						if (!isCancelled.get() && (progressMonitor == null || !progressMonitor.isCancelled())) {
+							inspector.inspect(target, filterInspectionResultConsumer, context, progressMonitor);
+						}
+					});
 				}				
 			}
 
@@ -135,7 +171,7 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 		return new Inspector<T>() {
 
 			@Override
-			public void inspect(T target, BiConsumer<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(T target, BiPredicate<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				// NOP				
 			}
 

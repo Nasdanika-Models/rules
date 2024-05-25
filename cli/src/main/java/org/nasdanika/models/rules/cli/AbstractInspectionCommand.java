@@ -2,7 +2,6 @@ package org.nasdanika.models.rules.cli;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 //import java.io.File;
@@ -10,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -117,6 +118,19 @@ public abstract class AbstractInspectionCommand extends AbstractInspectorCommand
 			description = "Parallel inspection"
 			)
 	private boolean parallel;
+	
+	@Option(
+			names = "--stop-on-first-fail",
+			description = "Stop on first failure"
+			)
+	private boolean stopOnFirstFailure;
+	
+	@Option(
+			names = "--limit",
+			description = "Max number of results to report"
+			)
+	private int limit;
+	
 	
 	/**
 	 * Obtains {@link ResourceSet} from resourceSetMixIn.
@@ -244,6 +258,18 @@ public abstract class AbstractInspectionCommand extends AbstractInspectorCommand
 		}
 		
 		Map<Notifier, List<InspectionResult>> inspectionResults = Collections.synchronizedMap(new LinkedHashMap<>());
+		AtomicInteger counter = new AtomicInteger();
+		AtomicBoolean failed = new AtomicBoolean();
+		BiPredicate<? super Notifier, ? super InspectionResult> inspectionResultConsumer = (target, inspectionResult) -> {
+			inspectionResults.computeIfAbsent(target, key -> Collections.synchronizedList(new ArrayList<>())).add(inspectionResult);
+			if (isFail(inspectionResult)) {
+				failed.set(true);				
+			}
+			if (stopOnFirstFailure && failed.get()) {
+				return false;
+			}
+			return limit == 0 || counter.incrementAndGet() < limit;
+		};
 		
 		try (ProgressMonitor progressMonitor = progressMonitorMixIn.createProgressMonitor(4 + inputs.size())) {
 			ResourceSet resourceSet = createResourceSet(progressMonitor.split("Creating Resource Set", 1));
@@ -257,7 +283,7 @@ public abstract class AbstractInspectionCommand extends AbstractInspectorCommand
 						.asContentsInspector(parallel, createPredicate(input))
 						.inspect(
 							inputResource, 
-							(target, inspectionResult) -> inspectionResults.computeIfAbsent(target, key -> Collections.synchronizedList(new ArrayList<>())).add(inspectionResult), 
+							inspectionResultConsumer, 
 							context, 
 							inputProgressMonitor);					
 				}
@@ -266,14 +292,7 @@ public abstract class AbstractInspectionCommand extends AbstractInspectorCommand
 			Map<Resource, List<Map.Entry<Notifier, List<InspectionResult>>>> groupedByResource = Util.groupBy(inspectionResults.entrySet(), e -> getResource(e.getKey()));
 			generateReport(groupedByResource, progressMonitor.split("Generating report", 1));
 			
-			Optional<InspectionResult> failure = inspectionResults
-				.values()
-				.stream()
-				.flatMap(Collection::stream)
-				.filter(this::isFail)
-				.findAny();
-			
-			return failure.isPresent() ? 1 : 0;
+			return failed.get() ? 1 : 0;
 		}
 	}
 	

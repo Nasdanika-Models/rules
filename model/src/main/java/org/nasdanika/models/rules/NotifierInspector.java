@@ -1,7 +1,8 @@
 package org.nasdanika.models.rules;
 
 import java.util.Collection;
-import java.util.function.BiConsumer;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -61,46 +62,62 @@ public interface NotifierInspector extends Inspector<Notifier> {
 			}
 
 			@Override
-			public void inspect(Notifier target, BiConsumer<? super Notifier, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
+			public void inspect(Notifier target, BiPredicate<? super Notifier, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor) {
 				if (predicate == null || predicate.test(target)) {
-					if (NotifierInspector.this.isForType(target.getClass())) {
-						NotifierInspector.this.inspect(target, inspectionResultConsumer, context, progressMonitor);
-					}
-					if (target instanceof ResourceSet) {
-						Stream<Resource> rStream = ((ResourceSet) target).getResources().stream();
-						if (parallel) {
-							rStream = rStream.parallel();
-						} 
-						rStream.forEach(resource -> inspect(resource, inspectionResultConsumer, context, progressMonitor));
-					} else if (target instanceof Resource) {
-						Stream<EObject> contentsStream = ((Resource) target).getContents().stream();
-						if (parallel) {
-							contentsStream = contentsStream.parallel();
+					AtomicBoolean isCancelled = new AtomicBoolean();
+					BiPredicate<? super Notifier, ? super InspectionResult> filterInspectionResultConsumer = Inspector.filterInspectionResultConsumer(inspectionResultConsumer, () -> isCancelled.set(true));					
+					if (!isCancelled.get() && (progressMonitor == null || !progressMonitor.isCancelled())) {					
+						if (NotifierInspector.this.isForType(target.getClass())) {
+							NotifierInspector.this.inspect(target, filterInspectionResultConsumer, context, progressMonitor);
 						}
-						contentsStream.forEach(root -> inspect(root, inspectionResultConsumer, context, progressMonitor));
-					} else if (target instanceof EObject) {
-						if (target instanceof TreeItem && ((TreeItem) target).eContainer() != null) {
-							URI targetURI = resolve((TreeItem) target);
-							if (targetURI != null) {
-								if (target instanceof Tree && !Util.isBlank(targetURI.lastSegment())) {
-									targetURI = targetURI.appendSegment("");
+						if (target instanceof ResourceSet) {
+							Stream<Resource> rStream = ((ResourceSet) target).getResources().stream();
+							if (parallel) {
+								rStream = rStream.parallel();
+							} 
+							rStream.forEach(resource -> {
+								if (!isCancelled.get() && (progressMonitor == null || !progressMonitor.isCancelled())) {
+									inspect(resource, filterInspectionResultConsumer, context, progressMonitor);
 								}
-								Resource eResource = ((TreeItem) target).eResource();
-								if (eResource != null) {
-									ResourceSet resourceSet = eResource.getResourceSet();
-									if (resourceSet != null) {
-										Resource targetResource = resourceSet.getResource(targetURI, true);
-										inspect(targetResource, inspectionResultConsumer, context, progressMonitor);
+							});
+						} else if (target instanceof Resource) {
+							Stream<EObject> contentsStream = ((Resource) target).getContents().stream();
+							if (parallel) {
+								contentsStream = contentsStream.parallel();
+							}
+							contentsStream.forEach(root -> {
+								if (!isCancelled.get() && (progressMonitor == null || !progressMonitor.isCancelled())) {
+									inspect(root, filterInspectionResultConsumer, context, progressMonitor);
+								}
+							});
+						} else if (target instanceof EObject) {
+							if (target instanceof TreeItem && ((TreeItem) target).eContainer() != null) {
+								URI targetURI = resolve((TreeItem) target);
+								if (targetURI != null) {
+									if (target instanceof Tree && !Util.isBlank(targetURI.lastSegment())) {
+										targetURI = targetURI.appendSegment("");
+									}
+									Resource eResource = ((TreeItem) target).eResource();
+									if (eResource != null) {
+										ResourceSet resourceSet = eResource.getResourceSet();
+										if (resourceSet != null) {
+											Resource targetResource = resourceSet.getResource(targetURI, true);
+											inspect(targetResource, filterInspectionResultConsumer, context, progressMonitor);
+										}
 									}
 								}
 							}
+							
+							Stream<EObject> contentsStream = ((EObject) target).eContents().stream();
+							if (parallel) {
+								contentsStream = contentsStream.parallel();
+							}
+							contentsStream.forEach(contents -> {
+								if (!isCancelled.get() && (progressMonitor == null || !progressMonitor.isCancelled())) {
+									inspect(contents, filterInspectionResultConsumer, context, progressMonitor);
+								}
+							});
 						}
-						
-						Stream<EObject> contentsStream = ((EObject) target).eContents().stream();
-						if (parallel) {
-							contentsStream = contentsStream.parallel();
-						}
-						contentsStream.forEach(contents -> inspect(contents, inspectionResultConsumer, context, progressMonitor));
 					}
 				}
 			}
@@ -124,11 +141,11 @@ public interface NotifierInspector extends Inspector<Notifier> {
 			@Override
 			public void inspect(
 					Notifier target, 
-					BiConsumer<? super Notifier, ? super InspectionResult> inspectionResultConsumer, 
+					BiPredicate<? super Notifier, ? super InspectionResult> inspectionResultConsumer, 
 					Context context,
 					ProgressMonitor progressMonitor) {
 				
-				inspector.inspect(target, (t,v) -> inspectionResultConsumer.accept((Notifier) t, v), context, progressMonitor);
+				inspector.inspect(target, (t,v) -> inspectionResultConsumer.test((Notifier) t, v), context, progressMonitor);
 			}
 			
 			@Override

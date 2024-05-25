@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.function.BiConsumer;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import org.eclipse.emf.common.notify.Notifier;
@@ -125,7 +125,7 @@ public class TestAnalyzers {
 					@Override
 					public void inspect(
 							Notifier target, 
-							BiConsumer<? super Notifier, ? super InspectionResult> inspectionResultConsumer,
+							BiPredicate<? super Notifier, ? super InspectionResult> inspectionResultConsumer,
 							Context context, 
 							ProgressMonitor progressMonitor) {
 						
@@ -203,7 +203,7 @@ public class TestAnalyzers {
 					progressMonitor);				
 	}
 	
-	protected void consumeInspectionResult(Notifier target, InspectionResult inspectionResult) {
+	protected boolean consumeInspectionResult(Notifier target, InspectionResult inspectionResult) {
 		System.out.println("[" + inspectionResult.eClass().getName() +"] " + inspectionResult.getName());
 		System.out.println("\tTarget: " + target);
 		Rule rule = inspectionResult.getRule();
@@ -215,7 +215,8 @@ public class TestAnalyzers {
 		}
 		RuleSet ruleSet = (RuleSet) inspectionResult.getRule().eContainer();
 		System.out.println("\tRule set: " + ruleSet.getName());
-		System.out.println("\tRule set ID: " + ruleSet.getId());		
+		System.out.println("\tRule set ID: " + ruleSet.getId());
+		return true;
 	}
 	
 	private static final String MAIN_BRANCH = "main";
@@ -253,6 +254,7 @@ public class TestAnalyzers {
 								actions.add((ResourceAction) vc);
 							}
 						});
+						return true;
 					}, 
 					null, 
 					progressMonitor);
