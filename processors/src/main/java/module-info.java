@@ -1,3 +1,6 @@
+import org.nasdanika.capability.CapabilityFactory;
+import org.nasdanika.models.rules.processors.doc.RulesNodeProcessorFactoryCapabilityFactory;
+
 module org.nasdanika.models.rules.processors {
 		
 	requires transitive org.nasdanika.models.rules;
@@ -8,5 +11,7 @@ module org.nasdanika.models.rules.processors {
 	
 	exports org.nasdanika.models.rules.processors.doc;
 	opens org.nasdanika.models.rules.processors.doc; // For loading resources
+
+	provides CapabilityFactory with RulesNodeProcessorFactoryCapabilityFactory; 
 	
 }
