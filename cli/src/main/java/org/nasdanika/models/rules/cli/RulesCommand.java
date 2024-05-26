@@ -7,13 +7,13 @@ import org.nasdanika.cli.RootCommand;
 import picocli.CommandLine.Command;
 
 @Command(
-		description = "HTML Application model commands",
-		name = "app",
+		description = "Rules commands",
+		name = "rules",
 		versionProvider = ModuleVersionProvider.class,
-//		subcommands = {
-//			SiteCommand.class
-//			// TODO - serve command to serve a site over HTTP instead of generating. Netty, caching, ...
-//		},		
+		subcommands = {
+			ActionModelCommand.class,	
+			SiteCommand.class
+		},		
 		mixinStandardHelpOptions = true)
 @ParentCommands(RootCommand.class)
 public class RulesCommand extends CommandGroup {

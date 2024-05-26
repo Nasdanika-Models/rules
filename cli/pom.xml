@@ -17,9 +17,9 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.nasdanika.core</groupId>
-			<artifactId>cli</artifactId>
-			<version>${core.version}</version>
+			<groupId>org.nasdanika.html</groupId>
+			<artifactId>app-model-gen-cli</artifactId>
+			<version>2024.5.0</version>
 		</dependency>
 	</dependencies>
 </project>

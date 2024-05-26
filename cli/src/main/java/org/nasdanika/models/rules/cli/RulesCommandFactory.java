@@ -6,7 +6,6 @@ import java.util.concurrent.CompletionStage;
 import java.util.function.BiFunction;
 
 import org.nasdanika.capability.CapabilityProvider;
-import org.nasdanika.cli.RootCommand;
 import org.nasdanika.cli.SubCommandCapabilityFactory;
 import org.nasdanika.common.ProgressMonitor;
 
