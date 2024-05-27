@@ -20,7 +20,7 @@ import reactor.core.publisher.Flux;
 public class OpenAITestGeneratorFactory extends ServiceCapabilityFactory<JUnitTestRequirement, TestGenerator> {
 
 	@Override
-	public boolean isForServiceType(Class<?> type) {
+	public boolean isFor(Class<?> type, Object requirement) {
 		return TestGenerator.class.equals(type);
 	}
 

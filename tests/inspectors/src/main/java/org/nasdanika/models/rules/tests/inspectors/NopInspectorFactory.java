@@ -15,7 +15,7 @@ import reactor.core.publisher.Flux;
 public class NopInspectorFactory extends ServiceCapabilityFactory<Object, Inspector<Object>> {
 
 	@Override
-	public boolean isForServiceType(Class<?> type) {
+	public boolean isFor(Class<?> type, Object requirement) {
 		return type == Inspector.class;
 	}
 

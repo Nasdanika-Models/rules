@@ -16,7 +16,7 @@ import reactor.core.publisher.Flux;
 public class NopRuleSetFactory extends ServiceCapabilityFactory<Object, RuleSet> {
 
 	@Override
-	public boolean isForServiceType(Class<?> type) {
+	public boolean isFor(Class<?> type, Object requirement) {
 		return type == RuleSet.class;
 	}
 

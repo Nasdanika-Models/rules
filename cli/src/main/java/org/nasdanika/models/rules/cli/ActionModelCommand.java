@@ -1,58 +1,30 @@
 package org.nasdanika.models.rules.cli;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.stream.Collectors;
-
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.nasdanika.cli.CommandBase;
-import org.nasdanika.cli.Description;
-import org.nasdanika.cli.HelpCommand;
-import org.nasdanika.cli.ParentCommands;
-import org.nasdanika.common.DefaultConverter;
-import org.nasdanika.common.MarkdownHelper;
-import org.nasdanika.common.Util;
-import org.nasdanika.exec.content.ContentFactory;
-import org.nasdanika.exec.content.Text;
-import org.nasdanika.html.model.app.Action;
-import org.nasdanika.html.model.app.AppFactory;
-
-import picocli.CommandLine;
-import picocli.CommandLine.Model.CommandSpec;
-import picocli.CommandLine.Command;
-import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.nasdanika.capability.CapabilityLoader;
 import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
-import org.nasdanika.cli.ParentCommands;
+import org.nasdanika.cli.CommandBase;
 import org.nasdanika.cli.ProgressMonitorMixIn;
-import org.nasdanika.cli.RootCommand;
-import org.nasdanika.common.NasdanikaException;
 import org.nasdanika.common.ProgressMonitor;
-import org.nasdanika.launcher.demo.ModuleVersionProvider;
-import org.nasdanika.models.rules.Rule;
+import org.nasdanika.emf.persistence.EObjectCapabilityFactory;
 import org.nasdanika.models.rules.RuleSet;
-import org.nasdanika.models.rules.cli.AbstractRuleCommand;
+import org.nasdanika.ncore.util.NcoreUtil;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Mixin;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.ParameterException;
+import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Spec;
 
 
 @Command(
@@ -64,6 +36,7 @@ public class ActionModelCommand extends CommandBase {
 		
 	@Parameters(
 		index =  "0",	
+		arity = "1",
 		description = {  
 			"Model URI, resolved relative",
 			"to the current directory",
@@ -81,31 +54,48 @@ public class ActionModelCommand extends CommandBase {
 	private boolean registered;
 	
 	@Mixin
-	private ProgressMonitorMixIn progressMonitorMixIn;	 
-	
+	private ProgressMonitorMixIn progressMonitorMixIn;	 	
 
 	@Parameters(index =  "1", description = "Output file")
 	private File output;
 		
 	@Override
 	public Integer call() throws Exception {
-		CapabilityLoader capabilityLoader = new CapabilityLoader();
+		RuleSet ruleSet = getRuleSet();
+		System.out.println(ruleSet);
+		return 0;
+	}
+	
+	@Spec CommandSpec spec;
+	
+	protected RuleSet getRuleSet() throws FileNotFoundException {
 		ProgressMonitor progressMonitor = progressMonitorMixIn.createProgressMonitor(1);
-		Iterable<CapabilityProvider<Object>> ruleSetProviders = capabilityLoader.load(ServiceCapabilityFactory.createRequirement(RuleSet.class), progressMonitor);
-		Collection<RuleSet> ruleSets = Collections.synchronizedCollection(new ArrayList<>());
-		for (CapabilityProvider<Object> provider: ruleSetProviders) {
-			provider.getPublisher().subscribe(rs -> ruleSets.add((RuleSet) rs), error -> error.printStackTrace());
-		}
-		if (output == null) {
-			generateReport(ruleSets, System.out, progressMonitor);
+		CapabilityLoader capabilityLoader = new CapabilityLoader();
+		URI modelURI = URI.createURI(model);
+		if (registered) {
+			Iterable<CapabilityProvider<Object>> ruleSetProviders = capabilityLoader.load(ServiceCapabilityFactory.createRequirement(RuleSet.class), progressMonitor);
+			Collection<RuleSet> ruleSets = Collections.synchronizedCollection(new ArrayList<>());
+			for (CapabilityProvider<Object> provider: ruleSetProviders) {
+				provider.getPublisher().subscribe(rs -> ruleSets.add((RuleSet) rs), error -> error.printStackTrace());
+			}
+			for (RuleSet ruleSet: ruleSets) {
+				for (URI uri: NcoreUtil.getIdentifiers(ruleSet)) {
+					if (uri.equals(modelURI)) {
+						return ruleSet;
+					}
+				}
+			}
 		} else {
-			try (PrintStream out = new PrintStream(output)) {
-				generateReport(ruleSets, out, progressMonitor);
-			} catch (FileNotFoundException e) {
-				throw new NasdanikaException(e);
+			Iterable<CapabilityProvider<Object>> ruleSetProviders = capabilityLoader.load(ServiceCapabilityFactory.createRequirement(EObject.class, null, EObjectCapabilityFactory.createRequirement(modelURI)), progressMonitor);
+			Collection<RuleSet> ruleSets = Collections.synchronizedCollection(new ArrayList<>());
+			for (CapabilityProvider<Object> provider: ruleSetProviders) {
+				provider.getPublisher().subscribe(rs -> ruleSets.add((RuleSet) rs), error -> error.printStackTrace());
+			}
+			for (RuleSet ruleSet: ruleSets) {
+				return ruleSet;
 			}
 		}
-		return 0;
+		throw new ParameterException(spec.commandLine(), "Registered rule set not found for URI: " + modelURI);
 	}
 
 }

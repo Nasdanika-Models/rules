@@ -17,7 +17,7 @@ import com.azure.core.credential.KeyCredential;
 public class OpenAIClientFactory extends ServiceCapabilityFactory<Object, OpenAIClient> {
 
 	@Override
-	public boolean isForServiceType(Class<?> type) {
+	public boolean isFor(Class<?> type, Object requirement) {
 		return OpenAIClient.class.equals(type);
 	}
 

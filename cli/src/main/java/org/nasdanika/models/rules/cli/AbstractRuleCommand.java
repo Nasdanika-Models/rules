@@ -1,9 +1,12 @@
 package org.nasdanika.models.rules.cli;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.nasdanika.cli.CommandBase;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RuleSet;
+import org.nasdanika.ncore.StringIdentity;
+import org.nasdanika.ncore.util.NcoreUtil;
 
 import picocli.CommandLine.Option;
 
@@ -49,7 +52,7 @@ public abstract class AbstractRuleCommand extends CommandBase {
 		if (ruleIncludes != null) {
 			boolean matched = false;
 			for (String ri: ruleIncludes) {
-				if (ri.equals(rule.getId())) {
+				if (matchIdentity(rule, ri)) {
 					matched = true;
 					break;
 				}
@@ -61,7 +64,7 @@ public abstract class AbstractRuleCommand extends CommandBase {
 		
 		if (ruleExcludes != null) {
 			for (String re: ruleExcludes) {
-				if (re.equals(rule.getId())) {
+				if (matchIdentity(rule, re)) {
 					return false;
 				}
 			}
@@ -73,7 +76,7 @@ public abstract class AbstractRuleCommand extends CommandBase {
 			if (rc instanceof RuleSet) {
 				RuleSet ruleSet = (RuleSet) rc;
 				for (String rse: ruleSetIncludes) {
-					if (rse.equals(ruleSet.getId())) {
+					if (matchIdentity(ruleSet, rse)) {
 						matched = true;
 						break;
 					}
@@ -89,7 +92,7 @@ public abstract class AbstractRuleCommand extends CommandBase {
 			if (rc instanceof RuleSet) {
 				RuleSet ruleSet = (RuleSet) rc;
 				for (String rse: ruleSetExcludes) {
-					if (rse.equals(ruleSet.getId())) {
+					if (matchIdentity(ruleSet, rse)) {
 						return false;
 					}
 				}
@@ -97,6 +100,18 @@ public abstract class AbstractRuleCommand extends CommandBase {
 		}
 		
 		return true;
+	}
+
+	protected boolean matchIdentity(StringIdentity obj, String identity) {
+		if (identity.equals(obj.getId())) {
+			return true; // Match by ID
+		}
+		for (URI identifier: NcoreUtil.getIdentifiers(obj)) {
+			if (identifier.toString().equals(identity)) {
+				return true; // Match by URI
+			}
+		}
+		return false;
 	}
 
 }
