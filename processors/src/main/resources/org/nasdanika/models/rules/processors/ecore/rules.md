@@ -235,7 +235,10 @@ notifierInspector
 
 ## CLI
 
-[``org.nasdanika.models.rules.cli``](https://javadoc.io/doc/org.nasdanika.models.rules/cli) module provides several abstract classes for building commands which deal with rule and inspectors.
+[``org.nasdanika.models.rules.cli``](https://javadoc.io/doc/org.nasdanika.models.rules/cli) module provides several concrete and abstract command classes and mix-ins for building commands which deal with rule sets, rules, and inspectors.
+
+For concrete classes see [Nasdanika CLI rules documentation](https://docs.nasdanika.org/nsd-cli/nsd/rules/index.html). 
+Some abstract classes are outlined below, consult JavaDoc for more details.
 
 ### AbstractRuleCommand
 

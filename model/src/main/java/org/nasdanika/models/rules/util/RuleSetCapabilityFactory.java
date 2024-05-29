@@ -30,7 +30,7 @@ public abstract class RuleSetCapabilityFactory extends ObjectLoaderCapabilityFac
 	
 	@Override
 	protected ResourceSetRequirement getResourceSetRequirement(Predicate<RuleSet> serviceRequirement) {
-		return new ResourceSetRequirement(new NcoreResourceSet(), null);
+		return new ResourceSetRequirement(new NcoreResourceSet(), null, null);
 	}
 
 }

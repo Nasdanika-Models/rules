@@ -11,8 +11,9 @@ import picocli.CommandLine.Command;
 		name = "rules",
 		versionProvider = ModuleVersionProvider.class,
 		subcommands = {
-			ActionModelCommand.class,	
-			SiteCommand.class
+			ActionModelCommand.class,
+			ListCommand.class,
+			RuleSetDocSiteCommand.class
 		},		
 		mixinStandardHelpOptions = true)
 @ParentCommands(RootCommand.class)
