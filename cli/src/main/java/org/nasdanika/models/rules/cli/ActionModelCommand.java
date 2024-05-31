@@ -19,7 +19,7 @@ import picocli.CommandLine.Parameters;
 
 @Command(
 		description = "Generates rule set documentation action model",
-		versionProvider = ModuleVersionProvider.class,		
+//		versionProvider = ModuleVersionProvider.class,		
 		mixinStandardHelpOptions = true,
 		name = "action-model")
 public class ActionModelCommand extends CommandBase {

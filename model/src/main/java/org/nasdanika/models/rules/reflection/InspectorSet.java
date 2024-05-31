@@ -344,7 +344,8 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 				iStream = iStream.parallel();
 			}
 			AtomicBoolean isCancelled = new AtomicBoolean();
-			BiPredicate<Object, ? super InspectionResult> filterInspectionResultConsumer = org.nasdanika.models.rules.Inspector.filterInspectionResultConsumer(inspectionResultConsumer, () -> isCancelled.set(true));					
+			Runnable onCancel = () -> isCancelled.set(true);
+			BiPredicate<Object, ? super InspectionResult> filterInspectionResultConsumer = org.nasdanika.models.rules.Inspector.<Object>filterInspectionResultConsumer(inspectionResultConsumer, onCancel);					
 			iStream
 				.filter(inspector -> target != null && inspector.isForType(target.getClass()))
 				.forEach(inspector -> {

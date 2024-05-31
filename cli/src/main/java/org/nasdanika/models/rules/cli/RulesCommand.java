@@ -9,7 +9,7 @@ import picocli.CommandLine.Command;
 @Command(
 		description = "Rules commands",
 		name = "rules",
-		versionProvider = ModuleVersionProvider.class,
+//		versionProvider = ModuleVersionProvider.class,
 		subcommands = {
 			ActionModelCommand.class,
 			ListCommand.class,

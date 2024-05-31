@@ -49,14 +49,12 @@ public interface Rule extends Node {
 
 	/**
 	 * Returns the value of the '<em><b>Severity</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.nasdanika.models.rules.Severity#getRules <em>Rules</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Severity</em>' reference.
 	 * @see #setSeverity(Severity)
 	 * @see org.nasdanika.models.rules.RulesPackage#getRule_Severity()
-	 * @see org.nasdanika.models.rules.Severity#getRules
-	 * @model opposite="rules" required="true"
+	 * @model required="true"
 	 * @generated
 	 */
 	Severity getSeverity();

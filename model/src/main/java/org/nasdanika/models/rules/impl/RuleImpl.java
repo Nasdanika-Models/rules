@@ -103,16 +103,6 @@ public class RuleImpl extends NodeImpl implements Rule {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetSeverity(Severity newSeverity, NotificationChain msgs) {
-		msgs = eDynamicInverseAdd((InternalEObject)newSeverity, RulesPackage.RULE__SEVERITY, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public void setSeverity(Severity newSeverity) {
 		eDynamicSet(RulesPackage.RULE__SEVERITY, RulesPackage.Literals.RULE__SEVERITY, newSeverity);
@@ -135,27 +125,8 @@ public class RuleImpl extends NodeImpl implements Rule {
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case RulesPackage.RULE__SEVERITY:
-				Severity severity = basicGetSeverity();
-				if (severity != null)
-					msgs = ((InternalEObject)severity).eInverseRemove(this, RulesPackage.SEVERITY__RULES, Severity.class, msgs);
-				return basicSetSeverity((Severity)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case RulesPackage.RULE__SEVERITY:
-				return basicSetSeverity(null, msgs);
 			case RulesPackage.RULE__ACTIONS:
 				return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
 		}

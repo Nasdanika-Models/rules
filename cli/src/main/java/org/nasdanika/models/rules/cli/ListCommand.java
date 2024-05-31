@@ -24,7 +24,7 @@ import picocli.CommandLine.Option;
 @Command(
 		description = "Lists available rule sets and rules",
 		name = "list",
-		versionProvider = ModuleVersionProvider.class,
+//		versionProvider = ModuleVersionProvider.class,
 		mixinStandardHelpOptions = true)
 public class ListCommand extends AbstractRuleCommand {
 		

@@ -27,7 +27,7 @@ import picocli.CommandLine.Parameters;
 
 @Command(
 		description = "Generates rule set documentation site",
-		versionProvider = ModuleVersionProvider.class,		
+//		versionProvider = ModuleVersionProvider.class,		
 		mixinStandardHelpOptions = true,
 		name = "site")
 public class RuleSetDocSiteCommand extends AbstractSiteCommand {

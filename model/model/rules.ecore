@@ -4,7 +4,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Rule" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//Node">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="suppress" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="severity" lowerBound="1"
-        eType="#//Severity" eOpposite="#//Severity/rules"/>
+        eType="#//Severity"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
         eType="#//Action" containment="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -56,7 +56,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Severity" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//ArchitectureDescriptionElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rules" upperBound="-1"
-        eType="#//Rule" eOpposite="#//Rule/severity"/>
+        eType="#//Rule" changeable="false" transient="true" derived="true">
+      <eAnnotations source="urn:org.nasdanika">
+        <details key="opposite" value="severity"/>
+      </eAnnotations>
+    </eStructuralFeatures>   
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="../../org.nasdanika.models.architecture/model/architecture.ecore#//Node">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
