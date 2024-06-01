@@ -32,6 +32,7 @@ One usage scenario is to define and publish a set of rules and then gradually in
 
 * [Sources](https://github.com/Nasdanika-models/rules)
 * [Javadoc](https://javadoc.io/doc/org.nasdanika.models.rules/model/)
+* [Medium Story](https://medium.com/nasdanika/nasdanika-rules-1a16889a41c7)
 
 ----
 
