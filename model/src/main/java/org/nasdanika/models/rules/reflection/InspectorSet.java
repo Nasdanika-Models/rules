@@ -74,12 +74,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 	public Collection<Rule> getRules() {
 		return inspectors.stream().flatMap(i -> i.getRules().stream()).toList();
 	}
-	
-	@Override
-	protected Stream<AnnotatedElementRecord> getAnnotatedElementRecords(Object target, List<Object> factoryPath) {
-		return super.getAnnotatedElementRecords(target, factoryPath);
-	}
-	
+		
 	/**
 	 * @return {@link org.nasdanika.models.rules.RuleSet} supported by this inspector set.
 	 */
