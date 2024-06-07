@@ -71,10 +71,10 @@ public class RuleSetDocSiteCommand extends AbstractSiteCommand {
 
 	@Override
 	protected int generate(Context context, ProgressMonitor progressMonitor) throws IOException, DiagnosticException {
-		try (ProgressMonitor gpm = progressMonitor.scale(3)) {
+		try (ProgressMonitor gpm = progressMonitor.scale(4)) {
 			RuleSet ruleSet = ruleSetMixIn.getRuleSet(model, progressMonitor.split("Loading rule set", 1));
 			
-			Consumer<Diagnostic> diagnosticConsumer = d -> d.dump(System.out, 0);		
+			Consumer<Diagnostic> diagnosticConsumer = d -> d.dump(progressMonitor.split("Diagnostic", 1));		
 			try (ProgressMonitor actionGeneratorProgressMonitor = progressMonitor.split("Generating action model", 1)) {
 				Action rootAction = AppFactory.eINSTANCE.createAction();
 				rootAction.setIcon(rootActionIcon);
