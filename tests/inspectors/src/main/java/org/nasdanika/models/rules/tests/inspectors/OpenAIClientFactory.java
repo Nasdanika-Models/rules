@@ -6,6 +6,7 @@ import java.util.function.BiFunction;
 import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
 import org.nasdanika.common.ProgressMonitor;
+import org.nasdanika.common.Util;
 
 import com.azure.ai.openai.OpenAIClient;
 import com.azure.ai.openai.OpenAIClientBuilder;
@@ -29,6 +30,10 @@ public class OpenAIClientFactory extends ServiceCapabilityFactory<Object, OpenAI
 			ProgressMonitor progressMonitor) {
 		
     	String key = System.getenv("OPENAI_API_KEY");
+    	if (Util.isBlank(key)) {
+    		return empty();
+    	}
+    	
     	OpenAIClient client = new OpenAIClientBuilder()
     		    .credential(new KeyCredential(key))
     		    .endpoint("https://api.openai.com/v1/chat/completions")
