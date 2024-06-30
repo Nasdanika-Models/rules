@@ -81,7 +81,15 @@ public class RuleSetDocSiteCommand extends AbstractSiteCommand {
 				rootAction.setText(rootActionText);
 				rootAction.setLocation(rootActionLocation);
 				
-				ActionGenerator actionGenerator = ActionGenerator.load(ruleSet, context, null, null, null, actionGeneratorProgressMonitor); 
+				ActionGenerator actionGenerator = ActionGenerator.load(
+						ruleSet, 
+						context, 
+						null, 
+						null, 
+						null, 
+						diagnosticConsumer, 
+						actionGeneratorProgressMonitor);
+				
 				Map<EObject, Collection<Label>> labelMap = actionGenerator.generateActionModel(diagnosticConsumer, progressMonitor);
 				labelMap
 					.values()

@@ -55,7 +55,15 @@ public class ActionModelCommand extends CommandBase {
 			Consumer<Diagnostic> diagnosticConsumer = d -> d.dump(progressMonitor.split("Diagnostic", 1));		
 			Context context = contextMixIn.createContext(progressMonitor.split("Creating context", 1));
 			try (ProgressMonitor actionGeneratorProgressMonitor = progressMonitor.split("Generating action model", 1)) {
-				ActionGenerator actionGenerator = ActionGenerator.load(ruleSet, context, null, null, null, actionGeneratorProgressMonitor); 
+				ActionGenerator actionGenerator = ActionGenerator.load(
+						ruleSet, 
+						context, 
+						null, 
+						null, 
+						null, 
+						diagnosticConsumer, 
+						actionGeneratorProgressMonitor);
+				
 				actionGenerator.generateActionModel(
 						diagnosticConsumer, 
 						output,
