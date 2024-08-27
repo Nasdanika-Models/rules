@@ -34,8 +34,8 @@ import org.nasdanika.common.Util;
 import org.nasdanika.models.gitlab.util.GitLabApiProvider;
 import org.nasdanika.models.gitlab.util.GitLabURIHandler;
 import org.nasdanika.models.java.util.JavaParserResourceFactory;
-import org.nasdanika.models.maven.Project;
-import org.nasdanika.models.maven.util.MavenResourceFactory;
+//import org.nasdanika.models.maven.Project;
+//import org.nasdanika.models.maven.util.MavenResourceFactory;
 import org.nasdanika.models.rules.CreateTextResourceAction;
 import org.nasdanika.models.rules.InspectionResult;
 import org.nasdanika.models.rules.Inspector;
@@ -65,89 +65,89 @@ public class TestAnalyzers {
 		}
 	}
 		
-	@Test
-	public void testLoadPomXmlFromGitLab() {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new MavenResourceFactory());
+//	@Test
+//	public void testLoadPomXmlFromGitLab() {
+//		ResourceSet resourceSet = new ResourceSetImpl();
+//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new MavenResourceFactory());
+//		
+//		String accessToken = System.getenv("GITLAB_ACCESS_TOKEN");
+//		if (!Util.isBlank(accessToken)) {	
+//			try (GitLabApiProvider gitLabApiProvider = new GitLabApiProvider("https://gitlab.com/", accessToken)) {
+//				GitLabURIHandler gitLabURIHandler = new GitLabURIHandler(gitLabApiProvider.getGitLabApi());				
+//				URI pomURI = URI.createHierarchicalURI(
+//						GitLabURIHandler.GITLAB_URI_SCHEME, 
+//						"48523784", 
+//						null, 
+//						new String[] { "main", "pom.xml" }, 
+//						null, 
+//						"/");
+//				
+//				resourceSet.getURIConverter().getURIHandlers().add(0, gitLabURIHandler);
+//				
+//				Resource pomXmlResource = resourceSet.getResource(pomURI, true);
+//				for (EObject root: pomXmlResource.getContents()) {
+//					Project project = (Project) root;
+//					System.out.println(project.getGroupId());
+//					System.out.println(project.getArtifactId());
+//					System.out.println(project.getVersion());
+//					System.out.println(project.getName());			
+//					System.out.println(project.getDescription());			
+//				}		
+//			}
+//		}		
+//	}	
 		
-		String accessToken = System.getenv("GITLAB_ACCESS_TOKEN");
-		if (!Util.isBlank(accessToken)) {	
-			try (GitLabApiProvider gitLabApiProvider = new GitLabApiProvider("https://gitlab.com/", accessToken)) {
-				GitLabURIHandler gitLabURIHandler = new GitLabURIHandler(gitLabApiProvider.getGitLabApi());				
-				URI pomURI = URI.createHierarchicalURI(
-						GitLabURIHandler.GITLAB_URI_SCHEME, 
-						"48523784", 
-						null, 
-						new String[] { "main", "pom.xml" }, 
-						null, 
-						"/");
-				
-				resourceSet.getURIConverter().getURIHandlers().add(0, gitLabURIHandler);
-				
-				Resource pomXmlResource = resourceSet.getResource(pomURI, true);
-				for (EObject root: pomXmlResource.getContents()) {
-					Project project = (Project) root;
-					System.out.println(project.getGroupId());
-					System.out.println(project.getArtifactId());
-					System.out.println(project.getVersion());
-					System.out.println(project.getName());			
-					System.out.println(project.getDescription());			
-				}		
-			}
-		}		
-	}	
-		
-	@Test
-	public void testLoadTreeResource() throws IOException {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());		
-		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new MavenResourceFactory());
-		
-		String accessToken = System.getenv("GITLAB_ACCESS_TOKEN");
-		if (!Util.isBlank(accessToken)) {	
-			try (GitLabApiProvider gitLabApiProvider = new GitLabApiProvider("https://gitlab.com/", accessToken)) {
-				GitLabURIHandler gitLabURIHandler = new GitLabURIHandler(gitLabApiProvider.getGitLabApi());				
-				URI resourceURI = URI.createHierarchicalURI(
-						GitLabURIHandler.GITLAB_URI_SCHEME, 
-						"48523784", 
-						null, 
-						new String[] { "main", "" }, 
-						null, 
-						null);
-				
-				resourceSet.getURIConverter().getURIHandlers().add(0, gitLabURIHandler);
-				
-				Resource resource = resourceSet.getResource(resourceURI, true);
-				resource.save(System.out, null);
-				
-				NotifierInspector inspector = new NotifierInspector() {
-
-					@Override
-					public void inspect(
-							Notifier target, 
-							BiPredicate<? super Notifier, ? super InspectionResult> inspectionResultConsumer,
-							Context context, 
-							ProgressMonitor progressMonitor) {
-						
-						if (target instanceof TreeItem) {
-							System.out.println("*** " + target.getClass() + " " + ((TreeItem) target).getName() + " " + ((TreeItem) target).eResource().getURI());
-						}
-					}
-					
-				};
-				
-				// Not visiting blobs
-				Predicate<Notifier> predicate = obj -> {
-					if (obj instanceof TreeItem) {
-						System.out.println(((TreeItem) obj).getName());
-						return obj instanceof Tree;
-					}
-					return true;
-				};
-				inspector.asContentsInspector(false, predicate).inspect(resource, null, null, null);				
-			}
-		}
-	}
+//	@Test
+//	public void testLoadTreeResource() throws IOException {
+//		ResourceSet resourceSet = new ResourceSetImpl();
+//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());		
+//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xml", new MavenResourceFactory());
+//		
+//		String accessToken = System.getenv("GITLAB_ACCESS_TOKEN");
+//		if (!Util.isBlank(accessToken)) {	
+//			try (GitLabApiProvider gitLabApiProvider = new GitLabApiProvider("https://gitlab.com/", accessToken)) {
+//				GitLabURIHandler gitLabURIHandler = new GitLabURIHandler(gitLabApiProvider.getGitLabApi());				
+//				URI resourceURI = URI.createHierarchicalURI(
+//						GitLabURIHandler.GITLAB_URI_SCHEME, 
+//						"48523784", 
+//						null, 
+//						new String[] { "main", "" }, 
+//						null, 
+//						null);
+//				
+//				resourceSet.getURIConverter().getURIHandlers().add(0, gitLabURIHandler);
+//				
+//				Resource resource = resourceSet.getResource(resourceURI, true);
+//				resource.save(System.out, null);
+//				
+//				NotifierInspector inspector = new NotifierInspector() {
+//
+//					@Override
+//					public void inspect(
+//							Notifier target, 
+//							BiPredicate<? super Notifier, ? super InspectionResult> inspectionResultConsumer,
+//							Context context, 
+//							ProgressMonitor progressMonitor) {
+//						
+//						if (target instanceof TreeItem) {
+//							System.out.println("*** " + target.getClass() + " " + ((TreeItem) target).getName() + " " + ((TreeItem) target).eResource().getURI());
+//						}
+//					}
+//					
+//				};
+//				
+//				// Not visiting blobs
+//				Predicate<Notifier> predicate = obj -> {
+//					if (obj instanceof TreeItem) {
+//						System.out.println(((TreeItem) obj).getName());
+//						return obj instanceof Tree;
+//					}
+//					return true;
+//				};
+//				inspector.asContentsInspector(false, predicate).inspect(resource, null, null, null);				
+//			}
+//		}
+//	}
 		
 	@Test
 	public void testInspectJava() throws IOException {

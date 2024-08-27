@@ -9,7 +9,7 @@ import org.nasdanika.cli.ProgressMonitorMixIn;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.Diagnostic;
 import org.nasdanika.common.ProgressMonitor;
-import org.nasdanika.html.model.app.graph.emf.ActionGenerator;
+import org.nasdanika.html.model.app.graph.emf.HtmlAppGenerator;
 import org.nasdanika.models.rules.RuleSet;
 
 import picocli.CommandLine.Command;
@@ -55,7 +55,7 @@ public class ActionModelCommand extends CommandBase {
 			Consumer<Diagnostic> diagnosticConsumer = d -> d.dump(progressMonitor.split("Diagnostic", 1));		
 			Context context = contextMixIn.createContext(progressMonitor.split("Creating context", 1));
 			try (ProgressMonitor actionGeneratorProgressMonitor = progressMonitor.split("Generating action model", 1)) {
-				ActionGenerator actionGenerator = ActionGenerator.load(
+				HtmlAppGenerator actionGenerator = HtmlAppGenerator.load(
 						ruleSet, 
 						context, 
 						null, 
@@ -64,7 +64,7 @@ public class ActionModelCommand extends CommandBase {
 						diagnosticConsumer, 
 						actionGeneratorProgressMonitor);
 				
-				actionGenerator.generateActionModel(
+				actionGenerator.generateHtmlAppModel(
 						diagnosticConsumer, 
 						output,
 						progressMonitor);

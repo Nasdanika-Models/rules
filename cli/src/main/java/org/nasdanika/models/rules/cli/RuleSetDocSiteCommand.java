@@ -17,7 +17,7 @@ import org.nasdanika.html.model.app.Action;
 import org.nasdanika.html.model.app.AppFactory;
 import org.nasdanika.html.model.app.Label;
 import org.nasdanika.html.model.app.gen.cli.AbstractSiteCommand;
-import org.nasdanika.html.model.app.graph.emf.ActionGenerator;
+import org.nasdanika.html.model.app.graph.emf.HtmlAppGenerator;
 import org.nasdanika.models.rules.RuleSet;
 
 import picocli.CommandLine.Command;
@@ -81,7 +81,7 @@ public class RuleSetDocSiteCommand extends AbstractSiteCommand {
 				rootAction.setText(rootActionText);
 				rootAction.setLocation(rootActionLocation);
 				
-				ActionGenerator actionGenerator = ActionGenerator.load(
+				HtmlAppGenerator htmlAppGenerator = HtmlAppGenerator.load(
 						ruleSet, 
 						context, 
 						null, 
@@ -90,7 +90,7 @@ public class RuleSetDocSiteCommand extends AbstractSiteCommand {
 						diagnosticConsumer, 
 						actionGeneratorProgressMonitor);
 				
-				Map<EObject, Collection<Label>> labelMap = actionGenerator.generateActionModel(diagnosticConsumer, progressMonitor);
+				Map<EObject, Collection<Label>> labelMap = htmlAppGenerator.generateHtmlAppModel(diagnosticConsumer, progressMonitor);
 				labelMap
 					.values()
 					.stream()
@@ -101,7 +101,7 @@ public class RuleSetDocSiteCommand extends AbstractSiteCommand {
 					});
 				
 				URI actionModelResourceURI = URI.createFileURI(File.createTempFile("resource-set-action-model-", ".xml").getAbsolutePath());		
-				ActionGenerator.saveLabels(Collections.singleton(rootAction), actionModelResourceURI);
+				HtmlAppGenerator.saveLabels(Collections.singleton(rootAction), actionModelResourceURI);
 				modelURI = actionModelResourceURI.appendFragment("/");
 			}			
 			return super.generate(context, gpm.split("Generating site", 1));

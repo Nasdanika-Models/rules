@@ -3,7 +3,7 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.nasdanika.models.rules/src/main/java" creationIcons="false"
     editorDirectory="" modelPluginID="org.nasdanika.models.rules" modelName="Rules"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
-    featureDelegation="Dynamic" complianceLevel="17.0" suppressGenModelAnnotations="false"
+    bundleManifest="false" featureDelegation="Dynamic" complianceLevel="17.0" suppressGenModelAnnotations="false"
     copyrightFields="false" usedGenPackages="../../org.nasdanika.models.architecture/model/architecture.genmodel#//architecture ../../org.nasdanika.models.coverage/model/coverage.genmodel#//coverage ../../org.nasdanika.drawio.model/model/drawio.genmodel#//model ../../org.nasdanika.graph.model/model/graph.genmodel#//model ../../org.nasdanika.models.java/model/java.genmodel#//java ../../org.nasdanika.ncore/model/ncore.genmodel#//ncore ../../org.nasdanika.models.party/model/party.genmodel#//party ../../org.nasdanika.models.source/model/source.genmodel#//source"
     operationReflection="true" importOrganizing="true">
   <foreignModel>rules.ecore</foreignModel>

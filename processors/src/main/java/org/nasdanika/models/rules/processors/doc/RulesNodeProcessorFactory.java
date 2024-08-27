@@ -12,6 +12,7 @@ import org.nasdanika.graph.processor.ProcessorInfo;
 import org.nasdanika.graph.processor.emf.EObjectNodeProcessor;
 import org.nasdanika.html.model.app.Action;
 import org.nasdanika.html.model.app.AppFactory;
+import org.nasdanika.html.model.app.Label;
 import org.nasdanika.html.model.app.graph.WidgetFactory;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RuleSet;
@@ -26,15 +27,15 @@ import org.nasdanika.ncore.util.NcoreUtil;
 public class RulesNodeProcessorFactory {
 			
 	private Context context;
-	private java.util.function.BiFunction<URI, ProgressMonitor, Action> prototypeProvider;
+	private java.util.function.BiFunction<URI, ProgressMonitor, Label> prototypeProvider;
 
 	protected java.util.function.Function<ProgressMonitor, Action> getPrototypeProvider(NodeProcessorConfig<WidgetFactory, WidgetFactory> config) {
 		return progressMonitor -> {
 			if (prototypeProvider != null) {
 				for (URI identifier: NcoreUtil.getIdentifiers(((EObjectNode) config.getElement()).get())) {
-					Action prototype = prototypeProvider.apply(identifier, progressMonitor);
-					if (prototype != null) {
-						return prototype;
+					Label prototype = prototypeProvider.apply(identifier, progressMonitor);
+					if (prototype instanceof Action) {
+						return (Action) prototype;
 					}				
 				}			
 			}
@@ -49,7 +50,7 @@ public class RulesNodeProcessorFactory {
 	 */
 	public RulesNodeProcessorFactory(
 			Context context, 
-			java.util.function.BiFunction<URI, ProgressMonitor, Action> prototypeProvider)  {
+			java.util.function.BiFunction<URI, ProgressMonitor, Label> prototypeProvider)  {
 		this.context = context;
 		this.prototypeProvider = prototypeProvider;
 	}
