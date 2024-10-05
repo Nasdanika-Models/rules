@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
-import java.util.function.BiFunction;
 
 import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
@@ -24,10 +23,10 @@ public abstract class RuleSetsCommandFactory<T> extends SubCommandCapabilityFact
 	@Override
 	protected CompletionStage<T> doCreateCommand(
 			List<CommandLine> parentPath, 
-			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
+			Loader loader,
 			ProgressMonitor progressMonitor) {
 		
-		CompletionStage<Iterable<CapabilityProvider<Object>>> ruleSetCS = resolver.apply(ServiceCapabilityFactory.createRequirement(RuleSet.class), progressMonitor);	
+		CompletionStage<Iterable<CapabilityProvider<Object>>> ruleSetCS = loader.load(ServiceCapabilityFactory.createRequirement(RuleSet.class), progressMonitor);	
 		return ruleSetCS.thenApply(this::createCommand);			
 	}
 	

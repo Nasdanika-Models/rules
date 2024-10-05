@@ -82,7 +82,7 @@ public class RuleSetDocSiteCommand extends AbstractSiteCommand {
 				rootAction.setLocation(rootActionLocation);
 				
 				HtmlAppGenerator htmlAppGenerator = HtmlAppGenerator.load(
-						ruleSet, 
+						Collections.singleton(ruleSet), 
 						context, 
 						null, 
 						null, 

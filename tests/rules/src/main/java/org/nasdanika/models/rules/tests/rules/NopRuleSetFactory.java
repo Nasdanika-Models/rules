@@ -3,7 +3,6 @@ package org.nasdanika.models.rules.tests.rules;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.function.BiFunction;
 
 import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
@@ -24,7 +23,7 @@ public class NopRuleSetFactory extends ServiceCapabilityFactory<Object, RuleSet>
 	protected CompletionStage<Iterable<CapabilityProvider<RuleSet>>> createService(
 			Class<RuleSet> serviceType, 
 			Object serviceRequirement,
-			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
+			Loader loader,
 			ProgressMonitor progressMonitor) {
 		
 		CapabilityProvider<RuleSet> capabilityProvider = new CapabilityProvider<RuleSet>() {

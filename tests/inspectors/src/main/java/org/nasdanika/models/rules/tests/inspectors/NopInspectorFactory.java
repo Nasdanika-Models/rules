@@ -7,6 +7,7 @@ import java.util.function.BiFunction;
 
 import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
+import org.nasdanika.capability.CapabilityFactory.Loader;
 import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.models.rules.Inspector;
 
@@ -23,7 +24,7 @@ public class NopInspectorFactory extends ServiceCapabilityFactory<Object, Inspec
 	protected CompletionStage<Iterable<CapabilityProvider<Inspector<Object>>>> createService(
 			Class<Inspector<Object>> serviceType, 
 			Object serviceRequirement,
-			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
+			Loader loader,
 			ProgressMonitor progressMonitor) {
 		
 		CapabilityProvider<Inspector<Object>> capabilityProvider = new CapabilityProvider<Inspector<Object>>() {

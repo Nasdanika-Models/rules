@@ -8,6 +8,7 @@ import java.util.function.BiFunction;
 
 import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
+import org.nasdanika.capability.CapabilityFactory.Loader;
 import org.nasdanika.common.ProgressMonitor;
 
 import com.azure.ai.openai.OpenAIClient;
@@ -28,10 +29,10 @@ public class OpenAITestGeneratorFactory extends ServiceCapabilityFactory<JUnitTe
 	protected CompletionStage<Iterable<CapabilityProvider<TestGenerator>>> createService(
 			Class<TestGenerator> serviceType, 
 			JUnitTestRequirement serviceRequirement,
-			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
+			Loader loader,
 			ProgressMonitor progressMonitor) {
 
-			CompletionStage<Iterable<CapabilityProvider<Object>>> openAIClientCS = resolver.apply(ServiceCapabilityFactory.createRequirement(OpenAIClient.class, null, null), progressMonitor);
+			CompletionStage<Iterable<CapabilityProvider<Object>>> openAIClientCS = loader.load(ServiceCapabilityFactory.createRequirement(OpenAIClient.class, null, null), progressMonitor);
 			return openAIClientCS.thenApply(clients -> applyClients(clients, serviceRequirement, progressMonitor));
 	}
 	

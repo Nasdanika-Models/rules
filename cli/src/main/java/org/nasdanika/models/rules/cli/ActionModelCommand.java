@@ -1,6 +1,7 @@
 package org.nasdanika.models.rules.cli;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.function.Consumer;
 
 import org.nasdanika.cli.CommandBase;
@@ -56,7 +57,7 @@ public class ActionModelCommand extends CommandBase {
 			Context context = contextMixIn.createContext(progressMonitor.split("Creating context", 1));
 			try (ProgressMonitor actionGeneratorProgressMonitor = progressMonitor.split("Generating action model", 1)) {
 				HtmlAppGenerator actionGenerator = HtmlAppGenerator.load(
-						ruleSet, 
+						Collections.singleton(ruleSet), 
 						context, 
 						null, 
 						null, 

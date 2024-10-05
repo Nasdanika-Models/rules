@@ -5,6 +5,7 @@ import java.util.function.BiFunction;
 
 import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
+import org.nasdanika.capability.CapabilityFactory.Loader;
 import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.common.Util;
 
@@ -26,7 +27,7 @@ public class OpenAIClientFactory extends ServiceCapabilityFactory<Object, OpenAI
 	protected CompletionStage<Iterable<CapabilityProvider<OpenAIClient>>> createService(
 			Class<OpenAIClient> serviceType,
 			Object serviceRequirement,
-			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
+			Loader loader,
 			ProgressMonitor progressMonitor) {
 		
     	String key = System.getenv("OPENAI_API_KEY");

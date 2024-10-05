@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.CompletionStage;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 import org.nasdanika.capability.CapabilityProvider;
@@ -18,13 +17,12 @@ import org.nasdanika.models.rules.reflection.RuleManager;
 import reactor.core.publisher.Flux;
 
 public class ReflectiveInspectorFactory extends InspectorCapabilityFactory<Object> {
-
+	
 	@Override
 	protected CompletionStage<Iterable<CapabilityProvider<Inspector<Object>>>> createService(
 			Class<Inspector<Object>> serviceType, 
-			Predicate<Inspector<Object>> serviceRequirement,
-			BiFunction<Object, ProgressMonitor, 
-			CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
+			Predicate<Inspector<Object>> serviceRequirement, 
+			Loader loader,
 			ProgressMonitor progressMonitor) {
 
 			JUnitTestRequirement jUnitTestRequirement = new JUnitTestRequirement(
@@ -36,7 +34,7 @@ public class ReflectiveInspectorFactory extends InspectorCapabilityFactory<Objec
 					false, 
 					false);
 			
-			CompletionStage<Iterable<CapabilityProvider<Object>>> testGeneratorCS = resolver.apply(ServiceCapabilityFactory.createRequirement(TestGenerator.class, null, jUnitTestRequirement), progressMonitor);
+			CompletionStage<Iterable<CapabilityProvider<Object>>> testGeneratorCS = loader.load(ServiceCapabilityFactory.createRequirement(TestGenerator.class, null, jUnitTestRequirement), progressMonitor);
 			return testGeneratorCS.thenApply(testGenerators -> applyTestGenerators(testGenerators, serviceRequirement, progressMonitor));
 	}
 	

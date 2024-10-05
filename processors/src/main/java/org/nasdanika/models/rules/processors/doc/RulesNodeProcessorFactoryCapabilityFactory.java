@@ -3,7 +3,6 @@ package org.nasdanika.models.rules.processors.doc;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.function.BiFunction;
 
 import org.nasdanika.capability.CapabilityFactory;
 import org.nasdanika.capability.CapabilityProvider;
@@ -22,7 +21,7 @@ public class RulesNodeProcessorFactoryCapabilityFactory implements CapabilityFac
 	@Override
 	public CompletionStage<Iterable<CapabilityProvider<Object>>> create(
 			NodeProcessorFactoryRequirement requirement,
-			BiFunction<Object, ProgressMonitor, CompletionStage<Iterable<CapabilityProvider<Object>>>> resolver,
+			Loader loader,
 			ProgressMonitor progressMonitor) {
 
 		RulesNodeProcessorFactory factory = new RulesNodeProcessorFactory(requirement.context(), requirement.prototypeProvider());
