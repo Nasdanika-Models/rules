@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.nasdanika.models.rules</groupId>
-		<version>2024.10.0</version>
+		<version>2024.11.0</version>
 		<artifactId>parent</artifactId>
 		<relativePath>..</relativePath>
 	</parent>
@@ -17,9 +17,9 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.nasdanika.html</groupId>
-			<artifactId>app-model-gen-cli</artifactId>
-			<version>${html.version}</version>
+			<groupId>org.nasdanika.models.app</groupId>
+			<artifactId>cli</artifactId>
+			<version>2024.11.0</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -10,7 +10,7 @@ import org.nasdanika.cli.ProgressMonitorMixIn;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.Diagnostic;
 import org.nasdanika.common.ProgressMonitor;
-import org.nasdanika.html.model.app.graph.emf.HtmlAppGenerator;
+import org.nasdanika.models.app.graph.emf.HtmlAppGenerator;
 import org.nasdanika.models.rules.RuleSet;
 
 import picocli.CommandLine.Command;

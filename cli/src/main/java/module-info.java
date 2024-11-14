@@ -5,7 +5,7 @@ module org.nasdanika.models.rules.cli {
 	
 	exports org.nasdanika.models.rules.cli;
 
-	requires transitive org.nasdanika.html.model.app.gen.cli;
+	requires transitive org.nasdanika.models.app.cli;
 	requires transitive org.nasdanika.models.rules.processors;
 	requires spring.core;
 	requires org.eclipse.emf.ecore.xmi;

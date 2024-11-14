@@ -15,12 +15,12 @@ import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.common.Util;
 import org.nasdanika.graph.emf.EReferenceConnection;
 import org.nasdanika.graph.processor.NodeProcessorConfig;
-import org.nasdanika.html.model.app.Action;
-import org.nasdanika.html.model.app.AppFactory;
-import org.nasdanika.html.model.app.Label;
-import org.nasdanika.html.model.app.gen.DynamicTableBuilder;
-import org.nasdanika.html.model.app.graph.WidgetFactory;
-import org.nasdanika.html.model.app.graph.emf.OutgoingReferenceBuilder;
+import org.nasdanika.models.app.Action;
+import org.nasdanika.models.app.AppFactory;
+import org.nasdanika.models.app.Label;
+import org.nasdanika.models.app.gen.DynamicTableBuilder;
+import org.nasdanika.models.app.graph.WidgetFactory;
+import org.nasdanika.models.app.graph.emf.OutgoingReferenceBuilder;
 import org.nasdanika.models.architecture.processors.doc.DomainNodeProcessor;
 import org.nasdanika.models.rules.Rule;
 import org.nasdanika.models.rules.RuleSet;
@@ -67,7 +67,7 @@ public class RuleSetNodeProcessor<T extends RuleSet> extends DomainNodeProcessor
 					.addStringColumnBuilder("description", true, false, "Description", endpoint -> description(endpoint.getKey(), endpoint.getValue(), progressMonitor))
 					.addStringColumnBuilder("severity", true, true, "Severity", endpoint -> severityLink(endpoint.getKey(), endpoint.getValue(), progressMonitor));
 				
-				org.nasdanika.html.model.html.Tag rulesTable = rulesTableBuilder.build(
+				org.nasdanika.models.html.Tag rulesTable = rulesTableBuilder.build(
 						referenceOutgoingEndpoints,  
 						"rule-set-rules", 
 						"rules-table", 
@@ -152,7 +152,7 @@ public class RuleSetNodeProcessor<T extends RuleSet> extends DomainNodeProcessor
 				
 				// 
 				
-				org.nasdanika.html.model.html.Tag severitiesTable = severitiesTableBuilder.build(
+				org.nasdanika.models.html.Tag severitiesTable = severitiesTableBuilder.build(
 						referenceOutgoingEndpoints,  
 						"rule-set-severities", 
 						"severities-table", 
