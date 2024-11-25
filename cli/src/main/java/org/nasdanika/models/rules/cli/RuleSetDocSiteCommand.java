@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 import org.eclipse.emf.common.util.DiagnosticException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.nasdanika.capability.CapabilityLoader;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.Diagnostic;
 import org.nasdanika.common.ProgressMonitor;
@@ -31,6 +32,14 @@ import picocli.CommandLine.Parameters;
 		mixinStandardHelpOptions = true,
 		name = "site")
 public class RuleSetDocSiteCommand extends AbstractSiteCommand {
+	
+	public RuleSetDocSiteCommand() {
+		
+	}
+	
+	public RuleSetDocSiteCommand(CapabilityLoader capabilityLoader) {
+		super(capabilityLoader);
+	}
 	
 	@Mixin
 	private RuleSetMixIn ruleSetMixIn;
