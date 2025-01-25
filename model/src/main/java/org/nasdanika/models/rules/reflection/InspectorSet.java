@@ -58,7 +58,7 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		this.ruleManager = ruleManager;
 		this.parallel = parallel;
 		for (Object factory: factories) {
-			getAnnotatedElementRecords(factory, Collections.singletonList(factory))
+			getAnnotatedElementRecords(factory, Collections.emptyList())
 				.filter(aer -> aer.getAnnotation(Inspector.class) != null)
 				.map(aer -> createInspector(aer, progressMonitor))
 				.filter(i -> inspectorPredicate == null || inspectorPredicate.test(i))
@@ -91,13 +91,13 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 		if (aerTarget instanceof RuleManager) {
 			return (RuleManager) aerTarget;
 		}
-		List<Object> factoryPath = aer.getFactoryPath();
+		List<FactoryRecord> factoryPath = aer.getFactoryPath();
 		if (factoryPath != null) {
-			LinkedList<Object> rfp = new LinkedList<>(factoryPath);
+			LinkedList<FactoryRecord> rfp = new LinkedList<>(factoryPath);
 			Collections.reverse(factoryPath);
-			for (Object factory: rfp) {
-				if (factory instanceof RuleManager) {
-					return (RuleManager) factory;
+			for (FactoryRecord factoryRecord: rfp) {
+				if (factoryRecord.target() instanceof RuleManager) {
+					return (RuleManager) factoryRecord.target();
 				}
 			}
 		}
@@ -237,12 +237,12 @@ public class InspectorSet extends Reflector implements org.nasdanika.models.rule
 	protected org.nasdanika.models.rules.RuleSet getRuleSet(AnnotatedElementRecord aer, ProgressMonitor progressMonitor) {
 		List<Object> candidates = new ArrayList<>();
 		candidates.add(aer.getTarget());
-		List<Object> factoryPath = aer.getFactoryPath();
+		List<FactoryRecord> factoryPath = aer.getFactoryPath();
 		if (factoryPath != null) {
-			LinkedList<Object> rfp = new LinkedList<>(factoryPath);
+			LinkedList<FactoryRecord> rfp = new LinkedList<>(factoryPath);
 			Collections.reverse(factoryPath);
-			for (Object factory: rfp) {
-				candidates.add(factory);
+			for (FactoryRecord factoryRecord: rfp) {
+				candidates.add(factoryRecord.target());
 			}
 		}
 		
