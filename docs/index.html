@@ -1,21 +1,21 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="EN">
   <head>
     <title>Rules</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cerulean/bootstrap.min.css" id="nsd-bootstrap-theme-stylesheet">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cerulean/bootstrap.min.css" id="nsd-bootstrap-theme-stylesheet"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nasdanika-Models/html-app@master/gen/web-resources/css/app.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jstree@3.3.16/dist/themes/default/style.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.5.0/github-markdown.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/default.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-vue@2.23.0/dist/bootstrap-vue.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nasdanika-Models/html-app@master/gen/web-resources/css/app.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jstree@3.3.16/dist/themes/default/style.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.5.0/github-markdown.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/default.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-vue@2.23.0/dist/bootstrap-vue.css"/>
     <script src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/html-app@master/gen/web-resources/js/common.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/html-app@master/gen/web-resources/js/dark-head.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jstree@3.3.16/dist/jstree.min.js"></script>
@@ -34,91 +34,55 @@
 
   gtag('config', 'G-9BRJVLK8CC');
 </script>    
-
-<script src="search-documents.js"></script>
-
-<script src="https://cdn.jsdelivr.net/gh/olivernn/lunr.js@v2.3.9/lunr.js"></script>
-
-<script>
-// Script for full-text search of JsTree
-
-window.nsdJsTreeSearchCallback = function(str, node) { 
-    var sf = new $.vakata.search(str, true, { caseSensitive : false, fuzzy : false }); 
-    if (sf.search(node.text).isMatch) {
-		return true;
-	} 
-    let searchResult = this.search(str); 
-    for (const sr in searchResult) {
-        if (searchResult[sr].ref === node.original['data-nsd-label-uuid']) {
-            return true;
-        } 
-    } 
-    return false; 
-}.bind(lunr(function () {
-			  this.ref('id');
-			  this.field('title');
-			  this.field('content');
-
-			  for (const key in searchDocuments) {
-				  let doc = searchDocuments[key];
-				this.add({
-					id: doc['link-uuid'],
-					title: doc.title,
-					path: doc.path,
-					content: doc.content
-				});  
-			  }
-			}));
-</script>
 </head>
   <body>
     <div class="container-fluid nsd-app-container">
       <div class="row">
         <div class="col nsd-app-header">
-          <a href="https://github.com/Nasdanika-Models" data-nsd-label-uuid="49ca6e15-93c7-4bd2-bb4b-3f2de2011c3d" class="nsd-app-header-title">
-            <img src="https://docs.nasdanika.org/images/nasdanika-logo.png" class="nsd-app-label-icon">Nasdanika Models</a>
+          <a href="https://github.com/Nasdanika-Models" data-nsd-label-uuid="fc29927a-d0cb-4572-bdf1-80834c8b0c0f" class="nsd-app-header-title">
+            <img src="https://docs.nasdanika.org/images/nasdanika-logo.png" class="nsd-app-label-icon"/>Nasdanika Models</a>
           <ul class="nav nsd-app-header-navs">
             <li class="nav-item">
-              <a href="search.html" data-nsd-label-uuid="6b53179e-f9ed-4231-979c-fb92aacd220a" class="nav-link"><span class="fas fa-search nsd-app-label-icon"></span>Search</a>
+              <a href="search.html" data-nsd-label-uuid="ece8f73c-c892-4530-a45b-854befe08580" class="nav-link"><span class="fas fa-search nsd-app-label-icon"></span>Search</a>
             </li>
             <li class="nav-item">
-              <a href="glossary.html" data-nsd-label-uuid="c2e2dfbd-acf2-4df1-956b-3958d3c0e7fd" class="nav-link"><span class="fas fa-book nsd-app-label-icon"></span>Glossary</a>
+              <a href="glossary.html" data-nsd-label-uuid="465913ec-ac00-43d5-acb2-7bce7dcbe8b0" class="nav-link"><span class="fas fa-book nsd-app-label-icon"></span>Glossary</a>
             </li>
           </ul>
         </div>
       </div>
       <div class="row">
         <div class="col nsd-app-navbar">
-          <ul class="navbar navbar-light navbar-expand-lg"><span title="TODO" data-nsd-label-uuid="61f5ada4-9364-4e1b-889e-9a1348644bea" class="navbar-brand"><img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EPackage.gif" class="nsd-app-label-icon">Rules</span>
-            <button type="button" data-toggle="collapse" data-target="#nsd_1wn" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span>
+          <ul class="navbar navbar-light navbar-expand-lg"><span title="TODO" data-nsd-label-uuid="96a7a40c-e457-4471-ae5e-2177fa7a03e6" class="navbar-brand"><img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EPackage.gif" class="nsd-app-label-icon"/>Rules</span>
+            <button type="button" data-toggle="collapse" data-target="#nsd_3vn" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span>
             </button>
-            <div id="nsd_1wn" class="collapse navbar-collapse">
+            <div id="nsd_3vn" class="collapse navbar-collapse">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                  <a href="classifiers.html" data-nsd-label-uuid="1a6e113a-8821-4bfb-be1e-0c324586a81c" class="nav-link">Classifiers</a>
+                  <a href="classifiers.html" data-nsd-label-uuid="eefc9268-fcbc-48fc-bf4c-489dc5723ab7" class="nav-link">Classifiers</a>
                 </li>
                 <li class="nav-item">
-                  <a href="sub-packages.html" data-nsd-label-uuid="81a506d9-f2a8-4a62-8098-85a3ebe4db81" class="nav-link">
-                    <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EPackage.gif" class="nsd-app-label-icon">Sub-packages</a>
+                  <a href="sub-packages.html" data-nsd-label-uuid="15e89ff9-ce97-482c-96d5-aafeed1e1235" class="nav-link">
+                    <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EPackage.gif" class="nsd-app-label-icon"/>Sub-packages</a>
                 </li>
                 <li class="nav-item">
-                  <a href="diagram.html" data-nsd-label-uuid="31eb17c0-20bf-47cd-8dcf-e0f5aa0d9aa6" class="nav-link"><span class="fas fa-project-diagram nsd-app-label-icon"></span>Diagram</a>
+                  <a href="diagram.html" data-nsd-label-uuid="0783c87e-d528-4d64-b574-8e6a7b3ec746" class="nav-link"><span class="fas fa-project-diagram nsd-app-label-icon"></span>Diagram</a>
                 </li>
                 <li class="nav-item">
-                  </li><li data-nsd-label-uuid="d5735356-7cbe-445f-a62c-22f01349b8c5" class="dropdown">
+                  <li data-nsd-label-uuid="a97bde40-1f0b-4d4f-9a3f-6a1ec6c59ca1" class="dropdown">
                     <a role="button" data-toggle="dropdown" class="nav-link dropdown-toggle">
-                      <img src="https://img.icons8.com/external-dreamstale-lineal-dreamstale/16/external-diagram-seo-media-dreamstale-lineal-dreamstale.png" class="nsd-app-label-icon">Graphs</a>
+                      <img src="https://img.icons8.com/external-dreamstale-lineal-dreamstale/16/external-diagram-seo-media-dreamstale-lineal-dreamstale.png" class="nsd-app-label-icon"/>Graphs</a>
                     <div class="dropdown-menu">
-                      <a href="default-graph.html" data-nsd-label-uuid="f59daab7-6255-4247-96e5-ba20d93970df" class="dropdown-item">Default Graph</a>
-                      <a href="circular-layout-graph.html" data-nsd-label-uuid="e3994497-8b64-4fe7-b36d-084c98223211" class="dropdown-item">Circular Graph</a>
-                      <a href="force-layout-graph.html" data-nsd-label-uuid="9077103c-19dd-4fec-a74b-a84d5e19630b" class="dropdown-item">Force Graph</a>
+                      <a href="default-graph.html" data-nsd-label-uuid="f1f2ee0e-4c1c-43b1-b731-cbaf9760f747" class="dropdown-item">Default Graph</a>
+                      <a href="circular-layout-graph.html" data-nsd-label-uuid="1f057567-034e-4847-b7e6-60b6b1d8a489" class="dropdown-item">Circular Graph</a>
+                      <a href="force-layout-graph.html" data-nsd-label-uuid="c5cc2df8-832d-46f8-9bc1-fc90afb7550b" class="dropdown-item">Force Graph</a>
                       <div title="With dependencies and sub-packages" class="dropdown-divider"></div>
-                      <a href="default-graph-with-dependencies-and-subpackages.html" data-nsd-label-uuid="bddb9279-01ad-4fe3-aff5-8412283f6216" class="dropdown-item">Default Graph</a>
-                      <a href="circular-layout-graph-with-dependencies-and-subpackages.html" data-nsd-label-uuid="ea8a9153-a767-4e01-93e9-2e59352fdf2b" class="dropdown-item">Circular Graph</a>
-                      <a href="force-layout-graph-with-dependencies-and-subpackages.html" data-nsd-label-uuid="54e9ddc1-b5f5-40b1-ad34-777d50f98929" class="dropdown-item">Force Graph</a>
+                      <a href="default-graph-with-dependencies-and-subpackages.html" data-nsd-label-uuid="a80cf47d-78cc-4fae-8304-9d8bf52a0814" class="dropdown-item">Default Graph</a>
+                      <a href="circular-layout-graph-with-dependencies-and-subpackages.html" data-nsd-label-uuid="0e587e29-9f7c-406c-b355-bfb469b6df55" class="dropdown-item">Circular Graph</a>
+                      <a href="force-layout-graph-with-dependencies-and-subpackages.html" data-nsd-label-uuid="f4578d45-e9fd-4a56-abe6-0192554df8d9" class="dropdown-item">Force Graph</a>
                     </div>
                   </li>
-                
+                </li>
               </ul>
             </div>
           </ul>
@@ -127,65 +91,65 @@ window.nsdJsTreeSearchCallback = function(str, node) {
       <div class="row nsd-app-content-row">
         <div class="col nsd-app-navigation-panel">
           <div class="list-group list-group-flush">
-            <a href="references/eClassifiers/Action/index.html" title="An action to be taken to address a rule violation" data-nsd-label-uuid="b843a763-4c07-4f34-bc47-611c8c2be50f" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">Action</a>
-            <a href="references/eClassifiers/BinaryResourceAction/index.html" data-nsd-label-uuid="7d9e6e85-073c-4474-88b5-adb73081868d" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">BinaryResourceAction</a>
-            <a href="references/eClassifiers/CreateBinaryResourceAction/index.html" data-nsd-label-uuid="5cd88f18-2a04-4ba3-8525-ed531c826cc7" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">CreateBinaryResourceAction</a>
-            <a href="references/eClassifiers/CreateResourceAction/index.html" data-nsd-label-uuid="612d400d-01e9-4046-acee-91ee1294e2b0" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">CreateResourceAction</a>
-            <a href="references/eClassifiers/CreateTextResourceAction/index.html" data-nsd-label-uuid="9dc1af48-cef1-4088-a17c-73c5f42ede0c" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">CreateTextResourceAction</a>
-            <a href="references/eClassifiers/DeleteResourceAction/index.html" data-nsd-label-uuid="4b3deb64-8e9a-4cf6-936f-f7618fc8f220" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">DeleteResourceAction</a>
-            <a href="references/eClassifiers/Failure/index.html" data-nsd-label-uuid="1a62c3e6-0a46-44cd-b4e5-3a0e3ac370c6" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">Failure</a>
-            <a href="references/eClassifiers/Inspectable/index.html" data-nsd-label-uuid="14cc4300-0b37-493f-b13a-8e52eb0af78a" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">Inspectable</a>
-            <a href="references/eClassifiers/InspectionResult/index.html" data-nsd-label-uuid="f6d59bdc-ea0c-47d0-b09d-5c812fd3711c" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">InspectionResult</a>
-            <a href="references/eClassifiers/MoveResourceAction/index.html" title="Moves (renames) the resources - changes its identifier" data-nsd-label-uuid="97728680-ace0-41ef-8f42-e53778e70b8c" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">MoveResourceAction</a>
-            <a href="references/eClassifiers/ResourceAction/index.html" title="An action on a resource identified by a string identifier, e.g. a path or URI" data-nsd-label-uuid="e8093493-ff5a-42be-95ad-bf9ddb7e0a4b" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">ResourceAction</a>
-            <a href="references/eClassifiers/Rule/index.html" data-nsd-label-uuid="921e86a7-d5c9-40b8-8440-75e565b97940" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">Rule</a>
-            <a href="references/eClassifiers/RuleSet/index.html" data-nsd-label-uuid="fe505d38-4a44-42af-ba45-78ed12283b0c" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">RuleSet</a>
-            <a href="references/eClassifiers/Severity/index.html" data-nsd-label-uuid="b88b9706-2bc1-4dc3-a772-587b0a63dfa9" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">Severity</a>
-            <a href="references/eClassifiers/TextResourceAction/index.html" data-nsd-label-uuid="f309b22a-a3ba-4dfe-8ab9-ef5954b9b9b1" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">TextResourceAction</a>
-            <a href="references/eClassifiers/UpdateBinaryResourceAction/index.html" data-nsd-label-uuid="bd231610-9c30-4d48-b481-be3ec3ee30bf" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">UpdateBinaryResourceAction</a>
-            <a href="references/eClassifiers/UpdateResourceAction/index.html" data-nsd-label-uuid="6c33b711-a24c-4598-83e3-1aee02c45853" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">UpdateResourceAction</a>
-            <a href="references/eClassifiers/UpdateTextResourceAction/index.html" data-nsd-label-uuid="e22e2428-c889-432a-9647-fba53e44d60f" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">UpdateTextResourceAction</a>
-            <a href="references/eClassifiers/Violation/index.html" data-nsd-label-uuid="8f8715b9-503e-4149-afca-15250be930ab" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">Violation</a>
-            <a href="references/eClassifiers/Waiver/index.html" data-nsd-label-uuid="e35c3ce0-9541-477f-b642-6ce6b3c98766" class="list-group-item list-group-action">
-              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">Waiver</a>
+            <a href="references/eClassifiers/Action/index.html" title="An action to be taken to address a rule violation" data-nsd-label-uuid="a523ab80-cf1a-4e4f-b7f3-14582bd8b406" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>Action</a>
+            <a href="references/eClassifiers/BinaryResourceAction/index.html" data-nsd-label-uuid="4f2fa48e-d36a-48c1-9d88-c5b0cd2c486d" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>BinaryResourceAction</a>
+            <a href="references/eClassifiers/CreateBinaryResourceAction/index.html" data-nsd-label-uuid="54a20e9c-0c9a-4c35-bd80-50163772797f" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>CreateBinaryResourceAction</a>
+            <a href="references/eClassifiers/CreateResourceAction/index.html" data-nsd-label-uuid="adf29333-7dbc-4ba7-8a9a-899a13364e07" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>CreateResourceAction</a>
+            <a href="references/eClassifiers/CreateTextResourceAction/index.html" data-nsd-label-uuid="4b2ac766-efb8-4749-a9dd-64a9d6b300cc" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>CreateTextResourceAction</a>
+            <a href="references/eClassifiers/DeleteResourceAction/index.html" data-nsd-label-uuid="6b63b3fc-bb5f-4201-abe4-1a8f645caae0" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>DeleteResourceAction</a>
+            <a href="references/eClassifiers/Failure/index.html" data-nsd-label-uuid="fb17799a-c421-44a2-8f89-ba7859283bc4" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>Failure</a>
+            <a href="references/eClassifiers/Inspectable/index.html" data-nsd-label-uuid="7bd48b6d-90a0-4793-bfd7-4408b9eb665a" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>Inspectable</a>
+            <a href="references/eClassifiers/InspectionResult/index.html" data-nsd-label-uuid="e74c084d-485f-41ca-b138-20d735b22174" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>InspectionResult</a>
+            <a href="references/eClassifiers/MoveResourceAction/index.html" title="Moves (renames) the resources - changes its identifier" data-nsd-label-uuid="9ef9e467-e42b-47fe-a08c-d941df40e76c" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>MoveResourceAction</a>
+            <a href="references/eClassifiers/ResourceAction/index.html" title="An action on a resource identified by a string identifier, e.g. a path or URI" data-nsd-label-uuid="b25bef78-e3ad-4cf3-b258-79d60f74ea4a" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>ResourceAction</a>
+            <a href="references/eClassifiers/Rule/index.html" data-nsd-label-uuid="51c8f87b-f8e9-4730-97e7-534d2b6316c8" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>Rule</a>
+            <a href="references/eClassifiers/RuleSet/index.html" data-nsd-label-uuid="855a5a41-f32f-4e27-a496-c17a6019c589" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>RuleSet</a>
+            <a href="references/eClassifiers/Severity/index.html" data-nsd-label-uuid="2878783c-b40f-476e-8d21-0eca4149c17b" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>Severity</a>
+            <a href="references/eClassifiers/TextResourceAction/index.html" data-nsd-label-uuid="36231c70-49ee-4e54-b536-51109edefa2e" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>TextResourceAction</a>
+            <a href="references/eClassifiers/UpdateBinaryResourceAction/index.html" data-nsd-label-uuid="9dc5e8bd-fe57-4121-8c5d-3d3c8362b46e" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>UpdateBinaryResourceAction</a>
+            <a href="references/eClassifiers/UpdateResourceAction/index.html" data-nsd-label-uuid="9fd5f70e-e196-47ce-b7f2-842b49f5fb26" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>UpdateResourceAction</a>
+            <a href="references/eClassifiers/UpdateTextResourceAction/index.html" data-nsd-label-uuid="06df1993-6ce5-4e85-9eb4-f252b43fe224" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>UpdateTextResourceAction</a>
+            <a href="references/eClassifiers/Violation/index.html" data-nsd-label-uuid="e69321ae-77f5-4a00-a657-0f267477b24a" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>Violation</a>
+            <a href="references/eClassifiers/Waiver/index.html" data-nsd-label-uuid="d73db789-6fca-453b-9ff8-5ae42261d37c" class="list-group-item list-group-action">
+              <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>Waiver</a>
           </div>
           <div class="card">
             <div class="card-header">
               <a href="references/eSubpackages/java/index.html">
-                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EPackage.gif" class="nsd-app-label-icon">java</a>
+                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EPackage.gif" class="nsd-app-label-icon"/>java</a>
             </div>
             <div class="list-group list-group-flush">
-              <a href="references/eSubpackages/java/references/eClassifiers/CompilationUnitAction/index.html" title="An action on a compilation unit" data-nsd-label-uuid="d23690f7-4edf-4a3f-92e4-555a1a6d7541" class="list-group-item list-group-action">
-                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">CompilationUnitAction</a>
-              <a href="references/eSubpackages/java/references/eClassifiers/CreateCompilationUnitAction/index.html" data-nsd-label-uuid="852bf18a-f78e-4e9e-a915-65ba6d2a580a" class="list-group-item list-group-action">
-                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">CreateCompilationUnitAction</a>
-              <a href="references/eSubpackages/java/references/eClassifiers/DeleteCompilationUnitAction/index.html" data-nsd-label-uuid="aba4797d-cccf-4de6-99b6-915bc2e8dd6f" class="list-group-item list-group-action">
-                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">DeleteCompilationUnitAction</a>
-              <a href="references/eSubpackages/java/references/eClassifiers/UpdateCompilationUnitAction/index.html" data-nsd-label-uuid="50bd0905-e95c-42d7-9fdd-fea468d234ad" class="list-group-item list-group-action">
-                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon">UpdateCompilationUnitAction</a>
+              <a href="references/eSubpackages/java/references/eClassifiers/CompilationUnitAction/index.html" title="An action on a compilation unit" data-nsd-label-uuid="9c35a949-8ba4-4394-9f81-fa3d1b407826" class="list-group-item list-group-action">
+                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>CompilationUnitAction</a>
+              <a href="references/eSubpackages/java/references/eClassifiers/CreateCompilationUnitAction/index.html" data-nsd-label-uuid="0a98f8f3-b24f-49b5-9e59-403608eb3b1e" class="list-group-item list-group-action">
+                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>CreateCompilationUnitAction</a>
+              <a href="references/eSubpackages/java/references/eClassifiers/DeleteCompilationUnitAction/index.html" data-nsd-label-uuid="7d8b5fa2-9d5a-45b5-bb27-122b507b9969" class="list-group-item list-group-action">
+                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>DeleteCompilationUnitAction</a>
+              <a href="references/eSubpackages/java/references/eClassifiers/UpdateCompilationUnitAction/index.html" data-nsd-label-uuid="4eebaef8-ba0d-4f28-b931-0434de0252c1" class="list-group-item list-group-action">
+                <img src="https://cdn.jsdelivr.net/gh/Nasdanika-Models/ecore@master/graph/web-resources/icons/EClass.gif" class="nsd-app-label-icon"/>UpdateCompilationUnitAction</a>
             </div>
           </div>
         </div>
-        <div data-nsd-label-uuid="61f5ada4-9364-4e1b-889e-9a1348644bea" data-nsd-action-uris="uuid:61f5ada4-9364-4e1b-889e-9a1348644bea" class="col nsd-app-content-panel">
+        <div data-nsd-label-uuid="96a7a40c-e457-4471-ae5e-2177fa7a03e6" data-nsd-action-uris="uuid:96a7a40c-e457-4471-ae5e-2177fa7a03e6" class="col nsd-app-content-panel">
           <div class="container-fluid">
             <div class="row nsd-app-content-panel-content-row">
               <div class="col">
@@ -195,14 +159,14 @@ window.nsdJsTreeSearchCallback = function(str, node) {
 <ul>
 <li>Inspecting <a href="https://docs.nasdanika.org/nsd-demo-cli/nsd/inspect-yaml/index.html">YAML</a> configuration files for compliance with a specific semantic model and naming conventions.</li>
 <li>Inspecting <a href="https://java.models.nasdanika.org/">Java</a> sources or bytecode for compliance with organization-specific guidelines.</li>
-<li>Inspecting <a href="https://gitlab.models.nasdanika.org/">GitLab</a> repository structure or contents. For example, checking for compliance with branching strategies or for Maven dependencies similar to <a href="https://github.com/dependabot">Dependabot</a>, but for internal dependencies such shared libraries. Dependency violations may contain actions to update dependencies, create a merge request, and, say create an issue in the organization’s issue tracker, add to backlog and assign to a <a href="https://gitlab.models.nasdanika.org/references/eSubpackages/codeowners/index.html">code owner</a>.</li>
+<li>Inspecting <a href="https://gitlab.models.nasdanika.org/">GitLab</a> repository structure or contents. For example, checking for compliance with branching strategies or for Maven dependencies similar to <a href="https://github.com/dependabot">Dependabot</a>, but for internal dependencies such shared libraries. Dependency violations may contain actions to update dependencies, create a merge request, and, say create an issue in the organization&rsquo;s issue tracker, add to backlog and assign to a <a href="https://gitlab.models.nasdanika.org/references/eSubpackages/codeowners/index.html">code owner</a>.</li>
 <li>Inspecting <a href="https://pdf.models.nasdanika.org/index.html">PDF</a> or <a href="https://excel.models.nasdanika.org/">Excel</a> files.</li>
 <li>Inspecting an organization model for, say, span or control or team size and structure.</li>
 </ul>
 <p>The below diagram shows the key concepts of the framework and their relationships:</p>
-<p></p><div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;<mxfile host=\&quot;Electron\&quot; modified=\&quot;2024-05-23T21:50:06.501Z\&quot; agent=\&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36\&quot; etag=\&quot;3NKpsK4k9nvOCMDDphiv\&quot; version=\&quot;24.4.0\&quot; type=\&quot;device\&quot;>\n  <diagram id=\&quot;Us3ODp1McBXTMFddmokU\&quot; name=\&quot;Page-1\&quot;>\n    <mxGraphModel dx=\&quot;1247\&quot; dy=\&quot;1261\&quot; grid=\&quot;1\&quot; gridSize=\&quot;10\&quot; guides=\&quot;1\&quot; tooltips=\&quot;1\&quot; connect=\&quot;1\&quot; arrows=\&quot;1\&quot; fold=\&quot;1\&quot; page=\&quot;1\&quot; pageScale=\&quot;1\&quot; pageWidth=\&quot;850\&quot; pageHeight=\&quot;1100\&quot; math=\&quot;0\&quot; shadow=\&quot;0\&quot;>\n      <root>\n        <mxCell id=\&quot;0\&quot; />\n        <mxCell id=\&quot;1\&quot; parent=\&quot;0\&quot; />\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-25\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-1\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-3\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; />\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-26\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-1\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; />\n        <\/mxCell>\n        <UserObject label=\&quot;Inspectable\&quot; link=\&quot;references/eClassifiers/Inspectable/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-1\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;340\&quot; y=\&quot;240\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <UserObject label=\&quot;Severity\&quot; link=\&quot;references/eClassifiers/Severity/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-2\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;640\&quot; y=\&quot;310\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <UserObject label=\&quot;Waiver\&quot; link=\&quot;references/eClassifiers/Waiver/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-3\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;180\&quot; y=\&quot;370\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <UserObject label=\&quot;Action\&quot; link=\&quot;references/eClassifiers/Action/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-4\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;405\&quot; y=\&quot;560\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-37\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-5\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;>\n            <Array as=\&quot;points\&quot;>\n              <mxPoint x=\&quot;690\&quot; y=\&quot;400\&quot; />\n              <mxPoint x=\&quot;690\&quot; y=\&quot;400\&quot; />\n            <\/Array>\n          <\/mxGeometry>\n        <\/mxCell>\n        <UserObject label=\&quot;Inspector\&quot; link=\&quot;https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/Inspector.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-5\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;760\&quot; y=\&quot;370\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-36\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-6\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;>\n            <Array as=\&quot;points\&quot;>\n              <mxPoint x=\&quot;690\&quot; y=\&quot;250\&quot; />\n              <mxPoint x=\&quot;690\&quot; y=\&quot;250\&quot; />\n            <\/Array>\n          <\/mxGeometry>\n        <\/mxCell>\n        <UserObject label=\&quot;Inspector Set\&quot; link=\&quot;https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/reflection/InspectorSet.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-6\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;760\&quot; y=\&quot;240\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-29\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; />\n        <\/mxCell>\n        <UserObject label=\&quot;Inspection Result\&quot; link=\&quot;references/eClassifiers/InspectionResult/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;340\&quot; y=\&quot;370\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-32\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-2\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;>\n            <Array as=\&quot;points\&quot;>\n              <mxPoint x=\&quot;690\&quot; y=\&quot;380\&quot; />\n            <\/Array>\n          <\/mxGeometry>\n        <\/mxCell>\n        <UserObject label=\&quot;Rule\&quot; link=\&quot;references/eClassifiers/Rule/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;520\&quot; y=\&quot;370\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-31\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; />\n        <\/mxCell>\n        <UserObject label=\&quot;Rule Set\&quot; link=\&quot;references/eClassifiers/RuleSet/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;520\&quot; y=\&quot;240\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-27\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-10\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; />\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-30\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-10\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-3\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;>\n            <Array as=\&quot;points\&quot;>\n              <mxPoint x=\&quot;230\&quot; y=\&quot;500\&quot; />\n            <\/Array>\n          <\/mxGeometry>\n        <\/mxCell>\n        <UserObject label=\&quot;Violation\&quot; link=\&quot;references/eClassifiers/Violation/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-10\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;275\&quot; y=\&quot;480\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-28\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-11\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; />\n        <\/mxCell>\n        <UserObject label=\&quot;Failure\&quot; link=\&quot;references/eClassifiers/Failure/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-11\&quot;>\n          <mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n            <mxGeometry x=\&quot;405\&quot; y=\&quot;480\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; />\n          <\/mxCell>\n        <\/UserObject>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-12\&quot; value=\&quot;Legend\&quot; style=\&quot;shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontSize=16;align=left;verticalAlign=top;fillColor=none;strokeColor=none;fontColor=#4D4D4D;fontStyle=1;spacingLeft=6;spacing=0;resizable=0;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;>\n          <mxGeometry x=\&quot;770\&quot; y=\&quot;510\&quot; width=\&quot;90\&quot; height=\&quot;90\&quot; as=\&quot;geometry\&quot; />\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-13\&quot; value=\&quot;\&quot; style=\&quot;shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;\&quot; parent=\&quot;8kiIrgNkBxjkIp-F2U6g-12\&quot; vertex=\&quot;1\&quot;>\n          <mxGeometry y=\&quot;30\&quot; width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;geometry\&quot; />\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-14\&quot; value=\&quot;Java\&quot; style=\&quot;shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=#6c8ebf;overflow=hidden;fillColor=#dae8fc;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=12;align=left;spacingLeft=10;spacingRight=4;\&quot; parent=\&quot;8kiIrgNkBxjkIp-F2U6g-13\&quot; vertex=\&quot;1\&quot;>\n          <mxGeometry width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;geometry\&quot;>\n            <mxRectangle width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;alternateBounds\&quot; />\n          <\/mxGeometry>\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-15\&quot; value=\&quot;\&quot; style=\&quot;shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;\&quot; parent=\&quot;8kiIrgNkBxjkIp-F2U6g-12\&quot; vertex=\&quot;1\&quot;>\n          <mxGeometry y=\&quot;60\&quot; width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;geometry\&quot; />\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-16\&quot; value=\&quot;Ecore\&quot; style=\&quot;shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=#82b366;overflow=hidden;fillColor=#d5e8d4;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=12;align=left;spacingLeft=10;spacingRight=4;\&quot; parent=\&quot;8kiIrgNkBxjkIp-F2U6g-15\&quot; vertex=\&quot;1\&quot;>\n          <mxGeometry width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;geometry\&quot;>\n            <mxRectangle width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;alternateBounds\&quot; />\n          <\/mxGeometry>\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-33\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-2\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;>\n            <mxPoint x=\&quot;580\&quot; y=\&quot;290\&quot; as=\&quot;sourcePoint\&quot; />\n            <mxPoint x=\&quot;580\&quot; y=\&quot;380\&quot; as=\&quot;targetPoint\&quot; />\n            <Array as=\&quot;points\&quot;>\n              <mxPoint x=\&quot;690\&quot; y=\&quot;270\&quot; />\n            <\/Array>\n          <\/mxGeometry>\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-34\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-4\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;>\n            <mxPoint x=\&quot;580\&quot; y=\&quot;290\&quot; as=\&quot;sourcePoint\&quot; />\n            <mxPoint x=\&quot;580\&quot; y=\&quot;380\&quot; as=\&quot;targetPoint\&quot; />\n            <Array as=\&quot;points\&quot;>\n              <mxPoint x=\&quot;570\&quot; y=\&quot;580\&quot; />\n            <\/Array>\n          <\/mxGeometry>\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-35\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-10\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-4\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;>\n            <mxPoint x=\&quot;590\&quot; y=\&quot;300\&quot; as=\&quot;sourcePoint\&quot; />\n            <mxPoint x=\&quot;590\&quot; y=\&quot;390\&quot; as=\&quot;targetPoint\&quot; />\n            <Array as=\&quot;points\&quot;>\n              <mxPoint x=\&quot;320\&quot; y=\&quot;580\&quot; />\n            <\/Array>\n          <\/mxGeometry>\n        <\/mxCell>\n        <mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-38\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-6\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-5\&quot; edge=\&quot;1\&quot;>\n          <mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;>\n            <mxPoint x=\&quot;580\&quot; y=\&quot;420\&quot; as=\&quot;sourcePoint\&quot; />\n            <mxPoint x=\&quot;515\&quot; y=\&quot;590\&quot; as=\&quot;targetPoint\&quot; />\n            <Array as=\&quot;points\&quot;>\n              <mxPoint x=\&quot;810\&quot; y=\&quot;350\&quot; />\n              <mxPoint x=\&quot;810\&quot; y=\&quot;350\&quot; />\n            <\/Array>\n          <\/mxGeometry>\n        <\/mxCell>\n        <mxCell id=\&quot;CWvWcfFb7keNqengJw7g-1\&quot; value=\&quot;extensions/extends\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot;>\n          <mxGeometry y=\&quot;-10\&quot; relative=\&quot;1\&quot; as=\&quot;geometry\&quot;>\n            <Array as=\&quot;points\&quot;>\n              <mxPoint x=\&quot;595\&quot; y=\&quot;220\&quot; />\n              <mxPoint x=\&quot;545\&quot; y=\&quot;220\&quot; />\n            <\/Array>\n            <mxPoint x=\&quot;285\&quot; y=\&quot;510\&quot; as=\&quot;sourcePoint\&quot; />\n            <mxPoint x=\&quot;240\&quot; y=\&quot;420\&quot; as=\&quot;targetPoint\&quot; />\n            <mxPoint as=\&quot;offset\&quot; />\n          <\/mxGeometry>\n        <\/mxCell>\n      <\/root>\n    <\/mxGraphModel>\n  <\/diagram>\n<\/mxfile>\n&quot;,&quot;resize&quot;:true}"></div>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/jgraph/drawio@v24.7.5/src/main/webapp/js/viewer.min.js"></script>
-<p></p>
+<p><div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;Electron\&quot; modified=\&quot;2024-05-23T21:50:06.501Z\&quot; agent=\&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36\&quot; etag=\&quot;3NKpsK4k9nvOCMDDphiv\&quot; version=\&quot;24.4.0\&quot; type=\&quot;device\&quot;&gt;\n  &lt;diagram id=\&quot;Us3ODp1McBXTMFddmokU\&quot; name=\&quot;Page-1\&quot;&gt;\n    &lt;mxGraphModel dx=\&quot;1247\&quot; dy=\&quot;1261\&quot; grid=\&quot;1\&quot; gridSize=\&quot;10\&quot; guides=\&quot;1\&quot; tooltips=\&quot;1\&quot; connect=\&quot;1\&quot; arrows=\&quot;1\&quot; fold=\&quot;1\&quot; page=\&quot;1\&quot; pageScale=\&quot;1\&quot; pageWidth=\&quot;850\&quot; pageHeight=\&quot;1100\&quot; math=\&quot;0\&quot; shadow=\&quot;0\&quot;&gt;\n      &lt;root&gt;\n        &lt;mxCell id=\&quot;0\&quot; /&gt;\n        &lt;mxCell id=\&quot;1\&quot; parent=\&quot;0\&quot; /&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-25\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-1\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-3\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-26\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-1\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;\/mxCell&gt;\n        &lt;UserObject label=\&quot;Inspectable\&quot; link=\&quot;references/eClassifiers/Inspectable/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-1\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;340\&quot; y=\&quot;240\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;UserObject label=\&quot;Severity\&quot; link=\&quot;references/eClassifiers/Severity/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-2\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;640\&quot; y=\&quot;310\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;UserObject label=\&quot;Waiver\&quot; link=\&quot;references/eClassifiers/Waiver/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-3\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;180\&quot; y=\&quot;370\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;UserObject label=\&quot;Action\&quot; link=\&quot;references/eClassifiers/Action/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-4\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;405\&quot; y=\&quot;560\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-37\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-5\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;690\&quot; y=\&quot;400\&quot; /&gt;\n              &lt;mxPoint x=\&quot;690\&quot; y=\&quot;400\&quot; /&gt;\n            &lt;\/Array&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;UserObject label=\&quot;Inspector\&quot; link=\&quot;https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/Inspector.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-5\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;760\&quot; y=\&quot;370\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-36\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-6\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;690\&quot; y=\&quot;250\&quot; /&gt;\n              &lt;mxPoint x=\&quot;690\&quot; y=\&quot;250\&quot; /&gt;\n            &lt;\/Array&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;UserObject label=\&quot;Inspector Set\&quot; link=\&quot;https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/reflection/InspectorSet.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-6\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;760\&quot; y=\&quot;240\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-29\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;\/mxCell&gt;\n        &lt;UserObject label=\&quot;Inspection Result\&quot; link=\&quot;references/eClassifiers/InspectionResult/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;340\&quot; y=\&quot;370\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-32\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-2\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;690\&quot; y=\&quot;380\&quot; /&gt;\n            &lt;\/Array&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;UserObject label=\&quot;Rule\&quot; link=\&quot;references/eClassifiers/Rule/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;520\&quot; y=\&quot;370\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-31\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;\/mxCell&gt;\n        &lt;UserObject label=\&quot;Rule Set\&quot; link=\&quot;references/eClassifiers/RuleSet/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;520\&quot; y=\&quot;240\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-27\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-10\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-30\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-10\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-3\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;230\&quot; y=\&quot;500\&quot; /&gt;\n            &lt;\/Array&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;UserObject label=\&quot;Violation\&quot; link=\&quot;references/eClassifiers/Violation/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-10\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;275\&quot; y=\&quot;480\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-28\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-11\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-7\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;\/mxCell&gt;\n        &lt;UserObject label=\&quot;Failure\&quot; link=\&quot;references/eClassifiers/Failure/index.html\&quot; id=\&quot;8kiIrgNkBxjkIp-F2U6g-11\&quot;&gt;\n          &lt;mxCell style=\&quot;rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n            &lt;mxGeometry x=\&quot;405\&quot; y=\&quot;480\&quot; width=\&quot;100\&quot; height=\&quot;40\&quot; as=\&quot;geometry\&quot; /&gt;\n          &lt;\/mxCell&gt;\n        &lt;\/UserObject&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-12\&quot; value=\&quot;Legend\&quot; style=\&quot;shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fontSize=16;align=left;verticalAlign=top;fillColor=none;strokeColor=none;fontColor=#4D4D4D;fontStyle=1;spacingLeft=6;spacing=0;resizable=0;\&quot; parent=\&quot;1\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry x=\&quot;770\&quot; y=\&quot;510\&quot; width=\&quot;90\&quot; height=\&quot;90\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-13\&quot; value=\&quot;\&quot; style=\&quot;shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;\&quot; parent=\&quot;8kiIrgNkBxjkIp-F2U6g-12\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry y=\&quot;30\&quot; width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-14\&quot; value=\&quot;Java\&quot; style=\&quot;shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=#6c8ebf;overflow=hidden;fillColor=#dae8fc;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=12;align=left;spacingLeft=10;spacingRight=4;\&quot; parent=\&quot;8kiIrgNkBxjkIp-F2U6g-13\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxRectangle width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;alternateBounds\&quot; /&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-15\&quot; value=\&quot;\&quot; style=\&quot;shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;\&quot; parent=\&quot;8kiIrgNkBxjkIp-F2U6g-12\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry y=\&quot;60\&quot; width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;geometry\&quot; /&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-16\&quot; value=\&quot;Ecore\&quot; style=\&quot;shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;strokeColor=#82b366;overflow=hidden;fillColor=#d5e8d4;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=12;align=left;spacingLeft=10;spacingRight=4;\&quot; parent=\&quot;8kiIrgNkBxjkIp-F2U6g-15\&quot; vertex=\&quot;1\&quot;&gt;\n          &lt;mxGeometry width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxRectangle width=\&quot;90\&quot; height=\&quot;30\&quot; as=\&quot;alternateBounds\&quot; /&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-33\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-2\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint x=\&quot;580\&quot; y=\&quot;290\&quot; as=\&quot;sourcePoint\&quot; /&gt;\n            &lt;mxPoint x=\&quot;580\&quot; y=\&quot;380\&quot; as=\&quot;targetPoint\&quot; /&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;690\&quot; y=\&quot;270\&quot; /&gt;\n            &lt;\/Array&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-34\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-8\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-4\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint x=\&quot;580\&quot; y=\&quot;290\&quot; as=\&quot;sourcePoint\&quot; /&gt;\n            &lt;mxPoint x=\&quot;580\&quot; y=\&quot;380\&quot; as=\&quot;targetPoint\&quot; /&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;570\&quot; y=\&quot;580\&quot; /&gt;\n            &lt;\/Array&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-35\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-10\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-4\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint x=\&quot;590\&quot; y=\&quot;300\&quot; as=\&quot;sourcePoint\&quot; /&gt;\n            &lt;mxPoint x=\&quot;590\&quot; y=\&quot;390\&quot; as=\&quot;targetPoint\&quot; /&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;320\&quot; y=\&quot;580\&quot; /&gt;\n            &lt;\/Array&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;8kiIrgNkBxjkIp-F2U6g-38\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=diamondThin;startFill=1;\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-6\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-5\&quot; edge=\&quot;1\&quot;&gt;\n          &lt;mxGeometry relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;mxPoint x=\&quot;580\&quot; y=\&quot;420\&quot; as=\&quot;sourcePoint\&quot; /&gt;\n            &lt;mxPoint x=\&quot;515\&quot; y=\&quot;590\&quot; as=\&quot;targetPoint\&quot; /&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;810\&quot; y=\&quot;350\&quot; /&gt;\n              &lt;mxPoint x=\&quot;810\&quot; y=\&quot;350\&quot; /&gt;\n            &lt;\/Array&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n        &lt;mxCell id=\&quot;CWvWcfFb7keNqengJw7g-1\&quot; value=\&quot;extensions/extends\&quot; style=\&quot;edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;\&quot; edge=\&quot;1\&quot; parent=\&quot;1\&quot; source=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot; target=\&quot;8kiIrgNkBxjkIp-F2U6g-9\&quot;&gt;\n          &lt;mxGeometry y=\&quot;-10\&quot; relative=\&quot;1\&quot; as=\&quot;geometry\&quot;&gt;\n            &lt;Array as=\&quot;points\&quot;&gt;\n              &lt;mxPoint x=\&quot;595\&quot; y=\&quot;220\&quot; /&gt;\n              &lt;mxPoint x=\&quot;545\&quot; y=\&quot;220\&quot; /&gt;\n            &lt;\/Array&gt;\n            &lt;mxPoint x=\&quot;285\&quot; y=\&quot;510\&quot; as=\&quot;sourcePoint\&quot; /&gt;\n            &lt;mxPoint x=\&quot;240\&quot; y=\&quot;420\&quot; as=\&quot;targetPoint\&quot; /&gt;\n            &lt;mxPoint as=\&quot;offset\&quot; /&gt;\n          &lt;\/mxGeometry&gt;\n        &lt;\/mxCell&gt;\n      &lt;\/root&gt;\n    &lt;\/mxGraphModel&gt;\n  &lt;\/diagram&gt;\n&lt;\/mxfile&gt;\n&quot;,&quot;resize&quot;:true}"></div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/jgraph/drawio@v26.0.4/src/main/webapp/js/viewer.min.js"></script>
+</p>
 <p>Green shapes represent Ecore model elements, blue shapes represent Java-only concepts.</p>
 <ul>
 <li><a href="references/eClassifiers/Action/index.html">Action</a> - rules and violations may define actions to be taken to comply with the rule or address a violation. Some actions may be automatically executable. There are many action flavors, see the <a href="diagram.html">diagram</a> for more details.</li>
@@ -213,7 +177,7 @@ window.nsdJsTreeSearchCallback = function(str, node) {
 <li><a href="https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/reflection/InspectorSet.html">Inspector Set</a> - a collection of inspector created by reflective introspection of annotated Java classes and method. A composite Inspector.</li>
 <li><a href="references/eClassifiers/Rule/index.html">Rule</a> - defines the expected state of something, principle/standard. A rule may have zero or more inspectors enforcing the rule.</li>
 <li><a href="references/eClassifiers/RuleSet/index.html">Rule Set</a> - a collection of rules. Rule Sets may form an inheritance hierarchy. E.g. a team rule set may inherit from organization rule sets for technologies used by the team.</li>
-<li><a href="references/eClassifiers/Severity/index.html">Severity</a> - Rules may be assigned severity. E.g. “Error” or “Warning”.</li>
+<li><a href="references/eClassifiers/Severity/index.html">Severity</a> - Rules may be assigned severity. E.g. &ldquo;Error&rdquo; or &ldquo;Warning&rdquo;.</li>
 <li><a href="references/eClassifiers/Violation/index.html">Violation</a> - a deviation from a rule reported by an inspector. E.g. a too large agile team, a misspelled key in YAML configuration or wrong value type for a given key.</li>
 <li><a href="references/eClassifiers/Waiver/index.html">Waiver</a> (a.k.a. Dispensation) - nullifies (suppresses) violations reported by a rule. Waivers can be permanent - issued for false positives, or temporary - giving a grace period to address a certain violation.</li>
 </ul>
@@ -223,7 +187,7 @@ window.nsdJsTreeSearchCallback = function(str, node) {
 <li><a href="https://javadoc.io/doc/org.nasdanika.models.rules/model/">Javadoc</a></li>
 <li><a href="https://medium.com/nasdanika/nasdanika-rules-1a16889a41c7">Medium Story</a></li>
 </ul>
-<hr>
+<hr />
 <ul>
 <li><a href="#rules">Rules</a></li>
 <li><a href="#inspectors">Inspectors</a></li>
@@ -271,7 +235,7 @@ window.nsdJsTreeSearchCallback = function(str, node) {
 
 	@Override
 	protected URI getResourceSetURI() {
-		return URI.createURI("demo-rule-set.yml").resolve(Util.createClassURI(getClass()));
+		return URI.createURI(&quot;demo-rule-set.yml&quot;).resolve(Util.createClassURI(getClass()));
 	}
 
 }
@@ -290,9 +254,9 @@ for (CapabilityProvider&lt;Object&gt; provider: ruleSetProviders) {
 }
 </code></pre>
 <h2><a href="#inspectors" id="inspectors">Inspectors</a></h2>
-<p>Inspectors implement <a href="https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/Inspector.html">Inspector</a> interface. They can be created by “traditional” means of implementing <code>Inspector</code> interfaces and by using <a href="https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/reflection/Inspector.html">Inspector</a> annotation. The “traditional” way is kinda obvious, so this section focuses on how to create inspectors using annotations and register then as capabilities.</p>
+<p>Inspectors implement <a href="https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/Inspector.html">Inspector</a> interface. They can be created by &ldquo;traditional&rdquo; means of implementing <code>Inspector</code> interfaces and by using <a href="https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/reflection/Inspector.html">Inspector</a> annotation. The &ldquo;traditional&rdquo; way is kinda obvious, so this section focuses on how to create inspectors using annotations and register then as capabilities.</p>
 <pre><code class="language-java">// Name is derived from the class name
-@RuleSet("""		
+@RuleSet(&quot;&quot;&quot;		
 		severities:
 		  error:
 		    name: Error
@@ -305,26 +269,26 @@ for (CapabilityProvider&lt;Object&gt; provider: ruleSetProviders) {
 		        
 		        * specRef attribute to RuleSet and Rule - support of loading from classloader resources 
 		        * Generation of HTML documentation
-		""")
+		&quot;&quot;&quot;)
 public class DemoInspectors {
 	
-	@Inspector(value = """
+	@Inspector(value = &quot;&quot;&quot;
 			name: Invalid YAML
 			documentation:
 			  exec.content.Markdown:
 			    source:
 			      exec.content.Text: |
 			        YAML with syntax errors, e.g. duplicate keys.
-			""",
-			severity = "error",
-			condition = "!errors.isEmpty()") 	
+			&quot;&quot;&quot;,
+			severity = &quot;error&quot;,
+			condition = &quot;!errors.isEmpty()&quot;) 	
 	public Collection&lt;String&gt; invalidYaml(YamlResource yamlResource) {
 		return yamlResource.getErrors().stream().map(Diagnostic::getMessage).toList();
 	}
 	
-	@Inspector(rule = "nasdanika://rules/demo-rule-set/rules/my-rule")
+	@Inspector(rule = &quot;nasdanika://rules/demo-rule-set/rules/my-rule&quot;)
 	public String myRuleInspector(YamlResource yamlResource) {
-		return "My finding";
+		return &quot;My finding&quot;;
 	}
 	
 }
@@ -371,14 +335,14 @@ public class DemoInspectors {
 provides CapabilityFactory with &lt;factory class&gt;;
 </code></pre>
 <p>Registered inspectors can be loaded by calling <code>Inspector.load()</code>. This method can load all registered inspectors or inspectors matching a predicate, e.g. enforcing rules from a specific  rule set.</p>
-<p>Inspectors are responsible for traversing (visiting) their targets and shall be aware of the targets’ internal structure. <a href="https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/NotifierInspector.html">NotifierInspector</a> is aware of internal structures of <a href="https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.common/2.28.0/org/eclipse/emf/common/notify/Notifier.html">Notifiers</a> - <a href="https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.ecore/2.33.0/org/eclipse/emf/ecore/resource/ResourceSet.html">ResourceSet</a>, <a href="https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.ecore/2.33.0/org/eclipse/emf/ecore/resource/Resource.html">Resource</a>, <a href="https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.ecore/2.33.0/org/eclipse/emf/ecore/EObject.html">EObject</a>. To inspect notifiers:</p>
+<p>Inspectors are responsible for traversing (visiting) their targets and shall be aware of the targets&rsquo; internal structure. <a href="https://javadoc.io/doc/org.nasdanika.models.rules/model/latest/org.nasdanika.models.rules/org/nasdanika/models/rules/NotifierInspector.html">NotifierInspector</a> is aware of internal structures of <a href="https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.common/2.28.0/org/eclipse/emf/common/notify/Notifier.html">Notifiers</a> - <a href="https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.ecore/2.33.0/org/eclipse/emf/ecore/resource/ResourceSet.html">ResourceSet</a>, <a href="https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.ecore/2.33.0/org/eclipse/emf/ecore/resource/Resource.html">Resource</a>, <a href="https://javadoc.io/static/org.eclipse.emf/org.eclipse.emf.ecore/2.33.0/org/eclipse/emf/ecore/EObject.html">EObject</a>. To inspect notifiers:</p>
 <ul>
 <li>Create an inspector compatible with Notifier</li>
 <li>Adapt it to NotifierInspector with <code>NotifierInspector.adapt()</code></li>
 <li>Obtain content inspector by calling <code>asContentInspector()</code></li>
 <li>Call <code>inspect</code></li>
 </ul>
-<pre><code class="language-java">Inspector&lt;Object&gt; inspector = loadInspector(progressMonitor.split("Loading Inspector", 1));
+<pre><code class="language-java">Inspector&lt;Object&gt; inspector = loadInspector(progressMonitor.split(&quot;Loading Inspector&quot;, 1));
 NotifierInspector notifierInspector = NotifierInspector.adapt(inspector);
 Resource inputResource = resourceSet.getResource(input, true); // Notifier to inspect
 notifierInspector
@@ -406,8 +370,8 @@ notifierInspector
 <p>This command can be used as a base for commands which generate documentation about available rules and rule sets.</p>
 <p>Below is a fragment of the <a href="https://docs.nasdanika.org/nsd-demo-cli/nsd/list-rules/index.html">list-rules</a> command which extends <code>AbstractInspectorCommand</code>:</p>
 <pre><code class="language-java">@Command(
-		description = "Lists available rules",
-		name = "list-inspectable-rules",
+		description = &quot;Lists available rules&quot;,
+		name = &quot;list-inspectable-rules&quot;,
 		versionProvider = ModuleVersionProvider.class,
 		mixinStandardHelpOptions = true)
 @ParentCommands(RootCommand.class)
@@ -437,12 +401,12 @@ public class ListInspectableRulesCommand extends AbstractInspectorCommand {
 }
 </code></pre>
 <h3><a href="#abstractinspectioncommand" id="abstractinspectioncommand">AbstractInspectionCommand</a></h3>
-<p>This command extends <code>AbstractInspectorCommand</code> and provides base functionality for inspecting resources loaded from URI’s and their contents.</p>
+<p>This command extends <code>AbstractInspectorCommand</code> and provides base functionality for inspecting resources loaded from URI&rsquo;s and their contents.</p>
 <p>In addition to rule and rule set inclusion/exclusion provided by <code>AbstractRuleCommand</code> this class provides the following options:</p>
 <ul>
 <li><code>-e</code>, <code>--exclude-resource</code> - An <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/util/AntPathMatcher.html">Ant pattern</a> of resources to exclude from inspection. The pattern is matched against the resource path computed relative to the root resource. For example, <code>dev/*.yml</code> - exclude YAML files in the <code>dev</code> folder. This option can be specified multiple times.</li>
 <li><code>-i</code>, <code>--include-resource</code> - An Ant pattern for resources to include. This option can be specified multiple times.</li>
-<li><code>--exclude-type</code> - model type to exclude from inspection. For example, exclude constructors or field declarations from inspection of Java code. This option can be specified multiple times. Matching includes super types, i.e. excluding <a href="https://java.models.nasdanika.org/references/eClassifiers/Type/index.html">Type</a> would exclude its sub-types as well - Class, Interface, … Type can be specified in the following ways:
+<li><code>--exclude-type</code> - model type to exclude from inspection. For example, exclude constructors or field declarations from inspection of Java code. This option can be specified multiple times. Matching includes super types, i.e. excluding <a href="https://java.models.nasdanika.org/references/eClassifiers/Type/index.html">Type</a> would exclude its sub-types as well - Class, Interface, &hellip; Type can be specified in the following ways:
 <ul>
 <li>Class name, e.g. <code>Type</code></li>
 <li>Qualified class name, e.g. <code>java.Type</code></li>
@@ -457,18 +421,18 @@ public class ListInspectableRulesCommand extends AbstractInspectorCommand {
 </ul>
 <p>Subclasses must implement <code>getInputs()</code> method and may override <code>createResourceSet()</code> method to register resource factories, adapter factories, or URI handlers as shown below in a fragment of <a href="https://docs.nasdanika.org/nsd-demo-cli/nsd/inspect-yaml/index.html">inspect-yaml</a> command:</p>
 <pre><code class="language-java">@Command(
-		description = "Demo of YAML inspection",
-		name = "inspect-yaml",
+		description = &quot;Demo of YAML inspection&quot;,
+		name = &quot;inspect-yaml&quot;,
 		versionProvider = ModuleVersionProvider.class,
 		mixinStandardHelpOptions = true)
 @ParentCommands(RootCommand.class)
 public class InspectYamlCommand extends AbstractInspectionCommand {
 	
 	@Parameters(description = {
-			"Files and directories",
-			"to inspect"
+			&quot;Files and directories&quot;,
+			&quot;to inspect&quot;
 			},
-			arity = "1..*")
+			arity = &quot;1..*&quot;)
 	File[] inputs;	
 
 	@Override
@@ -477,7 +441,7 @@ public class InspectYamlCommand extends AbstractInspectionCommand {
 		for (File input: inputs) {
 			URI uri = URI.createFileURI(input.getAbsolutePath());
 			if (input.isDirectory()) {
-				uri = uri.appendSegment("");
+				uri = uri.appendSegment(&quot;&quot;);
 			}
 			ret.add(uri);
 		}
@@ -492,8 +456,8 @@ public class InspectYamlCommand extends AbstractInspectionCommand {
 		// Basic YAML. Add semantic handlers for your problem domain as needed (you'd need to create them). 
 		YamlResourceFactory yamlResourceFactory = new YamlResourceFactory(new NcoreYamlHandler());
 		Map&lt;String, Object&gt; extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-		extensionToFactoryMap.put("yml", yamlResourceFactory);
-		extensionToFactoryMap.put("yaml", yamlResourceFactory);
+		extensionToFactoryMap.put(&quot;yml&quot;, yamlResourceFactory);
+		extensionToFactoryMap.put(&quot;yaml&quot;, yamlResourceFactory);
 		
 		// To load directories as resources in order to traverse them
 		resourceSet.getURIConverter().getURIHandlers().add(0, new DirectoryContentFileURIHandler()); 
@@ -504,7 +468,7 @@ public class InspectYamlCommand extends AbstractInspectionCommand {
 	protected boolean isIncluded(String path) {
 		String[] includes = getResourceIncludes();
 		if (includes == null) {
-			return path.endsWith(".yml") || path.endsWith(".yaml");
+			return path.endsWith(&quot;.yml&quot;) || path.endsWith(&quot;.yaml&quot;);
 		}
 		return super.isIncluded(path);
 	}
@@ -524,7 +488,7 @@ public class InspectYamlCommand extends AbstractInspectionCommand {
         <div class="col nsd-app-footer">
           <ul class="nav nsd-app-footer-navs">
             <li class="nav-item">
-              <a href="https://github.com/Nasdanika-Models/rules" data-nsd-label-uuid="ca2ecc6c-0852-4e69-8b0b-26084d326462" class="nav-link"><span class="fab fa-github nsd-app-label-icon"></span>Sources</a>
+              <a href="https://github.com/Nasdanika-Models/rules" data-nsd-label-uuid="35ec9e26-90e9-4d80-bc2b-358939f033fb" class="nav-link"><span class="fab fa-github nsd-app-label-icon"></span>Sources</a>
             </li>
           </ul>
         </div>
