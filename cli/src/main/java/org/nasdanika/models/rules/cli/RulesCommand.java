@@ -1,9 +1,9 @@
 package org.nasdanika.models.rules.cli;
 
 import org.nasdanika.cli.CommandGroup;
-import org.nasdanika.cli.Description;
 import org.nasdanika.cli.ParentCommands;
 import org.nasdanika.cli.RootCommand;
+import org.nasdanika.common.Description;
 
 import picocli.CommandLine.Command;
 
