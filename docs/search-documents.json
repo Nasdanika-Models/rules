@@ -1,303 +1,303 @@
 {
   "references/eClassifiers/Rule/references/eStructuralFeatures/severity/index.html": {
     "path": "Rule/References/severity",
-    "link-uuid": "8e0211f4-017a-4e1d-b7a7-4db080332087",
+    "link-uuid": "b33810b4-2b69-484b-af9b-bb23c750cbd6",
     "title": "severity",
     "content": "Type Severity Multiplicity 1"
   },
   "references/eClassifiers/InspectionResult/references/eStructuralFeatures/rule/index.html": {
     "path": "InspectionResult/References/rule",
-    "link-uuid": "29830a5a-23fe-4e08-aa73-80b11166b103",
+    "link-uuid": "d3d925f2-05c2-4f47-bbcc-5d9f4498c989",
     "title": "rule",
     "content": "Type Rule Multiplicity 1"
   },
   "references/eClassifiers/RuleSet/references/eStructuralFeatures/severities/index.html": {
     "path": "RuleSet/References/severities",
-    "link-uuid": "672ba211-bb9a-4425-8189-b7b470608dfe",
+    "link-uuid": "c77bf577-6919-47e7-9ddd-344c15247a84",
     "title": "severities",
     "content": "Type Severity Multiplicity 0..*"
   },
   "references/eClassifiers/TextResourceAction/inheritance.html": {
     "path": "TextResourceAction/Inheritance",
-    "link-uuid": "76214fdb-de66-4228-801a-f8250d148026",
+    "link-uuid": "fd271d34-3637-4f5c-8913-314434a16307",
     "title": "Inheritance",
     "content": "Supertypes Subtypes  "
   },
   "references/eClassifiers/Inspectable/references/eStructuralFeatures/inspectionResults/index.html": {
     "path": "Inspectable/References/inspectionResults",
-    "link-uuid": "0050c178-3841-48b6-b0d2-8709a2b8e5e4",
+    "link-uuid": "54d4d5b1-448b-488e-8b2e-ba3e254c29ed",
     "title": "inspectionResults",
     "content": "Type InspectionResult Multiplicity 0..*"
   },
   "references/eClassifiers/Violation/references/eStructuralFeatures/actions/index.html": {
     "path": "Violation/References/actions",
-    "link-uuid": "7604d5a1-1a2e-4a22-802d-6506eaa12eb9",
+    "link-uuid": "a50a15de-8bec-4217-9bf2-26b3184c4697",
     "title": "actions",
     "content": "Type Action Multiplicity 0..* Actions to be taken to address the violation"
   },
   "references/eClassifiers/TextResourceAction/references/eStructuralFeatures/content/index.html": {
     "path": "TextResourceAction/Attributes/content",
-    "link-uuid": "f76fe9d1-87d1-4031-aa4f-b4c62a217ceb",
+    "link-uuid": "db435f90-b96e-4148-9bc0-7c64a059d201",
     "title": "content",
     "content": "Type EString Multiplicity 0..1"
   },
   "references/eSubpackages/java/references/eClassifiers/DeleteCompilationUnitAction/references/eStructuralFeatures/compilationUnit/index.html": {
     "path": "java/DeleteCompilationUnitAction/References/compilationUnit",
-    "link-uuid": "8d760597-9a7b-46de-bf08-c5819511ec38",
+    "link-uuid": "378ae1bf-14f2-4f8b-bb0c-74c89e1c56c6",
     "title": "compilationUnit",
     "content": "Type CompilationUnit Multiplicity 0..1"
   },
   "references/eClassifiers/InspectionResult/inheritance.html": {
     "path": "InspectionResult/Inheritance",
-    "link-uuid": "ba7a2cba-57f2-4e43-abfa-5ed393faac07",
+    "link-uuid": "9dba4b60-1891-4a81-b3ae-bd5960d8d9a3",
     "title": "Inheritance",
     "content": "Supertypes Subtypes  "
   },
   "references/eSubpackages/java/references/eClassifiers/CompilationUnitAction/inheritance.html": {
     "path": "java/CompilationUnitAction/Inheritance",
-    "link-uuid": "038ccad5-65be-453b-ba69-cc6dc3d5a81e",
+    "link-uuid": "c8f09c07-fba4-4e9c-9194-c04dd7fa0ab1",
     "title": "Inheritance",
     "content": "Supertypes Subtypes  "
   },
   "index.html": {
-    "link-uuid": "13f1c1bc-9ea8-4e55-ab1c-0c1b96aaeecf",
+    "link-uuid": "882f2846-c6fb-45c3-a6c1-e09e900bbe9b",
     "title": "Rules",
     "content": "Nasdanika Rules is a framework for building solutions which inspect data for compliance with a set of rules/standards/principles/guidelines. For example: Inspecting YAML configuration files for compliance with a specific semantic model and naming conventions. Inspecting Java sources or bytecode for compliance with organization-specific guidelines. Inspecting GitLab repository structure or contents. For example, checking for compliance with branching strategies or for Maven dependencies similar to Dependabot, but for internal dependencies such shared libraries. Dependency violations may contain actions to update dependencies, create a merge request, and, say create an issue in the organization&rsquo;s issue tracker, add to backlog and assign to a code owner. Inspecting PDF or Excel files. Inspecting an organization model for, say, span or control or team size and structure. The below diagram shows the key concepts of the framework and their relationships: Green shapes represent Ecore model elements, blue shapes represent Java-only concepts. Action - rules and violations may define actions to be taken to comply with the rule or address a violation. Some actions may be automatically executable. There are many action flavors, see the diagram for more details. Failure - inspection result which indicates that the inspection was not completed correctly. For example, inspection code could throw an exception. Inspectable - base class for things to be inspected. Container of waivers and inspection results. Inspectors can inspect any Java object, Inspectable is a way to store inspection result. Inspection Result - result of inspection. Failure or Violation. Inspector - inspects a Java object and reports results. Multiple inspectors may be composed into a single inspector. An inspector can be associated with (enforce) zero or more Rules. Inspector Set - a collection of inspector created by reflective introspection of annotated Java classes and method. A composite Inspector. Rule - defines the expected state of something, principle/standard. A rule may have zero or more inspectors enforcing the rule. Rule Set - a collection of rules. Rule Sets may form an inheritance hierarchy. E.g. a team rule set may inherit from organization rule sets for technologies used by the team. Severity - Rules may be assigned severity. E.g. &ldquo;Error&rdquo; or &ldquo;Warning&rdquo;. Violation - a deviation from a rule reported by an inspector. E.g. a too large agile team, a misspelled key in YAML configuration or wrong value type for a given key. Waiver (a.k.a. Dispensation) - nullifies (suppresses) violations reported by a rule. Waivers can be permanent - issued for false positives, or temporary - giving a grace period to address a certain violation. An important thing to note is that rules can be used without inspectors and inspectors can be used without rules. One usage scenario is to define and publish a set of rules and then gradually introduce inspectors enforcing the rules. Sources Javadoc Medium Story Rules Inspectors CLI AbstractRuleCommand AbstractInspectorCommand AbstractInspectionCommand Rules Rules and rule sets can be created programmatically, loaded from XMI or YAML, or defined in inspector and inspector set annotations. This section explains how to define rule sets and rules in YAML and register rule set capability factories. Below is an example of rule set YAML definition: rules-rule-set:\n  uris: nasdanika://rules/demo-rule-set  \n  id: demo-rule-set\n  name: Demo Rule Set\n  documentation:\n    content-markdown:\n      source:\n        content-resource:\n          location: demo-rule-set.md\n          interpolate: true  \n  severities:\n    error:\n      name: Error      \n      documentation:\n        content-markdown:\n          source:\n           content-text: |+2\n             Inline markdown ``example``.\n             \n             * One\n             * Two    \n  rules:\n    my-rule:\n      rules-rule:\n        name: My rule\n        severity: nasdanika://rules/demo-rule-set/severities/error\n Consult rule set load specification for supported configuration keys. See Markdown for details regarding how to write markdown documentation. Rule sets can be registered as capabilities to make them available to reflective inspectors. To register a rule set create a class extending RuleSetCapabilityFactory: public class DemoRuleSetCapabilityFactory extends RuleSetCapabilityFactory {\n\n\t@Override\n\tprotected URI getResourceSetURI() {\n\t\treturn URI.createURI(&quot;demo-rule-set.yml&quot;).resolve(Util.createClassURI(getClass()));\n\t}\n\n}\n The above factory loads rule set from a class loader resource. Then open the package which contains rule set definition and add provides to module-info.java: opens &lt;rule set package&gt;;\n\nprovides CapabilityFactory with DemoRuleSetCapabilityFactory;\n After that rule set and its rules can be referenced from reflective inspectors, used by CLI commands to list available rule sets and generate documentation, and loaded programmatically as shown below: CapabilityLoader capabilityLoader = new CapabilityLoader();\nProgressMonitor progressMonitor = ...\nIterable&lt;CapabilityProvider&lt;Object&gt;&gt; ruleSetProviders = capabilityLoader.load(ServiceCapabilityFactory.createRequirement(RuleSet.class), progressMonitor);\nfor (CapabilityProvider&lt;Object&gt; provider: ruleSetProviders) {\n\tprovider.getPublisher().subscribe(ruleSetConsumer, errorConsumer);\n}\n Inspectors Inspectors implement Inspector interface. They can be created by &ldquo;traditional&rdquo; means of implementing Inspector interfaces and by using Inspector annotation. The &ldquo;traditional&rdquo; way is kinda obvious, so this section focuses on how to create inspectors using annotations and register then as capabilities. // Name is derived from the class name\n@RuleSet(&quot;&quot;&quot;\t\t\n\t\tseverities:\n\t\t  error:\n\t\t    name: Error\n\t\t    description: Artifacts with this severity are not allowed to be further processed (e.g. deployed, published to a repository) \n\t\tdocumentation:\n\t\t  exec.content.Markdown:\n\t\t    source:\n\t\t      exec.content.Text: |\n\t\t        TODO:\n\t\t        \n\t\t        * specRef attribute to RuleSet and Rule - support of loading from classloader resources \n\t\t        * Generation of HTML documentation\n\t\t&quot;&quot;&quot;)\npublic class DemoInspectors {\n\t\n\t@Inspector(value = &quot;&quot;&quot;\n\t\t\tname: Invalid YAML\n\t\t\tdocumentation:\n\t\t\t  exec.content.Markdown:\n\t\t\t    source:\n\t\t\t      exec.content.Text: |\n\t\t\t        YAML with syntax errors, e.g. duplicate keys.\n\t\t\t&quot;&quot;&quot;,\n\t\t\tseverity = &quot;error&quot;,\n\t\t\tcondition = &quot;!errors.isEmpty()&quot;) \t\n\tpublic Collection&lt;String&gt; invalidYaml(YamlResource yamlResource) {\n\t\treturn yamlResource.getErrors().stream().map(Diagnostic::getMessage).toList();\n\t}\n\t\n\t@Inspector(rule = &quot;nasdanika://rules/demo-rule-set/rules/my-rule&quot;)\n\tpublic String myRuleInspector(YamlResource yamlResource) {\n\t\treturn &quot;My finding&quot;;\n\t}\n\t\n}\n In the above snippet the class is a collection of inspector methods. It is annotated with RuleSet annotation which defines an in-line rule set. invalidYaml is annotated with Inspector annotation which contains in-line rule definition. myRuleInspector is also annotated with Inspector annotation, but references an externally defined rule by its logical URI - nasdanika://rules/demo-rule-set/rules/my-rule. Type of the first parameter of inspector methods defines the inspection target type, YamlResource in the above example. Inspector set dispatches targets it inspects to compatible methods. Inspector methods may have parameters compatible with the below types in any order: BiPredicate - takes inspected object and InspectionResult. Can be used if the inspector reports more than one finding or findings shall be associated an object other than the target. Context - can be used to configure inspector or provide helper objects. ProgressMonitor - to report progress and check for cancellation. Return values of non-void inspector methods are processed as follows: If the value is an Iterator, Iterable, Stream, or array then it is iterated and each element is processed as explained here If the value is an instance of InspectionResult (Violation or Failure) then it is used AS-IS If the value is a String then it is wrapped into a Violation. The string value is used as the violation name. The violation is associated with the inspector rule. If an inspector method throws an exception, it is wrapped into a Failure. To register an inspector, create a subclass of InspectorCapabilityFactory: public class ReflectiveInspectorFactory extends InspectorCapabilityFactory&lt;Object&gt; {\n\n\t@Override\n\tprotected CompletionStage&lt;Iterable&lt;CapabilityProvider&lt;Inspector&lt;Object&gt;&gt;&gt;&gt; createService(\n\t\t\tClass&lt;Inspector&lt;Object&gt;&gt; serviceType, \n\t\t\tPredicate&lt;Inspector&lt;Object&gt;&gt; serviceRequirement,\n\t\t\tBiFunction&lt;Object, ProgressMonitor, CompletionStage&lt;Iterable&lt;CapabilityProvider&lt;Object&gt;&gt;&gt;&gt; resolver,\n\t\t\tProgressMonitor progressMonitor) {\n\n\t\tInspector&lt;Object&gt; inspector = new InspectorSet(\n\t\t\tRuleManager.LOADING_RULE_MANAGER, \n\t\t\tserviceRequirement,\n\t\t\tfalse, \n\t\t\tprogressMonitor, \n\t\t\tnew DemoInspectors());\n\t\t\n\t\treturn serviceRequirement == null || serviceRequirement.test(inspector) ? wrap(inspector) : empty();\n\t}\n\n}\n and add opens and provides to module-info.java: opens &lt;inspectors package&gt; to org.nasdanika.common; // For inspector reflection\n\t\nprovides CapabilityFactory with &lt;factory class&gt;;\n Registered inspectors can be loaded by calling Inspector.load(). This method can load all registered inspectors or inspectors matching a predicate, e.g. enforcing rules from a specific rule set. Inspectors are responsible for traversing (visiting) their targets and shall be aware of the targets&rsquo; internal structure. NotifierInspector is aware of internal structures of Notifiers - ResourceSet, Resource, EObject. To inspect notifiers: Create an inspector compatible with Notifier Adapt it to NotifierInspector with NotifierInspector.adapt() Obtain content inspector by calling asContentInspector() Call inspect Inspector&lt;Object&gt; inspector = loadInspector(progressMonitor.split(&quot;Loading Inspector&quot;, 1));\nNotifierInspector notifierInspector = NotifierInspector.adapt(inspector);\nResource inputResource = resourceSet.getResource(input, true); // Notifier to inspect\nnotifierInspector\n\t.asContentsInspector(parallel, createPredicate(input))\n\t.inspect(\n\t\tinputResource, \n\t\tinspectionResultConsumer, \n\t\tcontext, \n\t\tinputProgressMonitor);\t\t\t\t\t\n CLI org.nasdanika.models.rules.cli module provides several concrete and abstract command classes and mix-ins for building commands which deal with rule sets, rules, and inspectors. For concrete classes see Nasdanika CLI rules documentation. Some abstract classes are outlined below, consult JavaDoc for more details. AbstractRuleCommand This command provides options to include and exclude rules and rule sets. All options can be specified more than once. --exclude-rule - URI of a rule to exclude from, say, inspection. --include-rule - URI of a rule to include to, say, inspection. --exclude-rule-set - URI of a rule set to exclude from, say, inspection. --include-rule-set - URI of a rule set to include to, say, inspection. If neither of --include-rule or --include-rule-set options are specified, then all rules and rule sets are included by default unless they are excluded by one of exclude options. Include and exclude options can be used together. For example, you may include a rule set and then exclude some rules from it. AbstractInspectorCommand This command extends AbstractRuleCommand. It loads registered inspectors using Inspector.load() and includes only inspectors for matching rules and rule sets. This command can be used as a base for commands which generate documentation about available rules and rule sets. Below is a fragment of the list-rules command which extends AbstractInspectorCommand: @Command(\n\t\tdescription = &quot;Lists available rules&quot;,\n\t\tname = &quot;list-inspectable-rules&quot;,\n\t\tversionProvider = ModuleVersionProvider.class,\n\t\tmixinStandardHelpOptions = true)\n@ParentCommands(RootCommand.class)\npublic class ListInspectableRulesCommand extends AbstractInspectorCommand {\n\n\t...\t\n\n\t@Override\n\tpublic Integer call() throws Exception {\n\t\tProgressMonitor progressMonitor = progressMonitorMixIn.createProgressMonitor(1);\n\t\tInspector&lt;Object&gt; inspector = loadInspector(progressMonitor);\n\t\tMap&lt;EObject, List&lt;Rule&gt;&gt; grouped = Util.groupBy(inspector.getRules(), EObject::eContainer);\n\t\tif (output == null) {\n\t\t\tgenerateReport(grouped, System.out, progressMonitor);\n\t\t} else {\n\t\t\ttry (PrintStream out = new PrintStream(output)) {\n\t\t\t\tgenerateReport(grouped, out, progressMonitor);\n\t\t\t} catch (FileNotFoundException e) {\n\t\t\t\tthrow new NasdanikaException(e);\n\t\t\t}\n\t\t}\n\t\treturn 0;\n\t}\n\t\n\t...\n\t\n}\n AbstractInspectionCommand This command extends AbstractInspectorCommand and provides base functionality for inspecting resources loaded from URI&rsquo;s and their contents. In addition to rule and rule set inclusion/exclusion provided by AbstractRuleCommand this class provides the following options: -e, --exclude-resource - An Ant pattern of resources to exclude from inspection. The pattern is matched against the resource path computed relative to the root resource. For example, dev/*.yml - exclude YAML files in the dev folder. This option can be specified multiple times. -i, --include-resource - An Ant pattern for resources to include. This option can be specified multiple times. --exclude-type - model type to exclude from inspection. For example, exclude constructors or field declarations from inspection of Java code. This option can be specified multiple times. Matching includes super types, i.e. excluding Type would exclude its sub-types as well - Class, Interface, &hellip; Type can be specified in the following ways: Class name, e.g. Type Qualified class name, e.g. java.Type URI - &lt;EPackage NS URI&gt;#//&lt;Class name, e.g. ecore://nasdanika.org/models/java#//Type --include-type - model type to include. This option can be specified multiple times. Can be combined with type exclusion. For example, you may exclude a super-type, but include one of its sub-types. Say, exclude types, but include interfaces. Or, the opposite - include types, but exclude interfaces. -f, --fail-on - Names of severities to fail on (return non-zero exit code). E.g. Error. This option can be specified multiple times. --parallel - Perform inspection in multiple threads. --stop-on-first-fail - stop inspection on first failure - a Violation with severity specified in --fail-on or a Failure. This option can be used in builds/pipelines to fail fast. --limit - Maximum number of results to report. Stop inspection once the limit is reached. This option can be used, for example, to gradually address technical debt - collect a specified number of things to work on in the next iteration (e.g. sprint). Subclasses must implement getInputs() method and may override createResourceSet() method to register resource factories, adapter factories, or URI handlers as shown below in a fragment of inspect-yaml command: @Command(\n\t\tdescription = &quot;Demo of YAML inspection&quot;,\n\t\tname = &quot;inspect-yaml&quot;,\n\t\tversionProvider = ModuleVersionProvider.class,\n\t\tmixinStandardHelpOptions = true)\n@ParentCommands(RootCommand.class)\npublic class InspectYamlCommand extends AbstractInspectionCommand {\n\t\n\t@Parameters(description = {\n\t\t\t&quot;Files and directories&quot;,\n\t\t\t&quot;to inspect&quot;\n\t\t\t},\n\t\t\tarity = &quot;1..*&quot;)\n\tFile[] inputs;\t\n\n\t@Override\n\tprotected List&lt;URI&gt; getInputs() {\n\t\tList&lt;URI&gt; ret = new ArrayList&lt;&gt;();\n\t\tfor (File input: inputs) {\n\t\t\tURI uri = URI.createFileURI(input.getAbsolutePath());\n\t\t\tif (input.isDirectory()) {\n\t\t\t\turi = uri.appendSegment(&quot;&quot;);\n\t\t\t}\n\t\t\tret.add(uri);\n\t\t}\n\t\treturn ret;\n\t}\n\n\t...\t\n\t\n\t@Override\n\tprotected ResourceSet createResourceSet(ProgressMonitor progressMonitor) {\n\t\tResourceSet resourceSet = super.createResourceSet(progressMonitor);\n\t\t// Basic YAML. Add semantic handlers for your problem domain as needed (you'd need to create them). \n\t\tYamlResourceFactory yamlResourceFactory = new YamlResourceFactory(new NcoreYamlHandler());\n\t\tMap&lt;String, Object&gt; extensionToFactoryMap = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();\n\t\textensionToFactoryMap.put(&quot;yml&quot;, yamlResourceFactory);\n\t\textensionToFactoryMap.put(&quot;yaml&quot;, yamlResourceFactory);\n\t\t\n\t\t// To load directories as resources in order to traverse them\n\t\tresourceSet.getURIConverter().getURIHandlers().add(0, new DirectoryContentFileURIHandler()); \n\t\treturn resourceSet;\n\t}\n\n\t@Override\n\tprotected boolean isIncluded(String path) {\n\t\tString[] includes = getResourceIncludes();\n\t\tif (includes == null) {\n\t\t\treturn path.endsWith(&quot;.yml&quot;) || path.endsWith(&quot;.yaml&quot;);\n\t\t}\n\t\treturn super.isIncluded(path);\n\t}\n\n\t...\n} Inspectable Severity Waiver Action Inspector Inspector Set Inspection Result Rule Rule Set Violation Failure Java Ecore Legend extensions/extends Page-1"
   },
   "references/eClassifiers/Action/index.html": {
-    "link-uuid": "a94be1b3-dc2f-42e4-a1c7-ad14ae3984b3",
+    "link-uuid": "65c87df2-5e30-4801-9a4b-df2b09dbd48a",
     "title": "Action",
     "content": "An action to be taken to address a rule violation"
   },
   "references/eClassifiers/UpdateTextResourceAction/inheritance.html": {
     "path": "UpdateTextResourceAction/Inheritance",
-    "link-uuid": "5e4c62cd-aa1b-40a9-a83d-aa3580349a6d",
+    "link-uuid": "2ce10f04-94d7-4f11-bdfd-a7c6a8f0d3be",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/ResourceAction/inheritance.html": {
     "path": "ResourceAction/Inheritance",
-    "link-uuid": "39e4e40a-e2dc-4915-85f5-5ea2ba145d28",
+    "link-uuid": "be6f98b4-52de-4c28-80b2-4fcf0a23ffe1",
     "title": "Inheritance",
     "content": "Supertypes Subtypes  "
   },
   "references/eClassifiers/CreateBinaryResourceAction/inheritance.html": {
     "path": "CreateBinaryResourceAction/Inheritance",
-    "link-uuid": "95a60909-b23a-4097-9e3e-b9f5c7e28385",
+    "link-uuid": "a747ab24-d066-43a6-966c-7445f396718a",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/RuleSet/references/eStructuralFeatures/rules/index.html": {
     "path": "RuleSet/References/rules",
-    "link-uuid": "c23e215e-3713-46d2-9ad4-bb740f3b986b",
+    "link-uuid": "9a038cf6-9917-4f35-923f-b0cf320d0eaf",
     "title": "rules",
     "content": "Type Rule Multiplicity 0..*"
   },
   "references/eClassifiers/UpdateBinaryResourceAction/inheritance.html": {
     "path": "UpdateBinaryResourceAction/Inheritance",
-    "link-uuid": "293ecf80-bf11-49f1-9aa6-bf0796c4497a",
+    "link-uuid": "7ae7ab2a-caca-409f-81ce-533faad2d49d",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/Waiver/references/eStructuralFeatures/violations/index.html": {
     "path": "Waiver/References/violations",
-    "link-uuid": "6c5a5a5e-18c6-44dc-bb85-206001045759",
+    "link-uuid": "523dbcd3-5d25-4570-a65f-4a4712c6bd7d",
     "title": "violations",
     "content": "Type Violation Multiplicity 0..*"
   },
   "references/eSubpackages/java/references/eClassifiers/CreateCompilationUnitAction/references/eStructuralFeatures/compilationUnit/index.html": {
     "path": "java/CreateCompilationUnitAction/References/compilationUnit",
-    "link-uuid": "5bf0bd52-4ec2-499d-b2ad-fd63cea8a407",
+    "link-uuid": "75af7a71-4e50-4e52-a7fc-7050a08ef859",
     "title": "compilationUnit",
     "content": "Type CompilationUnit Multiplicity 0..1"
   },
   "references/eClassifiers/Waiver/inheritance.html": {
     "path": "Waiver/Inheritance",
-    "link-uuid": "d96c4be2-85d3-4e16-ac94-3ca2c39f189b",
+    "link-uuid": "22bd8227-9fe9-485e-a4e8-202522eda328",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eSubpackages/java/references/eClassifiers/CompilationUnitAction/index.html": {
     "path": "java/CompilationUnitAction",
-    "link-uuid": "9124137c-b443-4cbb-824d-35e2cc3c36c1",
+    "link-uuid": "04720f9d-3ff6-498a-bb39-c663396afb2f",
     "title": "CompilationUnitAction",
     "content": "An action on a compilation unit"
   },
   "references/eClassifiers/UpdateResourceAction/inheritance.html": {
     "path": "UpdateResourceAction/Inheritance",
-    "link-uuid": "f2b9698a-32d7-4f6c-ba55-a9f01284867c",
+    "link-uuid": "458996f3-c5d2-40fc-bda6-3ac2e4beb3ad",
     "title": "Inheritance",
     "content": "Supertypes Subtypes  "
   },
   "references/eSubpackages/java/references/eClassifiers/UpdateCompilationUnitAction/inheritance.html": {
     "path": "java/UpdateCompilationUnitAction/Inheritance",
-    "link-uuid": "e3ab03fe-677f-409f-8cbb-03abd4ff8871",
+    "link-uuid": "13e02d91-4801-40b5-9633-ede15947e7bb",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/Action/inheritance.html": {
     "path": "Action/Inheritance",
-    "link-uuid": "d1d43b94-4387-439b-b27f-9559cb379f1f",
+    "link-uuid": "e4080dd5-df2b-4db1-81a5-439a36215019",
     "title": "Inheritance",
     "content": "Supertypes Subtypes  "
   },
   "references/eClassifiers/RuleSet/references/eStructuralFeatures/extensions/index.html": {
     "path": "RuleSet/References/extensions",
-    "link-uuid": "4a0a47df-867f-460d-a9e0-34cda79f6c41",
+    "link-uuid": "d111b499-1012-4cac-988b-c99df591d210",
     "title": "extensions",
     "content": "Type RuleSet Multiplicity 0..*"
   },
   "references/eClassifiers/CreateTextResourceAction/inheritance.html": {
     "path": "CreateTextResourceAction/Inheritance",
-    "link-uuid": "15c8919e-a4df-42da-8175-71f84edfc37f",
+    "link-uuid": "aa0f0d32-67c4-4303-87fa-51b37d49eee9",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/ResourceAction/index.html": {
-    "link-uuid": "0ab35016-3091-4739-930f-051f40ed08a5",
+    "link-uuid": "1d35d517-ac47-4721-b2c0-ebebae3ecc91",
     "title": "ResourceAction",
     "content": "An action on a resource identified by a string identifier, e.g. a path or URI"
   },
   "references/eClassifiers/ResourceAction/references/eStructuralFeatures/resourceIdentifier/index.html": {
     "path": "ResourceAction/Attributes/resourceIdentifier",
-    "link-uuid": "5a9f22a2-cd69-4d2c-ada1-7eeedf6dbeca",
+    "link-uuid": "b27d2c8b-6bca-4474-877e-a39f5940746c",
     "title": "resourceIdentifier",
     "content": "Type EString Multiplicity 0..1 Resource identifier - path, URI, &hellip;"
   },
   "references/eSubpackages/java/references/eClassifiers/DeleteCompilationUnitAction/inheritance.html": {
     "path": "java/DeleteCompilationUnitAction/Inheritance",
-    "link-uuid": "f88b8a46-1a91-45c4-a38e-d2c8274354b2",
+    "link-uuid": "9cf1d891-63bb-4b73-a7bd-08f92bd53a08",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/Violation/inheritance.html": {
     "path": "Violation/Inheritance",
-    "link-uuid": "99e23c9f-1c4e-4c92-8bb8-66818dcd0d45",
+    "link-uuid": "f9debf75-9d78-4b72-ab0f-19806470831d",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/CreateResourceAction/inheritance.html": {
     "path": "CreateResourceAction/Inheritance",
-    "link-uuid": "df9e6e29-1c93-4b28-a085-80b6a0587d0a",
+    "link-uuid": "a1790cab-44ab-422c-aa6d-a63660420007",
     "title": "Inheritance",
     "content": "Supertypes Subtypes  "
   },
   "references/eClassifiers/Severity/inheritance.html": {
     "path": "Severity/Inheritance",
-    "link-uuid": "2638b686-6746-4830-8bec-14d144c98c27",
+    "link-uuid": "43ef761f-e02b-4f3e-b357-d5db05f8943c",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/BinaryResourceAction/inheritance.html": {
     "path": "BinaryResourceAction/Inheritance",
-    "link-uuid": "91ecf5e9-cb66-4c6e-93d7-a091df4918a8",
+    "link-uuid": "a4344a5b-6309-4c12-929e-02a83efa8eb2",
     "title": "Inheritance",
     "content": "Supertypes Subtypes  "
   },
   "references/eClassifiers/RuleSet/references/eOperations/resolve-0/index.html": {
     "path": "RuleSet/Operations/resolve",
-    "link-uuid": "328718b7-960a-467c-8bbd-d84709768605",
+    "link-uuid": "4526c718-97ad-40ba-bb1c-229c2c92d3cc",
     "title": "resolve",
     "content": "Type RuleSet Multiplicity 0..1"
   },
   "references/eClassifiers/MoveResourceAction/references/eStructuralFeatures/newIdentifier/index.html": {
     "path": "MoveResourceAction/Attributes/newIdentifier",
-    "link-uuid": "45f036a0-1bee-407b-9f4f-f1b4be0eafd1",
+    "link-uuid": "055ebf25-1c3b-4134-a64d-80b0680a7a9d",
     "title": "newIdentifier",
     "content": "Type EString Multiplicity 0..1 New identifier"
   },
   "references/eClassifiers/Inspectable/references/eStructuralFeatures/waivers/index.html": {
     "path": "Inspectable/References/waivers",
-    "link-uuid": "79df0dcc-74c8-4644-a7ab-4ba3b510aa2f",
+    "link-uuid": "9ff500d1-1e84-47d8-9000-ffe073329fa1",
     "title": "waivers",
     "content": "Type Waiver Multiplicity 0..*"
   },
   "references/eClassifiers/DeleteResourceAction/inheritance.html": {
     "path": "DeleteResourceAction/Inheritance",
-    "link-uuid": "8cbd9f85-96ad-43b1-a8e4-16056800e565",
+    "link-uuid": "a502ce5d-cf93-4cf5-a58d-2e926c4c7129",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/Severity/references/eStructuralFeatures/rules/index.html": {
     "path": "Severity/References/rules",
-    "link-uuid": "49b165a8-0739-47f7-ad58-5cc0ca4d2ef0",
+    "link-uuid": "80fece2c-c03b-4f07-9d80-22b70254e741",
     "title": "rules",
     "content": "Type Rule Multiplicity 0..*"
   },
   "references/eClassifiers/Failure/references/eStructuralFeatures/cause/index.html": {
     "path": "Failure/References/cause",
-    "link-uuid": "add27b15-c7f4-4b92-a6e0-933b73bc405d",
+    "link-uuid": "a9523cb9-cccd-42a2-bb4b-3e2a835b679a",
     "title": "cause",
     "content": "Type Throwable Multiplicity 0..1"
   },
   "references/eClassifiers/BinaryResourceAction/references/eStructuralFeatures/content/index.html": {
     "path": "BinaryResourceAction/Attributes/content",
-    "link-uuid": "96da359c-f5b3-45f6-87da-dabb5ffad6d7",
+    "link-uuid": "4d9d0ead-30a6-4203-a1d3-78dc5f0ca155",
     "title": "content",
     "content": "Type EByteArray Multiplicity 0..1"
   },
   "references/eClassifiers/Failure/inheritance.html": {
     "path": "Failure/Inheritance",
-    "link-uuid": "81089ab6-da7c-4457-9a92-7a0442f70068",
+    "link-uuid": "c1dffc82-6f9a-47e6-b48a-d3b41ae32dda",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/Violation/references/eStructuralFeatures/waivers/index.html": {
     "path": "Violation/References/waivers",
-    "link-uuid": "bb73ccdb-1a81-465d-84ec-d922e12c7e62",
+    "link-uuid": "a2132aaf-6aad-4513-9b52-d72d59dd02e7",
     "title": "waivers",
     "content": "Type Waiver Multiplicity 0..*"
   },
   "references/eClassifiers/Rule/references/eStructuralFeatures/actions/index.html": {
     "path": "Rule/References/actions",
-    "link-uuid": "65735890-0a42-44f6-9c03-f2779b27bedd",
+    "link-uuid": "f0596427-8257-438f-a873-1c341f8cbf74",
     "title": "actions",
     "content": "Type Action Multiplicity 0..* Actions to be taken to address rule violations. Rule actions serve as documentation and as templates/prototypes for violation actions."
   },
   "references/eSubpackages/java/references/eClassifiers/CreateCompilationUnitAction/inheritance.html": {
     "path": "java/CreateCompilationUnitAction/Inheritance",
-    "link-uuid": "5bcaa21d-a648-4057-b6cf-1792b9f6d90f",
+    "link-uuid": "f10997ca-3361-4aac-874c-67eed55502ff",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/RuleSet/inheritance.html": {
     "path": "RuleSet/Inheritance",
-    "link-uuid": "a35465de-85ff-4966-af21-0577d895f206",
+    "link-uuid": "33fc2890-6c20-426d-b289-5549401a7b76",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/Rule/inheritance.html": {
     "path": "Rule/Inheritance",
-    "link-uuid": "d9d2f0b3-d501-486d-b9c4-888bdce1e98b",
+    "link-uuid": "e2c8a48c-8e7e-4cf2-aba2-fa03ee2dbcb3",
     "title": "Inheritance",
     "content": "Supertypes "
   },
   "references/eClassifiers/RuleSet/references/eStructuralFeatures/extends/index.html": {
     "path": "RuleSet/References/extends",
-    "link-uuid": "0f4034f6-5622-4fb0-ad9c-54a0e5f540fa",
+    "link-uuid": "4b99a73c-0e10-4290-af5c-7e36922a9aaa",
     "title": "extends",
     "content": "Type RuleSet Multiplicity 0..*"
   },
   "references/eSubpackages/java/references/eClassifiers/UpdateCompilationUnitAction/references/eStructuralFeatures/compilationUnit/index.html": {
     "path": "java/UpdateCompilationUnitAction/References/compilationUnit",
-    "link-uuid": "70a9b63b-0ba2-4491-b9f7-d40957dc92fa",
+    "link-uuid": "e9ef25a1-8c67-420f-87ca-52a7a754c84a",
     "title": "compilationUnit",
     "content": "Type CompilationUnit Multiplicity 0..1"
   },
   "references/eClassifiers/MoveResourceAction/index.html": {
-    "link-uuid": "7c465565-fcec-4bdd-88ec-4bed5cef23be",
+    "link-uuid": "cf41bcf6-2313-4c5e-b461-008e0c547dcd",
     "title": "MoveResourceAction",
     "content": "Moves (renames) the resources - changes its identifier"
   },
   "references/eClassifiers/Rule/references/eStructuralFeatures/suppress/index.html": {
     "path": "Rule/Attributes/suppress",
-    "link-uuid": "ae1726d3-57a3-441d-83de-a106923b7f4a",
+    "link-uuid": "81b34561-9b01-4589-88c2-aec159ca2eb0",
     "title": "suppress",
     "content": "Type EBoolean Multiplicity 0..1"
   },
   "references/eClassifiers/MoveResourceAction/inheritance.html": {
     "path": "MoveResourceAction/Inheritance",
-    "link-uuid": "306e5d5f-2bf9-42b9-8c1f-a3dd6ccfbea2",
+    "link-uuid": "8f33a848-0a27-4c51-81a7-9f8bd8b7474d",
     "title": "Inheritance",
     "content": "Supertypes "
   }
