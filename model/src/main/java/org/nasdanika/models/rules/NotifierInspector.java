@@ -17,6 +17,8 @@ import org.nasdanika.common.Util;
 import org.nasdanika.ncore.Tree;
 import org.nasdanika.ncore.TreeItem;
 
+import reactor.core.publisher.Flux;
+
 /**
  * Binding to {@link Notifier}
  */
@@ -151,6 +153,11 @@ public interface NotifierInspector extends Inspector<Notifier> {
 			@Override
 			public boolean isForType(Class<?> targetType) {
 				return inspector.isForType(targetType);
+			}
+
+			@Override
+			public Flux<InspectionResult> inspectAsync(Notifier target, Context context) {				
+				return inspector.inspectAsync(target, context);
 			}
 			
 		};

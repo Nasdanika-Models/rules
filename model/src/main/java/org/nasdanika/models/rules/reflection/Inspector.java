@@ -19,7 +19,7 @@ import org.nasdanika.models.rules.Violation;
  * Annotation for an inspector method.
  * The method shall take target as its first argument and may take {@link BiConsumer} and {@link ProgressMonitor}.
  * It may return an {@link InspectionResult} or a String, an array of inspection results/strings, 
- * a {@link Stream} of inspection results/strings, {@link Iterator} or an {@link Iterable} of inspection results/strings.
+ * a {@link Stream} of inspection results/strings, {@link Iterator}, <code>Mono</code>, <code>Flux</code> or an {@link Iterable} of inspection results/strings.
  * The returned strings are wrapped into {@link Violation}s and used as violation names.
  * The returned inspection results are associated with the target argument.
  * If <code>value</code> or <code>rule</code> are defined then inspection results are injected the resolved/created rule. 

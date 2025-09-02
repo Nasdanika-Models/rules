@@ -15,6 +15,8 @@ import org.nasdanika.common.Composable;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
 
+import reactor.core.publisher.Flux;
+
 /**
  * Inspects provided object and passes inspection results to a consumer
  */
@@ -36,6 +38,16 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 	 * @param progressMonitor
 	 */
 	void inspect(T target, BiPredicate<? super T, ? super InspectionResult> inspectionResultConsumer, Context context, ProgressMonitor progressMonitor);
+	
+	/**
+	 * Inspects the target and reports results to the consumer.
+	 * The consumer may return <code>false</code> to indicate that it has received enough results and inspection shall stop.
+	 * @param target
+	 * @param inspectionResultConsumer
+	 * @param context
+	 * @param progressMonitor
+	 */
+	Flux<InspectionResult> inspectAsync(T target, Context context);	
 	
 	/**
 	 * Calls onCancel {@link Runnable} if the argument predicate return false. 
@@ -92,6 +104,11 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 			public boolean isForType(Class<?> targetType) {				
 				return Inspector.this.isForType(targetType) || other.isForType(targetType);
 			}
+
+			@Override
+			public Flux<InspectionResult> inspectAsync(T target, Context context) {
+				return Flux.concat(Inspector.this.inspectAsync(target, context), other.inspectAsync(target, context));
+			}
 		};
 		
 	}
@@ -127,6 +144,12 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 				}
 				return false;
 			}
+
+			@Override
+			public Flux<InspectionResult> inspectAsync(T target, Context context) {				
+				return Flux.concat(Stream.of(inspectors).map(i -> i.inspectAsync(target, context)).toList());
+			}
+			
 		};
 		
 	}
@@ -157,6 +180,11 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 			}
 
 			@Override
+			public Flux<InspectionResult> inspectAsync(T target, Context context) {				
+				return Flux.concat(inspectors.stream().map(i -> i.inspectAsync(target, context)).toList());
+			}
+
+			@Override
 			public boolean isForType(Class<?> targetType) {
 				Stream<Inspector<T>> iStream = inspectors.stream();
 				if (parallel) {
@@ -178,6 +206,11 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 			@Override
 			public boolean isForType(Class<?> targetType) {
 				return false;
+			}
+			
+			@Override
+			public Flux<InspectionResult> inspectAsync(T target, Context context) {
+				return Flux.empty();
 			}
 			
 		};
