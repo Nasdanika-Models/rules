@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.nasdanika.common.Context;
 import org.nasdanika.common.ProgressMonitor;
@@ -33,7 +34,7 @@ public class RuleSetNodeProcessor<T extends RuleSet> extends DomainNodeProcessor
 	public RuleSetNodeProcessor(
 		NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
 		Context context,
-		java.util.function.Function<ProgressMonitor, Action> prototypeProvider) {
+		java.util.function.BiFunction<EObject, ProgressMonitor, Action> prototypeProvider) {
 		
 		super(config, context, prototypeProvider);
 	}

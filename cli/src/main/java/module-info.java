@@ -10,7 +10,7 @@ module org.nasdanika.models.rules.cli {
 	requires spring.core;
 	requires org.eclipse.emf.ecore.xmi;
 	
-	opens org.nasdanika.models.rules.cli to info.picocli;
+	opens org.nasdanika.models.rules.cli to info.picocli, org.nasdanika.cli;
 	
 	provides CapabilityFactory with
 		RulesCommandFactory;

@@ -2,15 +2,7 @@
  */
 package org.nasdanika.models.rules.processors.ecore;
 
-import java.util.function.BiConsumer;
-
 import org.nasdanika.common.Context;
-import org.nasdanika.common.ProgressMonitor;
-import org.nasdanika.graph.processor.NodeProcessorConfig;
-import org.nasdanika.models.app.Action;
-import org.nasdanika.models.app.Label;
-import org.nasdanika.models.app.graph.WidgetFactory;
-import org.nasdanika.models.ecore.graph.processors.EClassNodeProcessor;
 import org.nasdanika.models.ecore.graph.processors.EClassifierNodeProcessorFactory;
 import org.nasdanika.models.rules.RulesPackage;
 
@@ -33,7 +25,7 @@ public class ActionProcessorFactory /* extends NodeProcessorFactory */ {
 //	)
 //	public EClassNodeProcessor createEClassNodeProcessor(
 //			NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
-//			java.util.function.Function<ProgressMonitor, Action> prototypeProvider,
+//			java.util.function.BiFunction<EObject, ProgressMonitor, Action> prototypeProvider,
 //			BiConsumer<Label, ProgressMonitor> labelConfigurator,
 //			ProgressMonitor progressMonitor) {		
 //		return new EClassNodeProcessor(config, context, prototypeProvider) {
