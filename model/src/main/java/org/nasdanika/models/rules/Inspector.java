@@ -13,7 +13,10 @@ import org.nasdanika.capability.CapabilityProvider;
 import org.nasdanika.capability.ServiceCapabilityFactory;
 import org.nasdanika.common.Composable;
 import org.nasdanika.common.Context;
+import org.nasdanika.common.LoggerProgressMonitor;
 import org.nasdanika.common.ProgressMonitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import reactor.core.publisher.Flux;
 
@@ -47,7 +50,25 @@ public interface Inspector<T> extends Composable<Inspector<T>> {
 	 * @param context
 	 * @param progressMonitor
 	 */
-	Flux<InspectionResult> inspectAsync(T target, Context context);	
+	default Flux<InspectionResult> inspectAsync(T target, Context context) {
+		return Flux.create((sink) -> {
+			Logger logger = LoggerFactory.getLogger(NotifierInspector.class);
+			try (ProgressMonitor progressMonitor = new LoggerProgressMonitor(logger)) {
+				inspect(
+						target, 
+						(n,i) -> {
+							sink.next(i);
+							return true;
+						},
+						context,
+						progressMonitor);
+			} catch (Exception e) {
+				sink.error(e);
+			} finally {
+	            sink.complete(); // Signal completion when done						
+			}
+        });		
+	}
 	
 	/**
 	 * Calls onCancel {@link Runnable} if the argument predicate return false. 

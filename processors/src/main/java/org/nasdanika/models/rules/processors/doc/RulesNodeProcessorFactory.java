@@ -9,7 +9,7 @@ import org.nasdanika.common.ProgressMonitor;
 import org.nasdanika.graph.Element;
 import org.nasdanika.graph.emf.EObjectNode;
 import org.nasdanika.graph.processor.NodeProcessorConfig;
-import org.nasdanika.graph.processor.ProcessorInfo;
+import org.nasdanika.graph.processor.ProcessorConfig;
 import org.nasdanika.graph.processor.emf.EObjectNodeProcessor;
 import org.nasdanika.models.app.Action;
 import org.nasdanika.models.app.AppFactory;
@@ -30,7 +30,7 @@ public class RulesNodeProcessorFactory {
 	private Context context;
 	private java.util.function.BiFunction<URI, ProgressMonitor, Label> prototypeProvider;
 
-	protected java.util.function.BiFunction<EObject, ProgressMonitor, Action> getPrototypeProvider(NodeProcessorConfig<WidgetFactory, WidgetFactory> config) {
+	protected java.util.function.BiFunction<EObject, ProgressMonitor, Action> getPrototypeProvider(NodeProcessorConfig<WidgetFactory, WidgetFactory, Object> config) {
 		return (eObj, progressMonitor) -> {
 			if (prototypeProvider != null) {
 				for (URI identifier: NcoreUtil.getIdentifiers(((EObjectNode) config.getElement()).get())) {
@@ -72,9 +72,9 @@ public class RulesNodeProcessorFactory {
 //	Rule.java
 	@EObjectNodeProcessor(type = org.nasdanika.models.rules.Rule.class)
 	public Object createRuleNodeProcessor(
-			NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
+			NodeProcessorConfig<WidgetFactory, WidgetFactory, Object> config, 
 			boolean parallel, 
-			BiConsumer<Element,BiConsumer<ProcessorInfo<Object>,ProgressMonitor>> infoProvider,
+			BiConsumer<Element,BiConsumer<ProcessorConfig<WidgetFactory, WidgetFactory, Object>,ProgressMonitor>> infoProvider,
 			ProgressMonitor progressMonitor) {
 		
 		return new RuleNodeProcessor<Rule>(config, context, getPrototypeProvider(config));
@@ -83,9 +83,9 @@ public class RulesNodeProcessorFactory {
 //	RuleSet.java
 	@EObjectNodeProcessor(type = org.nasdanika.models.rules.RuleSet.class)
 	public Object createRuleSetNodeProcessor(
-			NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
+			NodeProcessorConfig<WidgetFactory, WidgetFactory, Object> config, 
 			boolean parallel, 
-			BiConsumer<Element,BiConsumer<ProcessorInfo<Object>,ProgressMonitor>> infoProvider,
+			BiConsumer<Element,BiConsumer<ProcessorConfig<WidgetFactory, WidgetFactory, Object>,ProgressMonitor>> infoProvider,
 			ProgressMonitor progressMonitor) {
 		
 		return new RuleSetNodeProcessor<RuleSet>(config, context, getPrototypeProvider(config));
@@ -94,9 +94,9 @@ public class RulesNodeProcessorFactory {
 //	Severity.java
 	@EObjectNodeProcessor(type = org.nasdanika.models.rules.Severity.class)
 	public Object createSeverityNodeProcessor(
-			NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
+			NodeProcessorConfig<WidgetFactory, WidgetFactory, Object> config, 
 			boolean parallel, 
-			BiConsumer<Element,BiConsumer<ProcessorInfo<Object>,ProgressMonitor>> infoProvider,
+			BiConsumer<Element,BiConsumer<ProcessorConfig<WidgetFactory, WidgetFactory, Object>,ProgressMonitor>> infoProvider,
 			ProgressMonitor progressMonitor) {
 		
 		return new SeverityNodeProcessor<Severity>(config, context, getPrototypeProvider(config));

@@ -14,7 +14,7 @@ import org.nasdanika.models.rules.Severity;
 public class SeverityNodeProcessor<T extends Severity> extends ArchitectureDescriptionElementNodeProcessor<T> {
 
 	public SeverityNodeProcessor(
-		NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
+		NodeProcessorConfig<WidgetFactory, WidgetFactory, Object> config, 
 		Context context,
 		java.util.function.BiFunction<EObject, ProgressMonitor, Action> prototypeProvider) {
 		

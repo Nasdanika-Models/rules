@@ -32,7 +32,7 @@ import org.nasdanika.ncore.NamedElement;
 public class RuleSetNodeProcessor<T extends RuleSet> extends DomainNodeProcessor<T> {
 
 	public RuleSetNodeProcessor(
-		NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
+		NodeProcessorConfig<WidgetFactory, WidgetFactory, Object> config, 
 		Context context,
 		java.util.function.BiFunction<EObject, ProgressMonitor, Action> prototypeProvider) {
 		

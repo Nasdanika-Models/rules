@@ -17,7 +17,7 @@ import org.nasdanika.models.rules.RulesPackage;
 public class RuleNodeProcessor<T extends Rule> extends NodeNodeProcessor<T> {
 	
 	public RuleNodeProcessor(
-		NodeProcessorConfig<WidgetFactory, WidgetFactory> config, 
+		NodeProcessorConfig<WidgetFactory, WidgetFactory, Object> config, 
 		Context context,
 		java.util.function.BiFunction<EObject, ProgressMonitor, Action> prototypeProvider) {
 		

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.gitlab4j.api.CommitsApi;
-import org.gitlab4j.api.Constants.Encoding;
+import org.gitlab4j.models.Constants.Encoding;
 import org.gitlab4j.api.GitLabApiException;
 import org.gitlab4j.api.MergeRequestApi;
 import org.gitlab4j.api.models.CommitAction;
