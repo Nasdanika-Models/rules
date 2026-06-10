@@ -97,7 +97,7 @@ public interface NotifierInspector extends Inspector<Notifier> {
 							});
 						} else if (target instanceof EObject) {
 							if (target instanceof TreeItem && ((TreeItem) target).eContainer() != null) {
-								URI targetURI = resolve((TreeItem) target);
+								URI targetURI = select((TreeItem) target);
 								if (targetURI != null) {
 									if (target instanceof Tree && !Util.isBlank(targetURI.lastSegment())) {
 										targetURI = targetURI.appendSegment("");
