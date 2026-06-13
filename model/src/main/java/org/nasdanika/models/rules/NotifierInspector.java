@@ -96,13 +96,13 @@ public interface NotifierInspector extends Inspector<Notifier> {
 								}
 							});
 						} else if (target instanceof EObject) {
-							if (target instanceof TreeItem && ((TreeItem) target).eContainer() != null) {
-								URI targetURI = select((TreeItem) target);
+							if (target instanceof TreeItem treeItem && treeItem.eContainer() != null) {
+								URI targetURI =  select(treeItem);
 								if (targetURI != null) {
 									if (target instanceof Tree && !Util.isBlank(targetURI.lastSegment())) {
 										targetURI = targetURI.appendSegment("");
 									}
-									Resource eResource = ((TreeItem) target).eResource();
+									Resource eResource = treeItem.eResource();
 									if (eResource != null) {
 										ResourceSet resourceSet = eResource.getResourceSet();
 										if (resourceSet != null) {
@@ -125,6 +125,10 @@ public interface NotifierInspector extends Inspector<Notifier> {
 						}
 					}
 				}
+			}
+
+			private URI select(TreeItem treeItem) {
+				throw new UnsupportedOperationException("Unimplemented method 'select'");
 			}
 
 			@Override
